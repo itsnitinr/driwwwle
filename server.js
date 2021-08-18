@@ -6,6 +6,7 @@ const next = require('next');
 const connectDB = require('./server-utils/connectDB');
 
 const app = express();
+app.use(express.json());
 const server = http.Server(app);
 const dev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,8 @@ const handle = nextApp.getRequestHandler();
 connectDB();
 
 nextApp.prepare().then(() => {
+  app.use('/api/signup', require('./api/signup'));
+
   app.all('*', (req, res) => handle(req, res));
   server.listen(PORT, (err) => {
     if (err) throw err;
