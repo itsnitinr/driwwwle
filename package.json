@@ -6,6 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.0",
+    "@heroicons/react": "^1.0.4",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^5.13.7",
