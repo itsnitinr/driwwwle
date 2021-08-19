@@ -1,11 +1,15 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import {
   LockClosedIcon,
   MailIcon,
   EyeIcon,
   EyeOffIcon,
+  RefreshIcon,
 } from '@heroicons/react/outline';
+
+import { loginUser } from '../utils/auth';
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -24,9 +28,9 @@ const Login = () => {
     setUser((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
+    loginUser({ email, password }, setError, setFormLoading, toast);
   };
 
   useEffect(() => {
@@ -144,6 +148,14 @@ const Login = () => {
                   aria-hidden="true"
                 />
               </span>
+              {formLoading && (
+                <span className="absolute right-0 inset-y-0 flex items-center pr-3">
+                  <RefreshIcon
+                    className="h-5 w-5 text-gray-100 animate-spin"
+                    aria-hidden="true"
+                  />
+                </span>
+              )}
               Sign In
             </button>
           </div>

@@ -21,6 +21,7 @@ export const registerUser = async (
     });
     setToken(res.data.token);
     toast.info(res.data.msg);
+    Router.push('/');
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
@@ -29,7 +30,12 @@ export const registerUser = async (
   setLoading(false);
 };
 
-export const loginUser = async ({ email, password }, setError, setLoading) => {
+export const loginUser = async (
+  { email, password },
+  setError,
+  setLoading,
+  toast
+) => {
   setLoading(true);
   try {
     const res = await axios.post(`${baseURL}/api/auth`, {
@@ -37,14 +43,15 @@ export const loginUser = async ({ email, password }, setError, setLoading) => {
       password,
     });
     setToken(res.data.token);
+    Router.push('/home');
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
+    toast.error(errorMsg);
   }
   setLoading(false);
 };
 
 const setToken = (token) => {
   cookie.set('token', token);
-  Router.push('/');
 };
