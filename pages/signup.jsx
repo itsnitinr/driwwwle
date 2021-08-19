@@ -1,5 +1,7 @@
+import axios from 'axios';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import {
   LockClosedIcon,
   MailIcon,
@@ -9,9 +11,14 @@ import {
   EyeOffIcon,
   CheckIcon,
   XIcon,
+  RefreshIcon,
 } from '@heroicons/react/outline';
 
+import baseURL from '../utils/baseURL';
+import { registerUser } from '../utils/auth';
+
 const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
+let cancel;
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -35,9 +42,31 @@ const Signup = () => {
     setUser((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
+    await registerUser(user, setError, setFormLoading, toast);
+  };
+
+  const checkUsername = async () => {
+    setUsernameLoading(true);
+    try {
+      cancel && cancel();
+      const CancelToken = axios.CancelToken;
+      const res = await axios.get(`${baseURL}/api/signup/${username}`, {
+        cancelToken: new CancelToken((canceler) => {
+          cancel = canceler;
+        }),
+      });
+      if (error !== null) setError(null);
+      if (res.data.msg === 'Username available') {
+        setUsernameAvailable(true);
+        setUser((prevState) => ({ ...prevState, username }));
+      }
+    } catch (err) {
+      setUsernameAvailable(false);
+      setError('Username not available');
+    }
+    setUsernameLoading(false);
   };
 
   useEffect(() => {
@@ -46,6 +75,10 @@ const Signup = () => {
     );
     isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
   }, [user]);
+
+  useEffect(() => {
+    username === '' ? setUsernameAvailable(false) : checkUsername();
+  }, [username]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -225,6 +258,14 @@ const Signup = () => {
                   aria-hidden="true"
                 />
               </span>
+              {formLoading && (
+                <span className="absolute right-0 inset-y-0 flex items-center pr-3">
+                  <RefreshIcon
+                    className="h-5 w-5 text-gray-100 animate-spin"
+                    aria-hidden="true"
+                  />
+                </span>
+              )}
               Sign Up
             </button>
           </div>
