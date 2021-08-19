@@ -7,7 +7,12 @@ const upload = async (pic) => {
     formdata.append('upload_preset', 'driwwwle');
     formdata.append('cloud_name', 'nitinr');
 
-    const res = await axios.post(process.env.CLOUDINARY_URL, formdata);
+    console.log(process.env.NEXT_PUBLIC_CLOUDINARY_URL);
+
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_CLOUDINARY_URL,
+      formdata
+    );
     return res.data.url;
   } catch (err) {
     console.log(err);

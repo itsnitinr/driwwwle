@@ -52,6 +52,32 @@ export const loginUser = async (
   setLoading(false);
 };
 
+export const onboardUser = async (
+  verificationToken,
+  { bio, techStack, social, profilePicUrl },
+  setLoading,
+  toast
+) => {
+  setLoading(true);
+  try {
+    const res = await axios.post(
+      `${baseURL}/api/onboarding/${verificationToken}`,
+      {
+        bio,
+        techStack: techStack.split(',').map((item) => item.trim()),
+        social,
+        profilePicUrl,
+      }
+    );
+    setToken(res.data.token);
+    toast.success(res.data.msg);
+    Router.push('/home');
+  } catch (error) {
+    const errorMsg = catchErrors(error);
+    toast.error(errorMsg);
+  }
+  setLoading(false);
+};
 const setToken = (token) => {
   cookie.set('token', token);
 };

@@ -15,6 +15,7 @@ router.post('/:token', async (req, res) => {
     bio,
     techStack,
     social: { github, linkedin, website, twitter, instagram, youtube },
+    profilePicUrl,
   } = req.body;
 
   const verificationToken = crypto
@@ -32,6 +33,7 @@ router.post('/:token', async (req, res) => {
     // Set user verified to true
     user.isVerified = true;
     user.verificationToken = undefined;
+    if (profilePicUrl) user.profilePicUrl = profilePicUrl;
     await user.save();
 
     // Create profile
