@@ -9,7 +9,7 @@ const Layout = ({ children, user }) => {
       router.pathname === '/' ||
       router.pathname === '/signup' ||
       router.pathname === '/login' ||
-      router.pathname === '/onboarding'
+      router.pathname === '/onboarding/[token]'
     ) {
       return false;
     }
