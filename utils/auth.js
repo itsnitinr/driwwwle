@@ -43,7 +43,7 @@ export const loginUser = async (
       password,
     });
     setToken(res.data.token);
-    Router.push('/home');
+    Router.push('/feed');
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
@@ -78,6 +78,16 @@ export const onboardUser = async (
   }
   setLoading(false);
 };
+
 const setToken = (token) => {
   cookie.set('token', token);
+};
+
+export const redirectUser = (ctx, location) => {
+  if (ctx.req) {
+    ctx.res.writeHead(302, { Location: location });
+    ctx.res.end();
+  } else {
+    Router.push(location);
+  }
 };
