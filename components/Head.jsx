@@ -13,6 +13,7 @@ const CustomHead = ({ title }) => {
         property="og:description"
         content="Showcase your projects to the world!"
       />
+      <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
   );
 };
