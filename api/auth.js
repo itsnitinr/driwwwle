@@ -4,6 +4,25 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 
 const User = require('../models/User.model');
+const auth = require('../middleware/auth.middleware');
+
+// @route:  GET /api/auth
+// @desc:   Get looged in user's info
+router.get('/', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(400).json({
+        msg: 'Please verify your email and complete onboarding first',
+      });
+    }
+    res.status(200).json({ user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
 
 // @route:  POST /api/auth
 // @desc:   Login user
