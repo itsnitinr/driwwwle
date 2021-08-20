@@ -8,7 +8,8 @@ const Layout = ({ children, user }) => {
     if (
       router.pathname === '/' ||
       router.pathname === '/signup' ||
-      router.pathname === '/login'
+      router.pathname === '/login' ||
+      router.pathname === '/onboarding'
     ) {
       return false;
     }

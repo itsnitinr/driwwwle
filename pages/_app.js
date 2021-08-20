@@ -27,7 +27,10 @@ MyApp.getInitialProps = async ({ ctx }) => {
 
   const protectedRoutes =
     ctx.pathname === '/feed' || ctx.pathname === '/notifications';
-  const availableForEveryone = ctx.pathname === '/' || ctx.pathname === '/home';
+  const availableForEveryone =
+    ctx.pathname === '/' ||
+    ctx.pathname === '/home' ||
+    ctx.pathname === '/onboarding';
 
   // If user is not logged in
   if (!token) {

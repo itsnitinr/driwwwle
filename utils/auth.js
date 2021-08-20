@@ -19,7 +19,6 @@ export const registerUser = async (
       email,
       password,
     });
-    setToken(res.data.token);
     toast.info(res.data.msg);
     Router.push('/');
   } catch (error) {
