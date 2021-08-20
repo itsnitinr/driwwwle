@@ -6,6 +6,7 @@ import Head from '../components/Head';
 import Layout from '../components/Layout';
 
 import 'tailwindcss/tailwind.css';
+import '../public/nprogress.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import baseURL from '../utils/baseURL';
