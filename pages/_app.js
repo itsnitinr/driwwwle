@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { Hydrate } from 'react-query/hydration';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { ToastContainer } from 'react-toastify';
 import { parseCookies, destroyCookie } from 'nookies';
 
@@ -13,12 +17,19 @@ import baseURL from '../utils/baseURL';
 import { redirectUser } from '../utils/auth';
 
 function MyApp({ Component, pageProps }) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <Layout {...pageProps}>
-      <ToastContainer />
-      <Head title={pageProps.title} />
-      <Component {...pageProps} />
-    </Layout>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <Layout {...pageProps}>
+          <ToastContainer />
+          <Head title={pageProps.title} />
+          <Component {...pageProps} />
+          <ReactQueryDevtools />
+        </Layout>
+      </Hydrate>
+    </QueryClientProvider>
   );
 }
 
