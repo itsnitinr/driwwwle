@@ -13,8 +13,6 @@ router.post('/', auth, async (req, res) => {
   const { title, description, images, liveDemo, sourceCode, techStack } =
     req.body;
 
-  console.log('Entered');
-
   try {
     const postObj = {
       user: req.userId,
