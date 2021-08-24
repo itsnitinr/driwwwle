@@ -4,6 +4,7 @@ import { dehydrate } from 'react-query/hydration';
 
 import baseURL from '../utils/baseURL';
 import HeroBanner from '../components/home/HeroBanner';
+import PostCard from '../components/PostCard';
 
 const getPosts = async () => {
   const { data } = await axios.get(`${baseURL}/api/posts`);
@@ -16,9 +17,9 @@ const HomePage = () => {
   return (
     <>
       <HeroBanner />
-      <main className="container mx-auto p-8 md:px-16 md:py-10">
+      <main className="container bg-gray-50 mx-auto bg-gray-50 p-8 md:px-16 md:py-10 grid gap-5 place-items-center grid-cols-auto-fit">
         {data.map((post) => (
-          <h1 key={post._id}>{post.title}</h1>
+          <PostCard key={post._id} post={post} />
         ))}
       </main>
     </>
