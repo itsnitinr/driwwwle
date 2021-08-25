@@ -4,6 +4,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { SearchIcon } from '@heroicons/react/solid';
 import { BellIcon, MenuIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
 
+import { logoutUser } from '../utils/auth';
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
@@ -151,10 +153,10 @@ const Navbar = ({ user, currentPath }) => {
                               <Menu.Item>
                                 {({ active }) => (
                                   <a
-                                    href="#"
+                                    onClick={logoutUser}
                                     className={classNames(
                                       active ? 'bg-gray-100' : '',
-                                      'block px-4 py-2 text-sm text-gray-700'
+                                      'block px-4 cursor-pointer py-2 text-sm text-gray-700'
                                     )}
                                   >
                                     Sign out
@@ -242,7 +244,10 @@ const Navbar = ({ user, currentPath }) => {
                       Settings
                     </a>
                   </Link>
-                  <a className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                  <a
+                    onClick={logoutUser}
+                    className="block cursor-pointer px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                  >
                     Sign out
                   </a>
                 </div>

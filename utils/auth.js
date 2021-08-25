@@ -82,6 +82,11 @@ const setToken = (token) => {
   cookie.set('token', token);
 };
 
+export const logoutUser = () => {
+  cookie.remove('token');
+  Router.push('/login');
+};
+
 export const redirectUser = (ctx, location) => {
   if (ctx.req) {
     ctx.res.writeHead(302, { Location: location });
