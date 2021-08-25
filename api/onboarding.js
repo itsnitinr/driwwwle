@@ -7,16 +7,15 @@ const User = require('../models/User.model');
 const Profile = require('../models/Profile.model');
 const Follower = require('../models/Follower.model');
 
+const upload = require('../middleware/imageUpload.middleware');
+
 // @route:  POST /api/onboarding/:token
 // @desc:   Verify email and complete onboarding
-router.post('/:token', async (req, res) => {
+router.post('/:token', upload.single('profilePic'), async (req, res) => {
   const { token } = req.params;
-  const {
-    bio,
-    techStack,
-    social: { github, linkedin, website, twitter, instagram, youtube },
-    profilePicUrl,
-  } = req.body;
+  const { bio, techStack, social } = req.body;
+  const { github, linkedin, website, twitter, instagram, youtube } =
+    JSON.parse(social);
 
   const verificationToken = crypto
     .createHash('sha256')
@@ -33,14 +32,14 @@ router.post('/:token', async (req, res) => {
     // Set user verified to true
     user.isVerified = true;
     user.verificationToken = undefined;
-    if (profilePicUrl) user.profilePicUrl = profilePicUrl;
+    if (req.file) user.profilePicUrl = req.file.path;
     await user.save();
 
     // Create profile
     let profileFields = {};
     profileFields.user = user._id;
     profileFields.bio = bio;
-    profileFields.techStack = techStack;
+    profileFields.techStack = JSON.parse(techStack);
 
     profileFields.social = {};
     if (github) profileFields.social.github = github;

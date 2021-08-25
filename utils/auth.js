@@ -53,7 +53,7 @@ export const loginUser = async (
 
 export const onboardUser = async (
   verificationToken,
-  { bio, techStack, social, profilePicUrl },
+  formdata,
   setLoading,
   toast
 ) => {
@@ -61,11 +61,11 @@ export const onboardUser = async (
   try {
     const res = await axios.post(
       `${baseURL}/api/onboarding/${verificationToken}`,
+      formdata,
       {
-        bio,
-        techStack: techStack.split(',').map((item) => item.trim()),
-        social,
-        profilePicUrl,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       }
     );
     setToken(res.data.token);

@@ -12,7 +12,6 @@ import {
 } from 'react-icons/ai';
 
 import { onboardUser } from '../../utils/auth';
-import uploadImage from '../../utils/cloudinaryUpload';
 
 const Onboarding = () => {
   const router = useRouter();
@@ -20,7 +19,7 @@ const Onboarding = () => {
 
   const [bio, setBio] = useState('');
   const [image, setImage] = useState(null);
-  const [techStack, setTechStack] = useState([]);
+  const [techStack, setTechStack] = useState('');
   const [social, setSocial] = useState({
     github: '',
     website: '',
@@ -44,26 +43,16 @@ const Onboarding = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // Upload profile pic to cloudinary
-    let profilePicUrl;
-    if (image !== null) {
-      setLoading(true);
-      profilePicUrl = await uploadImage(image);
-    }
-    console.log({ profilePicUrl });
-
-    // Handle error uploading image to cloudinary
-    if (image !== null && !profilePicUrl) {
-      setLoading(false);
-      return toast.error('There was an error while trying to upload the image');
-    }
-
-    await onboardUser(
-      token,
-      { bio, techStack, social, profilePicUrl },
-      setLoading,
-      toast
+    const formdata = new FormData();
+    formdata.append('profilePic', image);
+    formdata.append('bio', bio);
+    formdata.append(
+      'techStack',
+      JSON.stringify(techStack.split(',').map((item) => item.trim()))
     );
+    formdata.append('social', JSON.stringify(social));
+
+    await onboardUser(token, formdata, setLoading, toast);
   };
 
   return (
