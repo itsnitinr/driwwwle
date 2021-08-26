@@ -6,21 +6,25 @@ const Post = require('../models/Post.model');
 const User = require('../models/User.model');
 
 const auth = require('../middleware/auth.middleware');
+const upload = require('../middleware/imageUpload.middleware');
 
 // @route   POST /api/posts
 // @desc    Create a new post
-router.post('/', auth, async (req, res) => {
-  const { title, description, images, liveDemo, sourceCode, techStack } =
-    req.body;
+router.post('/', auth, upload.array('images', 5), async (req, res) => {
+  const { title, description, liveDemo, sourceCode, techStack } = req.body;
+
+  if (req.files.length < 1) {
+    return res.status(400).json({ msg: 'Atleast one image is required' });
+  }
 
   try {
     const postObj = {
       user: req.userId,
       title,
       description,
-      images,
+      images: req.files.map((file) => file.path),
       liveDemo,
-      techStack,
+      techStack: JSON.parse(techStack),
     };
     if (sourceCode) postObj.sourceCode = sourceCode;
     const post = await new Post(postObj).save();
