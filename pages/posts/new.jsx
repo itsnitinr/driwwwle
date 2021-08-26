@@ -7,11 +7,13 @@ import {
 } from '@heroicons/react/outline';
 
 import PostInput from '../../components/new-post/PostInput';
+import RichTextEditor from '../../components/new-post/RichTextEditor';
 import ImageDropzone from '../../components/new-post/ImageDropzone';
 import ThumbnailsDND from '../../components/new-post/ThumbnailsDND';
 
 const NewPost = ({ user }) => {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [techStack, setTechStack] = useState('');
   const [liveDemo, setLiveDemo] = useState('');
   const [sourceCode, setSourceCode] = useState('');
@@ -45,7 +47,7 @@ const NewPost = ({ user }) => {
             setValue={setTechStack}
           />
         </div>
-        <div className="mb-10 mr-auto grid md:grid-cols-2 gap-4 w-full">
+        <div className="mb-5 mr-auto grid md:grid-cols-2 gap-4 w-full">
           <PostInput
             Icon={LinkIcon}
             label="Deployed website URL"
@@ -63,6 +65,13 @@ const NewPost = ({ user }) => {
             setValue={setSourceCode}
           />
         </div>
+        <label
+          htmlFor="description"
+          className="block mr-auto text-md font-medium text-pink-600 mb-2"
+        >
+          Add some description
+        </label>
+        <RichTextEditor value={description} setValue={setDescription} />
         <ImageDropzone setImages={setImages} />
         {images.length > 0 && (
           <ThumbnailsDND images={images} setImages={setImages} />
