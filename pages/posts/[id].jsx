@@ -22,7 +22,7 @@ const PostPage = ({ user }) => {
     <div className="max-w-5xl px-4 py-8 md:px-8 md:py-12 mx-auto">
       <PostHeader post={data} user={user} />
       <div className="my-8">
-        <PostCarousel images={data.images} />
+        <PostCarousel images={data.images} title={data.title} />
       </div>
     </div>
   );
