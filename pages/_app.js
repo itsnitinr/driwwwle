@@ -41,10 +41,12 @@ MyApp.getInitialProps = async ({ ctx }) => {
     ctx.pathname === '/feed' ||
     ctx.pathname === '/notifications' ||
     ctx.pathname === '/posts/new';
+
   const availableForEveryone =
     ctx.pathname === '/' ||
     ctx.pathname === '/home' ||
-    ctx.pathname === '/onboarding';
+    ctx.pathname === '/onboarding' ||
+    ctx.pathname === '/posts/[id]';
 
   // If user is not logged in
   if (!token) {

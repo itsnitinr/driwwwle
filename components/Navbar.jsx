@@ -28,14 +28,14 @@ const Navbar = ({ user, currentPath }) => {
                   <Link href="/home">
                     <img
                       className="block lg:hidden h-8 w-auto cursor-pointer"
-                      src="logo.svg"
+                      src="/logo.svg"
                       alt="Driwwwle"
                     />
                   </Link>
                   <Link href="/home">
                     <img
                       className="hidden lg:block h-8 w-auto cursor-pointer"
-                      src="logo.svg"
+                      src="/logo.svg"
                       alt="Driwwwle"
                     />
                   </Link>

@@ -4,7 +4,7 @@ import { EyeIcon, HeartIcon } from '@heroicons/react/solid';
 
 const PostCard = ({ post }) => {
   return (
-    <Link href={`/${post._id}`}>
+    <Link href={`/posts/${post._id}`}>
       <div className="rounded-lg relative group">
         <Image
           src={post.images[0]}
