@@ -8,6 +8,7 @@ const PostCarousel = ({ images, title }) => {
   const settings = {
     autoplay: true,
     autoplaySpeed: 5000,
+    className: 'group',
     dots: true,
     infinite: true,
     speed: 500,
@@ -21,11 +22,12 @@ const PostCarousel = ({ images, title }) => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={className}
+        className={className + ' opacity-0 group-hover:opacity-100 transition'}
         style={{
           ...style,
           display: 'block',
-          left: '20px',
+          left: '3vw',
+          zIndex: 100,
         }}
         onClick={onClick}
       />
@@ -36,8 +38,8 @@ const PostCarousel = ({ images, title }) => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={className}
-        style={{ ...style, display: 'block', right: '50px' }}
+        className={className + ' opacity-0 group-hover:opacity-100 transition'}
+        style={{ ...style, display: 'block', right: '3vw', zIndex: 100 }}
         onClick={onClick}
       />
     );
@@ -46,7 +48,7 @@ const PostCarousel = ({ images, title }) => {
   return (
     <Slider {...settings}>
       {images.map((image) => (
-        <div key={image}>
+        <div key={image} className="group">
           <Image
             className="rounded-lg shadow-4xl"
             src={image}
