@@ -2,10 +2,20 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useQuery, QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
+import {
+  ClockIcon,
+  TagIcon,
+  GlobeAltIcon,
+  CodeIcon,
+  HeartIcon,
+  ChatIcon,
+} from '@heroicons/react/outline';
 
 import baseURL from '../../utils/baseURL';
 import PostHeader from '../../components/post-page/PostHeader';
 import PostCarousel from '../../components/post-page/PostCarousel';
+import PostDetailsItem from '../../components/post-page/PostDetailsItem';
+import PostDetailsLink from '../../components/post-page/PostDetailsLink';
 
 const getPost = async (id) => {
   const { data } = await axios.get(`${baseURL}/api/posts/${id}`);
@@ -23,6 +33,34 @@ const PostPage = ({ user }) => {
       <PostHeader post={data} user={user} />
       <div className="my-8">
         <PostCarousel images={data.images} title={data.title} />
+      </div>
+      <div className="flex flex-wrap md:flex-nowrap">
+        <div
+          className="w-100 md:w-2/3 lg:w-3/4 w-full text-lg mb-6 md:mb-0 pr-4"
+          dangerouslySetInnerHTML={{ __html: data.description }}
+        ></div>
+        <div className="w-100 md:w-1/3 lg:w-1/4 w-full">
+          <h3 className="text-lg font-semibold text-pink-600">Post Details</h3>
+          <div className="grid grid-col-1 mt-4 space-y-2">
+            <PostDetailsItem Icon={ClockIcon} detail={data.createdAt} />
+            <PostDetailsItem
+              Icon={TagIcon}
+              detail={data.techStack.join(', ')}
+            />
+            <PostDetailsLink Icon={GlobeAltIcon} detail={data.liveDemo} />
+            {data.sourceCode && (
+              <PostDetailsLink Icon={CodeIcon} detail={data.sourceCode} />
+            )}
+            <PostDetailsItem
+              Icon={HeartIcon}
+              detail={`${data.likes.length} likes`}
+            />
+            <PostDetailsItem
+              Icon={ChatIcon}
+              detail={`${data.comments.length} comments`}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

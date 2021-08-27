@@ -5,29 +5,10 @@ import 'react-quill/dist/quill.snow.css';
 
 const RichTextEditor = ({ value, setValue }) => {
   const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [
-        { list: 'ordered' },
-        { list: 'bullet' },
-        { indent: '-1' },
-        { indent: '+1' },
-      ],
-    ],
+    toolbar: [['bold', 'italic', 'underline', 'strike', 'blockquote']],
   };
 
-  const formats = [
-    'header',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-  ];
+  const formats = ['bold', 'italic', 'underline', 'strike', 'blockquote'];
 
   return (
     <ReactQuill
