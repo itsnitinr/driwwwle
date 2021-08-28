@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { HeartIcon, BookmarkIcon, TrashIcon } from '@heroicons/react/solid';
 
-const PostHeader = ({ post, user }) => {
+const PostHeader = ({ post, user, deletePost }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
@@ -30,7 +30,10 @@ const PostHeader = ({ post, user }) => {
               <p className="hidden md:block">Like</p>
             </button>
             {post.user._id === user._id && (
-              <button className="bg-red-100 text-red-600 py-2 px-3 flex items-center rounded-lg font-medium">
+              <button
+                onClick={deletePost}
+                className="bg-red-100 text-red-600 py-2 px-3 flex items-center rounded-lg font-medium"
+              >
                 <TrashIcon className="h-5 w-5 mr-1" />{' '}
                 <p className="hidden md:block">Delete</p>
               </button>

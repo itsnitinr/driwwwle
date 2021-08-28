@@ -30,13 +30,14 @@ const NewPost = ({ user }) => {
   const [sourceCode, setSourceCode] = useState('');
   const [images, setImages] = useState([]);
 
-  const mutation = useMutation((formdata) =>
-    axios.post(`${baseURL}/api/posts`, formdata, {
-      headers: {
-        Authorization: cookie.get('token'),
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+  const mutation = useMutation(
+    async (formdata) =>
+      await axios.post(`${baseURL}/api/posts`, formdata, {
+        headers: {
+          Authorization: cookie.get('token'),
+          'Content-Type': 'multipart/form-data',
+        },
+      })
   );
 
   const handleSubmit = async (e) => {

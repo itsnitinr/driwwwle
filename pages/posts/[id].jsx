@@ -1,6 +1,8 @@
 import axios from 'axios';
+import cookie from 'js-cookie';
+import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useQuery, QueryClient } from 'react-query';
+import { useQuery, useMutation, QueryClient } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import {
   ClockIcon,
@@ -28,9 +30,27 @@ const PostPage = ({ user }) => {
 
   const { data } = useQuery(['posts', id], () => getPost(id));
 
+  const mutation = useMutation(async () => {
+    await axios.delete(`${baseURL}/api/posts/${id}`, {
+      headers: {
+        Authorization: cookie.get('token'),
+      },
+    });
+  });
+
+  const deletePost = async () => {
+    try {
+      await mutation.mutateAsync();
+      toast.success('Post has been deleted successfully');
+      router.push('/home');
+    } catch (err) {
+      toast.error(err.response?.data?.msg || 'Something went wrong');
+    }
+  };
+
   return (
     <div className="max-w-5xl px-4 py-8 md:px-8 md:py-12 mx-auto">
-      <PostHeader post={data} user={user} />
+      <PostHeader post={data} user={user} deletePost={deletePost} />
       <div className="my-8">
         <PostCarousel images={data.images} title={data.title} />
       </div>
