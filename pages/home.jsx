@@ -11,7 +11,7 @@ const getPosts = async () => {
   return data;
 };
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
   const { data } = useQuery(['posts'], getPosts);
 
   return (
@@ -19,7 +19,7 @@ const HomePage = () => {
       <HeroBanner />
       <main className="container bg-gray-50 mx-auto bg-gray-50 p-8 md:px-16 md:py-10 grid gap-5 place-items-center grid-cols-auto-fit">
         {data.map((post) => (
-          <PostCard key={post._id} post={post} />
+          <PostCard user={user} key={post._id} post={post} />
         ))}
       </main>
     </>
