@@ -250,6 +250,12 @@ const Navbar = ({ user, currentPath }) => {
                   >
                     Sign out
                   </a>
+                  <Link href="/posts/new">
+                    <a className="bg-pink-500 hover:bg-pink-600 transition rounded text-white mx-4 py-2 font-semibold flex items-center justify-center">
+                      <PlusIcon className="h-4 w-4 mr-1" />
+                      <p className="text-sm">New Post</p>
+                    </a>
+                  </Link>
                 </div>
               </div>
             ) : (
