@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import { HeartIcon, BookmarkIcon, TrashIcon } from '@heroicons/react/solid';
 
-const PostHeader = ({ post, user, deletePost }) => {
+const PostHeader = ({ post, user, deletePost, likePost }) => {
+  const isLiked =
+    user && post.likes.filter((like) => like.user === user._id).length > 0;
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
@@ -25,9 +28,25 @@ const PostHeader = ({ post, user, deletePost }) => {
               <BookmarkIcon className="h-5 w-5 mr-1" />{' '}
               <p className="hidden md:block">Save</p>
             </button>
-            <button className="bg-gray-100 text-gray-700 py-2 px-3 flex items-center rounded-lg font-medium">
-              <HeartIcon className="h-5 w-5 mr-1" />{' '}
-              <p className="hidden md:block">Like</p>
+            <button
+              onClick={likePost}
+              className={`${
+                isLiked
+                  ? 'bg-pink-100 text-pink-600'
+                  : 'bg-gray-100 text-gray-700'
+              } py-2 px-3 flex items-center rounded-lg font-medium`}
+            >
+              {isLiked ? (
+                <>
+                  <HeartIcon className="h-5 w-5 mr-1" />{' '}
+                  <p>{post.likes.length}</p>
+                </>
+              ) : (
+                <>
+                  <HeartIcon className="h-5 w-5 mr-1" />{' '}
+                  <p className="hidden md:block">Like</p>
+                </>
+              )}
             </button>
             {post.user._id === user._id && (
               <button

@@ -2,7 +2,12 @@ import axios from 'axios';
 import cookie from 'js-cookie';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useQuery, useMutation, QueryClient } from 'react-query';
+import {
+  useQuery,
+  useMutation,
+  QueryClient,
+  useQueryClient,
+} from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import {
   ClockIcon,
@@ -28,6 +33,8 @@ const PostPage = ({ user }) => {
   const router = useRouter();
   const { id } = router.query;
 
+  const queryClient = useQueryClient();
+
   const { data } = useQuery(['posts', id], () => getPost(id));
 
   const mutation = useMutation(async () => {
@@ -37,6 +44,27 @@ const PostPage = ({ user }) => {
       },
     });
   });
+
+  const likeMutation = useMutation(
+    async () => {
+      const { data } = await axios.put(
+        `${baseURL}/api/posts/like/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: cookie.get('token'),
+          },
+        }
+      );
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        const old = queryClient.getQueryData(['posts', id]);
+        queryClient.setQueryData(['posts', id], { ...old, likes: data.likes });
+      },
+    }
+  );
 
   const deletePost = async () => {
     try {
@@ -50,7 +78,12 @@ const PostPage = ({ user }) => {
 
   return (
     <div className="max-w-5xl px-4 py-8 md:px-8 md:py-12 mx-auto">
-      <PostHeader post={data} user={user} deletePost={deletePost} />
+      <PostHeader
+        post={data}
+        user={user}
+        deletePost={deletePost}
+        likePost={() => likeMutation.mutate()}
+      />
       <div className="my-8">
         <PostCarousel images={data.images} title={data.title} />
       </div>
