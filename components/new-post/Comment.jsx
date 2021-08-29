@@ -20,7 +20,6 @@ const Comment = ({ comment, user, postId, queryClient }) => {
     },
     {
       onSuccess: (data) => {
-        console.log({ data });
         const old = queryClient.getQueryData(['posts', postId]);
         queryClient.setQueryData(['posts', postId], { ...old, comments: data });
         toast.success('Your comment has been deleted');

@@ -69,6 +69,27 @@ const PostPage = ({ user }) => {
     }
   );
 
+  const saveMutation = useMutation(
+    async () => {
+      const { data } = await axios.put(
+        `${baseURL}/api/posts/save/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: cookie.get('token'),
+          },
+        }
+      );
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        const old = queryClient.getQueryData(['posts', id]);
+        queryClient.setQueryData(['posts', id], { ...old, saves: data.saves });
+      },
+    }
+  );
+
   const deletePost = async () => {
     try {
       await mutation.mutateAsync();
@@ -86,6 +107,7 @@ const PostPage = ({ user }) => {
         user={user}
         deletePost={deletePost}
         likePost={() => likeMutation.mutate()}
+        savePost={() => saveMutation.mutate()}
       />
       <div className="my-8">
         <PostCarousel images={data.images} title={data.title} />

@@ -37,6 +37,14 @@ const postSchema = new mongoose.Schema(
         },
       },
     ],
+    saves: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+        },
+      },
+    ],
     comments: [
       {
         _id: { type: String, required: true },
@@ -46,10 +54,6 @@ const postSchema = new mongoose.Schema(
       },
     ],
     views: {
-      type: Number,
-      default: 0,
-    },
-    saves: {
       type: Number,
       default: 0,
     },

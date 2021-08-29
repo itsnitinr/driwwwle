@@ -122,6 +122,39 @@ router.put('/like/:postId', auth, async (req, res) => {
   }
 });
 
+// @route   PUT /api/posts/save/:postId
+// @desc    Save or unsave a post
+router.put('/save/:postId', auth, async (req, res) => {
+  try {
+    let post = await Post.findById(req.params.postId);
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    const isSaved =
+      post.saves.filter((save) => save.user.toString() === req.userId).length >
+      0;
+
+    if (isSaved) {
+      // Unsave the post if already saved
+      const index = post.saves.findIndex(
+        (save) => save.user.toString() === req.userId
+      );
+      post.saves.splice(index, 1);
+      post = await post.save();
+      res.status(200).json(post);
+    } else {
+      // Save the post
+      post.saves.unshift({ user: req.userId });
+      post = await post.save();
+      res.status(200).json(post);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 // @route   GET /api/posts/like/:postId
 // @desc    Get likes of a post
 router.get('/like/:postId', async (req, res) => {
