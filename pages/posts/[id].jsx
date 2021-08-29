@@ -1,5 +1,6 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
+import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import {
@@ -23,6 +24,8 @@ import PostHeader from '../../components/post-page/PostHeader';
 import PostCarousel from '../../components/post-page/PostCarousel';
 import PostDetailsItem from '../../components/post-page/PostDetailsItem';
 import PostDetailsLink from '../../components/post-page/PostDetailsLink';
+import NewComment from '../../components/new-post/NewComment';
+import Comment from '../../components/new-post/Comment';
 
 const getPost = async (id) => {
   const { data } = await axios.get(`${baseURL}/api/posts/${id}`);
@@ -88,10 +91,27 @@ const PostPage = ({ user }) => {
         <PostCarousel images={data.images} title={data.title} />
       </div>
       <div className="flex flex-wrap md:flex-nowrap">
-        <div
-          className="w-100 md:w-2/3 lg:w-3/4 w-full text-lg mb-6 md:mb-0 pr-4"
-          dangerouslySetInnerHTML={{ __html: data.description }}
-        ></div>
+        <div className="w-full md:w-2/3 lg:w-3/4">
+          <div
+            className="w-full text-lg mb-6 md:mb-0 pr-4"
+            dangerouslySetInnerHTML={{ __html: data.description }}
+          ></div>
+          <div className="mt-6">
+            <h1 className="mb-4 text-lg text-pink-600 font-semibold">
+              Comments ({data.comments.length})
+            </h1>
+            {user && <NewComment queryClient={queryClient} id={data._id} />}
+            {data.comments.map((comment) => (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                postId={data._id}
+                user={user}
+                queryClient={queryClient}
+              />
+            ))}
+          </div>
+        </div>
         <div className="w-100 md:w-1/3 lg:w-1/4 w-full">
           <h3 className="text-lg font-semibold text-pink-600">Post Details</h3>
           <div className="grid grid-col-1 mt-4 space-y-2">

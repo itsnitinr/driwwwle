@@ -162,6 +162,8 @@ router.post('/comment/:postId', auth, async (req, res) => {
     post.comments.unshift(comment);
     post = await post.save();
 
+    post = await Post.populate(post, 'comments.user');
+
     res.status(201).json(post.comments);
   } catch (err) {
     console.error(err);
@@ -193,6 +195,9 @@ router.delete('/comment/:postId/:commentId', auth, async (req, res) => {
       );
       post.comments.splice(index, 1);
       post = await post.save();
+
+      post = await Post.populate(post, 'comments.user');
+
       res.status(200).json(post.comments);
     } else {
       res
