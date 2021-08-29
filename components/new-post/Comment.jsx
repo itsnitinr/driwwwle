@@ -46,7 +46,7 @@ const Comment = ({ comment, user, postId, queryClient }) => {
           </span>
         </h4>
         <p className="text-sm">{comment.text}</p>
-        {user._id === comment.user._id && (
+        {user && user._id === comment.user._id && (
           <TrashIcon
             onClick={() => mutation.mutate()}
             className="h-4 w-4 mt-1 cursor-pointer text-red-600"
