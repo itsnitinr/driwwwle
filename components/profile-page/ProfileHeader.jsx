@@ -13,17 +13,17 @@ const ProfileHeader = ({ profile, followers, following, user }) => {
     followers.filter((follower) => follower.user === user._id).length > 0;
 
   return (
-    <div className="flex justify-center px-8 py-16">
+    <div className="flex justify-center px-8 py-8 md:py-12">
       <div>
         <Image
           className="rounded-full"
           src={profile.user.profilePicUrl}
-          height={120}
-          width={120}
+          height={100}
+          width={100}
         />
       </div>
       <div className="ml-5">
-        <h1 className="text-3xl mb-1 text-gray-800 font-bold">
+        <h1 className="text-2xl mb-1 text-gray-800 font-bold">
           {profile.user.name}
         </h1>
         <h3 className="mb-2">

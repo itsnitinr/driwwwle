@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import { HeartIcon, BookmarkIcon, TrashIcon } from '@heroicons/react/solid';
 
@@ -18,10 +19,12 @@ const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
           width={50}
         />
         <div className="ml-4">
-          <h1 className="text-lg md:text-xl font-semibold leading-6">
-            {post.title}
-          </h1>
-          <p className="md:text-md text-gray-500">@{post.user.username} </p>
+          <h1 className="text-lg md:text-xl font-semibold">{post.title}</h1>
+          <Link href={`/${post.user.username}`}>
+            <a className="md:text-md hover:text-pink-600 text-gray-700">
+              {post.user.username}
+            </a>
+          </Link>
         </div>
       </div>
       <div className="flex gap-2 md:gap-4">

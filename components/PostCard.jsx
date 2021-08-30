@@ -101,16 +101,18 @@ const PostCard = ({ post, user }) => {
           )}
         </div>
         <div className="flex justify-between mt-1 items-center px-1">
-          <div className="flex">
-            <Image
-              src={post.user.profilePicUrl}
-              alt={post.user.name}
-              className="rounded-full"
-              width={25}
-              height={20}
-            />
-            <p className="ml-2">{post.user.username}</p>
-          </div>
+          <Link href={`/${post.user.username}`}>
+            <div className="flex hover:text-pink-600 cursor-pointer">
+              <Image
+                src={post.user.profilePicUrl}
+                alt={post.user.name}
+                className="rounded-full"
+                width={25}
+                height={20}
+              />
+              <p className="ml-2">{post.user.username}</p>
+            </div>
+          </Link>
           <div className="flex items-center text-sm">
             <div className="flex items-center">
               <HeartIcon className="h-4 w-4 mr-1 text-gray-400 hover:text-pink-600 transition" />{' '}
