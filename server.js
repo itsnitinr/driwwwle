@@ -21,6 +21,7 @@ nextApp.prepare().then(() => {
   app.use('/api/onboarding', require('./api/onboarding'));
   app.use('/api/auth', require('./api/auth'));
   app.use('/api/posts', require('./api/posts'));
+  app.use('/api/profile', require('./api/profile'));
 
   app.all('*', (req, res) => handle(req, res));
   server.listen(PORT, (err) => {
