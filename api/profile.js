@@ -27,8 +27,8 @@ router.get('/:username', async (req, res) => {
 
     res.status(200).json({
       profile,
-      follwers: follow.followers.length,
-      following: follow.following.length,
+      followers: follow.followers,
+      following: follow.following,
       posts,
     });
   } catch (error) {

@@ -7,7 +7,7 @@ const User = require('../models/User.model');
 const auth = require('../middleware/auth.middleware');
 
 // @route:  GET /api/auth
-// @desc:   Get looged in user's info
+// @desc:   Get logged in user's info
 router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
