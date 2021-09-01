@@ -4,6 +4,7 @@ const router = express.Router();
 
 const Post = require('../models/Post.model');
 const User = require('../models/User.model');
+const Follower = require('../models/Follower.model');
 
 const auth = require('../middleware/auth.middleware');
 const upload = require('../middleware/imageUpload.middleware');
@@ -40,6 +41,27 @@ router.post('/', auth, upload.array('images', 5), async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 }).populate('user');
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   GET /api/posts/feed
+// @desc    Get posts of following users
+router.get('/feed', auth, async (req, res) => {
+  try {
+    const user = await Follower.findOne({ user: req.userId }).select(
+      '-followers'
+    );
+
+    const followingUsers = user.following.map((following) => following.user);
+
+    const posts = await Post.find({ user: { $in: followingUsers } })
+      .sort({ createdAt: -1 })
+      .populate('user');
+
     res.status(200).json(posts);
   } catch (err) {
     console.error(err);
