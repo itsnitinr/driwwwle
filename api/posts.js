@@ -8,6 +8,10 @@ const Follower = require('../models/Follower.model');
 
 const auth = require('../middleware/auth.middleware');
 const upload = require('../middleware/imageUpload.middleware');
+const {
+  newLikeNotification,
+  removeLikeNotification,
+} = require('../server-utils/notifications');
 
 // @route   POST /api/posts
 // @desc    Create a new post
@@ -131,11 +135,31 @@ router.put('/like/:postId', auth, async (req, res) => {
       );
       post.likes.splice(index, 1);
       post = await post.save();
+
+      // Remove like notification
+      if (post.user.toString() !== req.userId) {
+        await removeLikeNotification(
+          post.user.toString(),
+          req.userId,
+          req.params.postId
+        );
+      }
+
       res.status(200).json(post);
     } else {
       // Like the post
       post.likes.unshift({ user: req.userId });
       post = await post.save();
+
+      // Add like notification
+      if (post.user.toString() !== req.userId) {
+        await newLikeNotification(
+          post.user.toString(),
+          req.userId,
+          req.params.postId
+        );
+      }
+
       res.status(200).json(post);
     }
   } catch (err) {

@@ -6,6 +6,7 @@ const router = express.Router();
 const User = require('../models/User.model');
 const Profile = require('../models/Profile.model');
 const Follower = require('../models/Follower.model');
+const Notification = require('../models/Notification.model');
 
 const upload = require('../middleware/imageUpload.middleware');
 
@@ -53,6 +54,9 @@ router.post('/:token', upload.single('profilePic'), async (req, res) => {
 
     // Initialise followers and following
     await new Follower({ user: user._id, followers: [], following: [] }).save();
+
+    // Initialise notifications
+    await new Notification({ user: user._id, notifications: [] });
 
     // Return JWT
     jwt.sign(
