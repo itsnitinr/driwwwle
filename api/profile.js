@@ -7,6 +7,10 @@ const Follower = require('../models/Follower.model');
 const Post = require('../models/Post.model');
 
 const auth = require('../middleware/auth.middleware');
+const {
+  newFollowerNotification,
+  removeFollowerNotification,
+} = require('../server-utils/notifications');
 
 // @route   GET /api/profile/:username
 // @desc    Get user's profile info
@@ -116,6 +120,8 @@ router.post('/follow/:userId', auth, async (req, res) => {
       userToFollowOrUnfollow.followers.splice(index, 1);
       await userToFollowOrUnfollow.save();
 
+      await removeFollowerNotification(req.params.userId, req.userId);
+
       res.status(200).json(userToFollowOrUnfollow.followers);
     } else {
       loggedInUser.following.unshift({ user: req.params.userId });
@@ -123,6 +129,8 @@ router.post('/follow/:userId', auth, async (req, res) => {
 
       userToFollowOrUnfollow.followers.unshift({ user: req.userId });
       await userToFollowOrUnfollow.save();
+
+      await newFollowerNotification(req.params.userId, req.userId);
 
       res.status(200).json(userToFollowOrUnfollow.followers);
     }

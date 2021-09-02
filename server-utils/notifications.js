@@ -106,9 +106,45 @@ const removeCommentNotification = async (
   }
 };
 
+const newFollowerNotification = async (userToNotifyId, userWhoFollowedId) => {
+  try {
+    const userToNotify = await Notification.findOne({ user: userToNotifyId });
+    const notification = {
+      type: 'follow',
+      user: userWhoFollowedId,
+      date: Date.now(),
+    };
+
+    userToNotify.notifications.unshift(notification);
+    await userToNotify.save();
+
+    await setNotificationsToUnread(userToNotifyId);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const removeFollowerNotification = async (
+  userToNotifyId,
+  userWhoFollowedId
+) => {
+  try {
+    await Notification.findOneAndUpdate(
+      { user: userToNotifyId },
+      {
+        $pull: { notifications: { type: 'follow', user: userWhoFollowedId } },
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   newLikeNotification,
   removeLikeNotification,
   newCommentNotification,
   removeCommentNotification,
+  newFollowerNotification,
+  removeFollowerNotification,
 };
