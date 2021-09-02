@@ -22,6 +22,7 @@ nextApp.prepare().then(() => {
   app.use('/api/auth', require('./api/auth'));
   app.use('/api/posts', require('./api/posts'));
   app.use('/api/profile', require('./api/profile'));
+  app.use('/api/notifications', require('./api/notifications'));
 
   app.all('*', (req, res) => handle(req, res));
   server.listen(PORT, (err) => {
