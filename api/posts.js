@@ -8,9 +8,12 @@ const Follower = require('../models/Follower.model');
 
 const auth = require('../middleware/auth.middleware');
 const upload = require('../middleware/imageUpload.middleware');
+
 const {
   newLikeNotification,
   removeLikeNotification,
+  newCommentNotification,
+  removeCommentNotification,
 } = require('../server-utils/notifications');
 
 // @route   POST /api/posts
@@ -243,6 +246,16 @@ router.post('/comment/:postId', auth, async (req, res) => {
 
     post = await Post.populate(post, 'comments.user');
 
+    if (post.user.toString() !== req.userId) {
+      await newCommentNotification(
+        post.user.toString(),
+        req.userId,
+        req.params.postId,
+        comment._id,
+        req.body.text
+      );
+    }
+
     res.status(201).json(post.comments);
   } catch (err) {
     console.error(err);
@@ -276,6 +289,15 @@ router.delete('/comment/:postId/:commentId', auth, async (req, res) => {
       post = await post.save();
 
       post = await Post.populate(post, 'comments.user');
+
+      if (post.user.toString() !== req.userId) {
+        await removeCommentNotification(
+          post.user.toString(),
+          req.userId,
+          req.params.postId,
+          comment._id
+        );
+      }
 
       res.status(200).json(post.comments);
     } else {
