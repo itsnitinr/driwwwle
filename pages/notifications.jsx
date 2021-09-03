@@ -1,5 +1,6 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
+import { useEffect } from 'react';
 import { parseCookies } from 'nookies';
 import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
@@ -20,6 +21,21 @@ const NotificationsPage = () => {
     getNotifications(cookie.get('token'))
   );
 
+  useEffect(() => {
+    const setNotificationsToRead = async () => {
+      try {
+        await axios.post(
+          `${baseURL}/api/notifications`,
+          {},
+          { headers: { Authorization: cookie.get('token') } }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    return () => setNotificationsToRead();
+  }, []);
+
   return (
     <div className="container mx-auto py-8 px-4 md:px-16 md:py-10">
       <h1 className="text-xl text-pink-600 font-semibold mb-8">
@@ -29,6 +45,7 @@ const NotificationsPage = () => {
         <ul className="-mb-8">
           {data.map((notification, index) => (
             <NotificationItem
+              key={index}
               id={index}
               notification={notification}
               index={index}

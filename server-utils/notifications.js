@@ -6,6 +6,7 @@ const setNotificationsToUnread = async (userId) => {
     const user = await User.findById(userId);
     if (!user.unreadNotification) {
       user.unreadNotification = true;
+      await user.save();
     }
   } catch (error) {
     console.error(error);

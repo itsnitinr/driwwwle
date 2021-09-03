@@ -92,9 +92,12 @@ const Navbar = ({ user, currentPath }) => {
                 <>
                   <div className="hidden lg:ml-4 lg:flex lg:items-center">
                     <Link href="/notifications">
-                      <button className="flex-shrink-0 bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                      <button className="flex-shrink-0 relative bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
                         <span className="sr-only">View notifications</span>
                         <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        {user.unreadNotification && (
+                          <div className="absolute top-1 right-2 bg-pink-600 h-2 w-2 rounded-full"></div>
+                        )}
                       </button>
                     </Link>
                     <Menu as="div" className="ml-4 relative flex-shrink-0">
@@ -210,9 +213,12 @@ const Navbar = ({ user, currentPath }) => {
                     </div>
                   </div>
                   <Link href="/notifications">
-                    <button className="ml-auto flex-shrink-0 bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                    <button className="relative ml-auto flex-shrink-0 bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
                       <span className="sr-only">View notifications</span>
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      {user.unreadNotification && (
+                        <div className="absolute top-1 right-2 bg-pink-600 h-2 w-2 rounded-full"></div>
+                      )}
                     </button>
                   </Link>
                 </div>
