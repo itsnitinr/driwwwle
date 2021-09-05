@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Image from 'next/image';
 import cookie from 'js-cookie';
 import { useState } from 'react';
 import { parseCookies } from 'nookies';
@@ -8,8 +7,10 @@ import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 import { ChatAltIcon } from '@heroicons/react/outline';
 
-import baseURL from '../utils/baseURL';
 import ChatItem from '../components/messages-page/ChatItem';
+import Search from '../components/messages-page/Search';
+
+import baseURL from '../utils/baseURL';
 
 const getChats = async (token) => {
   const { data } = await axios.get(`${baseURL}/api/chats`, {
@@ -21,35 +22,14 @@ const getChats = async (token) => {
 const MessagesPage = ({ user }) => {
   const { data } = useQuery(['messages'], () => getChats(cookie.get('token')));
 
-  const [searchText, setSearchText] = useState('');
-
-  const { data: usersData } = useQuery(
-    ['search', 'users', searchText],
-    async () => {
-      const CancelToken = axios.CancelToken;
-      const source = CancelToken.source();
-
-      const promise = await axios.get(
-        `${baseURL}/api/search/users/${searchText}`,
-        {
-          cancelToken: source.token,
-        }
-      );
-
-      promise.cancel = () => {
-        source.cancel();
-      };
-
-      return promise.data;
-    }
-  );
-
   const router = useRouter();
   const { chat } = router.query;
 
   if (chat === user._id) {
     router.push('/messages');
   }
+
+  const [chats, setChats] = useState(data);
 
   return (
     <div className="bg-gray-50 container mx-auto h-screen">
@@ -60,46 +40,9 @@ const MessagesPage = ({ user }) => {
               {user.name}'s Chats
             </button>
           </div>
-          <div className="relative">
-            <input
-              placeholder="Search by name or username"
-              className="w-full bg-gray-100 p-2 border-b border-gray-200"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-            {usersData && searchText.trim().length !== 0 && (
-              <div className="absolute space-y-2 top-14 w-full bg-white z-50 px-2 py-4 shadow-2xl rounded">
-                {usersData.length > 0 ? (
-                  usersData.map((user) => (
-                    <div
-                      onClick={() => {
-                        router.push(`/messages?chat=${user._id}`);
-                        setSearchText('');
-                      }}
-                      className="flex cursor-pointer"
-                      key={user._id}
-                    >
-                      <Image
-                        src={user.profilePicUrl}
-                        height={30}
-                        width={30}
-                        className="rounded-full"
-                      />
-                      <p className="text-md ml-2">
-                        {user.name.length > 20
-                          ? user.name.substring(0, 20) + '...'
-                          : user.name}
-                      </p>
-                    </div>
-                  ))
-                ) : (
-                  <p>No users found..</p>
-                )}
-              </div>
-            )}
-          </div>
+          <Search chats={chats} setChats={setChats} />
           <ul className="py-1 overflow-auto">
-            {data.map((chat) => (
+            {chats.map((chat) => (
               <ChatItem key={chat.messagesWith} chat={chat} />
             ))}
           </ul>
