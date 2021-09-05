@@ -57,68 +57,62 @@ const Search = () => {
                 {!data.users || data.users.length === 0 ? (
                   <p className="text-gray-400 text-xs">No users found..</p>
                 ) : (
-                  data.users.map(
-                    (user, index) =>
-                      index < 2 && (
-                        <div
-                          onClick={() => {
-                            router.push(`/${user.username}`);
-                            setSearchText('');
-                          }}
-                          className="flex cursor-pointer"
-                          key={user._id}
-                        >
-                          <Image
-                            src={user.profilePicUrl}
-                            height={30}
-                            width={30}
-                            className="rounded-full"
-                          />
-                          <p className="text-md ml-2">
-                            {user.name.length > 20
-                              ? user.name.substring(0, 20) + '...'
-                              : user.name}
-                          </p>
-                        </div>
-                      )
-                  )
+                  data.users.map((user) => (
+                    <div
+                      onClick={() => {
+                        router.push(`/${user.username}`);
+                        setSearchText('');
+                      }}
+                      className="flex cursor-pointer"
+                      key={user._id}
+                    >
+                      <Image
+                        src={user.profilePicUrl}
+                        height={30}
+                        width={30}
+                        className="rounded-full"
+                      />
+                      <p className="text-md ml-2">
+                        {user.name.length > 20
+                          ? user.name.substring(0, 20) + '...'
+                          : user.name}
+                      </p>
+                    </div>
+                  ))
                 )}
                 <h1 className="text-sm font-semibold my-2">Posts</h1>
                 {!data.posts || data.posts.length === 0 ? (
                   <p className="text-gray-400 text-xs">No posts found..</p>
                 ) : (
-                  data.posts.map(
-                    (post, index) =>
-                      index < 2 && (
-                        <div
-                          onClick={() => {
-                            router.push(`/posts/${post._id}`);
-                            setSearchText('');
-                          }}
-                          className="flex cursor-pointer"
-                          key={post._id}
-                        >
-                          <Image
-                            src={post.images[0]}
-                            height={40}
-                            width={60}
-                            className="rounded"
-                          />
-                          <div>
-                            <p className="text-sm ml-2 font-semibold">
-                              {post.title.length > 20
-                                ? post.title.substring(0, 20) + '...'
-                                : post.title}
-                            </p>
-                            <p className="ml-2 text-xs text-gray-600">
-                              {post.user.name.length > 20
-                                ? post.user.name.substring(0, 20) + '...'
-                                : post.user.name}
-                            </p>
-                          </div>
-                        </div>
-                      )
-                  )
+                  data.posts.map((post) => (
+                    <div
+                      onClick={() => {
+                        router.push(`/posts/${post._id}`);
+                        setSearchText('');
+                      }}
+                      className="flex cursor-pointer"
+                      key={post._id}
+                    >
+                      <Image
+                        src={post.images[0]}
+                        height={40}
+                        width={60}
+                        className="rounded"
+                      />
+                      <div>
+                        <p className="text-sm ml-2 font-semibold">
+                          {post.title.length > 20
+                            ? post.title.substring(0, 20) + '...'
+                            : post.title}
+                        </p>
+                        <p className="ml-2 text-xs text-gray-600">
+                          {post.user.name.length > 20
+                            ? post.user.name.substring(0, 20) + '...'
+                            : post.user.name}
+                        </p>
+                      </div>
+                    </div>
+                  ))
                 )}
               </div>
             </div>
