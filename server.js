@@ -17,6 +17,7 @@ const handle = nextApp.getRequestHandler();
 connectDB();
 
 nextApp.prepare().then(() => {
+  app.use('/api/search', require('./api/search'));
   app.use('/api/signup', require('./api/signup'));
   app.use('/api/onboarding', require('./api/onboarding'));
   app.use('/api/auth', require('./api/auth'));

@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { SearchIcon } from '@heroicons/react/solid';
 import { BellIcon, MenuIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
 
-import { logoutUser } from '../utils/auth';
+import Search from './Search';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
+import { logoutUser } from '../utils/auth';
 
 const navigation = [
   { name: 'Home', href: '/home' },
@@ -27,7 +24,7 @@ const Navbar = ({ user, currentPath }) => {
                 <div className="flex-shrink-0 flex items-center">
                   <Link href="/home">
                     <img
-                      className="block lg:hidden h-8 w-auto cursor-pointer"
+                      className="block lg:hidden h-4 w-auto cursor-pointer"
                       src="/logo.svg"
                       alt="Driwwwle"
                     />
@@ -56,28 +53,7 @@ const Navbar = ({ user, currentPath }) => {
                   ))}
                 </div>
               </div>
-              <div className="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end">
-                <div className="max-w-lg w-full lg:max-w-xs">
-                  <label htmlFor="search" className="sr-only">
-                    Search
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <SearchIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <input
-                      id="search"
-                      name="search"
-                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-pink-500 focus:border-pink-500 sm:text-sm"
-                      placeholder="Search"
-                      type="search"
-                    />
-                  </div>
-                </div>
-              </div>
+              <Search />
               <div className="flex items-center lg:hidden">
                 <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500">
                   <span className="sr-only">Open main menu</span>
