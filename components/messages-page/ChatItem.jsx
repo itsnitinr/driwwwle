@@ -16,17 +16,17 @@ const ChatItem = ({ chat }) => {
       }
       className={active ? 'bg-gray-100' : null}
     >
-      <button class="flex items-center w-full px-4 py-2 select-none hover:bg-gray-50 focus:outline-none">
+      <button className="flex items-center w-full px-4 py-2 select-none hover:bg-gray-100 focus:outline-none">
         <Image
-          class="rounded-full border"
+          className="rounded-full border"
           src={chat.profilePicUrl}
           height={50}
           width={50}
           alt={chat.name}
         />
-        <div class="transform translate-y-0.5 ml-3 text-left">
-          <h3 class="leading-4">{chat.name}</h3>
-          <span class="text-xs text-gray-500">{chat.lastMessage}</span>
+        <div className="transform translate-y-0.5 ml-3 text-left">
+          <h3 className="leading-4">{chat.name}</h3>
+          <span className="text-xs text-gray-500">{chat.lastMessage}</span>
         </div>
       </button>
     </li>
