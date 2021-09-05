@@ -40,7 +40,8 @@ MyApp.getInitialProps = async ({ ctx }) => {
   const protectedRoutes =
     ctx.pathname === '/feed' ||
     ctx.pathname === '/notifications' ||
-    ctx.pathname === '/posts/new';
+    ctx.pathname === '/posts/new' ||
+    ctx.pathname === '/messages';
 
   const availableForEveryone =
     ctx.pathname === '/' ||
