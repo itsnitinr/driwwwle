@@ -7,6 +7,7 @@ const User = require('../models/User.model');
 const Profile = require('../models/Profile.model');
 const Follower = require('../models/Follower.model');
 const Notification = require('../models/Notification.model');
+const Chat = require('../models/Chat.model');
 
 const upload = require('../middleware/imageUpload.middleware');
 
@@ -56,7 +57,10 @@ router.post('/:token', upload.single('profilePic'), async (req, res) => {
     await new Follower({ user: user._id, followers: [], following: [] }).save();
 
     // Initialise notifications
-    await new Notification({ user: user._id, notifications: [] });
+    await new Notification({ user: user._id, notifications: [] }).save();
+
+    // Initialise chats
+    await new Chat({ user: user._id, chats: [] }).save();
 
     // Return JWT
     jwt.sign(
