@@ -1,6 +1,7 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
-import { useState } from 'react';
+import io from 'socket.io-client';
+import { useState, useRef, useEffect } from 'react';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import { QueryClient, useQuery } from 'react-query';
@@ -30,6 +31,21 @@ const MessagesPage = ({ user }) => {
   }
 
   const [chats, setChats] = useState(data);
+  const [connectedUsers, setConnectedUsers] = useState([]);
+
+  const socket = useRef();
+
+  useEffect(() => {
+    if (!socket.current) {
+      socket.current = io(baseURL);
+    }
+    if (socket.current) {
+      socket.current.emit('join', { userId: user._id });
+      socket.current.on('connectedUsers', ({ users }) => {
+        users.length > 0 && setConnectedUsers(users);
+      });
+    }
+  }, []);
 
   return (
     <div className="bg-gray-50 container mx-auto h-screen">
@@ -43,7 +59,11 @@ const MessagesPage = ({ user }) => {
           <Search chats={chats} setChats={setChats} />
           <ul className="py-1 overflow-auto">
             {chats.map((chat) => (
-              <ChatItem key={chat.messagesWith} chat={chat} />
+              <ChatItem
+                key={chat.messagesWith}
+                chat={chat}
+                connectedUsers={connectedUsers}
+              />
             ))}
           </ul>
         </div>
