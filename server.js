@@ -34,6 +34,8 @@ io.on('connection', (socket) => {
     const { chat, error } = await loadMessages(userId, messagesWith);
     if (!error) {
       socket.emit('messagesLoaded', { chat });
+    } else {
+      socket.emit('noChatFound');
     }
   });
 

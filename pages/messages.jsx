@@ -15,6 +15,7 @@ import Message from '../components/messages-page/Message';
 import MessageInput from '../components/messages-page/MessageInput';
 
 import baseURL from '../utils/baseURL';
+import getUserInfo from '../utils/getUserInfo';
 
 const getChats = async (token) => {
   const { data } = await axios.get(`${baseURL}/api/chats`, {
@@ -39,6 +40,7 @@ const MessagesPage = ({ user }) => {
   const [banner, setBanner] = useState({ name: '', profilePicUrl: '' });
 
   const socket = useRef();
+  const openChatId = useRef('');
 
   // Connecting to socket
   useEffect(() => {
@@ -67,19 +69,53 @@ const MessagesPage = ({ user }) => {
           name: chat.messagesWith.name,
           profilePicUrl: chat.messagesWith.profilePicUrl,
         });
+        openChatId.current = chat.messagesWith._id;
+      });
+
+      socket.current.on('noChatFound', async () => {
+        const data = await getUserInfo(chat);
+        if (data?.name && data?.profilePicUrl) {
+          const chatAlreadyExists = chats.find(
+            (chatItem) => chatItem.messagesWith === chat
+          );
+          if (!chatAlreadyExists) {
+            const newChat = {
+              messagesWith: chat,
+              name: data.name,
+              profilePicUrl: data.profilePicUrl,
+              lastMessage: '',
+              date: Date.now(),
+            };
+            setChats((prevState) => [newChat, ...prevState]);
+          }
+          setBanner({ name: data.name, profilePicUrl: data.profilePicUrl });
+          setMessages([]);
+          openChatId.current = router.query.chat;
+        }
       });
     };
 
-    if (socket.current) {
+    if (socket.current && router.query.chat) {
       loadMessages();
     }
-  }, [chat]);
+  }, [router.query.chat]);
+
+  const sendMessage = (message) => {
+    if (socket.current) {
+      socket.current.emit('newMessage', {
+        userId: user._id,
+        receiver: openChatId.current || router.query.chat,
+        message,
+      });
+    }
+  };
 
   // Receiving new messages from socket
   useEffect(() => {
     if (socket.current) {
       socket.current.on('messageSent', ({ newMessage }) => {
-        if (newMessage.receiver === chat) {
+        console.log(newMessage.receiver, openChatId.current);
+        if (newMessage.receiver === openChatId.current) {
           setMessages((prev) => [...prev, newMessage]);
           setChats((prev) => {
             const previousChat = prev.find(
@@ -93,16 +129,6 @@ const MessagesPage = ({ user }) => {
       });
     }
   }, []);
-
-  const sendMessage = (message) => {
-    if (socket.current) {
-      socket.current.emit('newMessage', {
-        userId: user._id,
-        receiver: chat,
-        message,
-      });
-    }
-  };
 
   return (
     <div className="bg-gray-50 container mx-auto h-chat">
@@ -130,10 +156,10 @@ const MessagesPage = ({ user }) => {
         </div>
         <div
           className={`${
-            chat ? 'flex w-full' : 'hidden'
+            chat ? 'flex w-full' : 'flex'
           } md:w-2/3 lg:w-3/4 border-l border-gray-200 items-center justify-center text-center`}
         >
-          {messages.length > 0 && banner.name && banner.profilePicUrl ? (
+          {banner.name && banner.profilePicUrl ? (
             <div className="h-full w-full relative flex flex-col">
               <Banner banner={banner} />
               <div className="bg-gray-50 flex-1 p-4 max-h-100 overflow-x-hidden">
