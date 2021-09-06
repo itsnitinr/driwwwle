@@ -12,6 +12,9 @@ module.exports = {
       gridTemplateColumns: {
         'auto-fit': 'repeat(auto-fit, minmax(270px, 1fr))',
       },
+      spacing: {
+        chat: '88vh',
+      },
     },
   },
   variants: {

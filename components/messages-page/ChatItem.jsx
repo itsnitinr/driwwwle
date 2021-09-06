@@ -11,8 +11,6 @@ const ChatItem = ({ chat, connectedUsers }) => {
     connectedUsers.filter((user) => user.userId === chat.messagesWith).length >
       0;
 
-  console.log(isOnline);
-
   return (
     <li
       key={chat.messagesWith}

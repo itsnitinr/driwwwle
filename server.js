@@ -13,6 +13,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 3000;
 
 const { addUser, removeUser } = require('./server-utils/sockets');
+const { loadMessages } = require('./server-utils/chat');
 
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
@@ -27,6 +28,13 @@ io.on('connection', (socket) => {
         users: users.filter((user) => user.userId !== userId),
       });
     }, 10000);
+  });
+
+  socket.on('loadMessages', async ({ userId, messagesWith }) => {
+    const { chat, error } = await loadMessages(userId, messagesWith);
+    if (!error) {
+      socket.emit('messagesLoaded', { chat });
+    }
   });
 
   socket.on('disconnect', () => {

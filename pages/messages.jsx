@@ -10,6 +10,9 @@ import { ChatAltIcon } from '@heroicons/react/outline';
 
 import ChatItem from '../components/messages-page/ChatItem';
 import Search from '../components/messages-page/Search';
+import Banner from '../components/messages-page/Banner';
+import Message from '../components/messages-page/Message';
+import MessageInput from '../components/messages-page/MessageInput';
 
 import baseURL from '../utils/baseURL';
 
@@ -32,6 +35,8 @@ const MessagesPage = ({ user }) => {
 
   const [chats, setChats] = useState(data);
   const [connectedUsers, setConnectedUsers] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [banner, setBanner] = useState({ name: '', profilePicUrl: '' });
 
   const socket = useRef();
 
@@ -47,10 +52,35 @@ const MessagesPage = ({ user }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const loadMessages = () => {
+      socket.current.emit('loadMessages', {
+        userId: user._id,
+        messagesWith: chat,
+      });
+
+      socket.current.on('messagesLoaded', ({ chat }) => {
+        setMessages(chat.messages);
+        setBanner({
+          name: chat.messagesWith.name,
+          profilePicUrl: chat.messagesWith.profilePicUrl,
+        });
+      });
+    };
+
+    if (socket.current) {
+      loadMessages();
+    }
+  }, [chat]);
+
   return (
-    <div className="bg-gray-50 container mx-auto h-screen">
+    <div className="bg-gray-50 container mx-auto h-chat">
       <div className="bg-white border border-gray-200 rounded flex h-full">
-        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 h-full">
+        <div
+          className={`${
+            chat ? 'hidden md:block' : 'block'
+          } w-full sm:w-1/2 md:w-1/3 lg:w-1/4 h-full`}
+        >
           <div className="border-b border-gray-200 p-3 relative">
             <button className="flex items-center mx-auto select-none font-semibold focus:outline-none">
               {user.name}'s Chats
@@ -67,9 +97,31 @@ const MessagesPage = ({ user }) => {
             ))}
           </ul>
         </div>
-        <div className="hidden sm:w-1/2 md:w-2/3 lg:w-3/4 border-l border-gray-200 sm:flex items-center justify-center text-center">
-          {chat ? (
-            <p>Chatting with {chat}</p>
+        <div
+          className={`${
+            chat ? 'flex w-full' : 'hidden'
+          } md:w-2/3 lg:w-3/4 border-l border-gray-200 items-center justify-center text-center`}
+        >
+          {messages.length > 0 && banner.name && banner.profilePicUrl ? (
+            <div className="h-full w-full relative flex flex-col">
+              <Banner banner={banner} />
+              <div className="bg-gray-50 flex-1 p-4">
+                {messages.map((message, index) => (
+                  <Message
+                    key={index}
+                    message={message}
+                    user={user}
+                    setMessages={setMessages}
+                    messagesWith={chat}
+                  />
+                ))}
+              </div>
+              <MessageInput
+                socket={socket.current}
+                user={user}
+                messagesWith={chat}
+              />
+            </div>
           ) : (
             <div className="space-y-5">
               <div className="border border-pink-600 rounded-full inline-flex p-5 items-center justify-center">
