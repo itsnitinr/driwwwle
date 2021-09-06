@@ -2,15 +2,19 @@ const Message = ({ message, user, setMessages, messagesWith }) => {
   const isUserSender = message.sender === user._id;
 
   return (
-    <div className={`${isUserSender ? 'ml-auto' : 'mr-auto'} w-max max-w-1/2`}>
+    <div
+      className={`${
+        isUserSender ? 'ml-auto' : 'mr-auto'
+      } w-max max-w-xs md:max-w-xs lg:max-w-md xl:max-w-lg mb-2`}
+    >
       <div
         className={`${
           isUserSender
             ? 'bg-pink-300 rounded-tr-none'
             : 'bg-pink-400 rounded-tl-none'
-        } rounded-lg py-2 font-medium px-4 text-left`}
+        } rounded-lg py-2 mb-1 font-medium px-4 text-left`}
       >
-        {message.message}
+        <p className="break-words">{message.message}</p>
       </div>
       <p className="text-xs text-gray-400">{message.date}</p>
     </div>

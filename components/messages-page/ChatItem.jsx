@@ -38,7 +38,11 @@ const ChatItem = ({ chat, connectedUsers }) => {
         </div>
         <div className="transform translate-y-0.5 ml-3 text-left">
           <h3 className="leading-4">{chat.name}</h3>
-          <span className="text-xs text-gray-500">{chat.lastMessage}</span>
+          <span className="text-xs text-gray-500">
+            {chat.lastMessage.length > 30
+              ? chat.lastMessage.substring(0, 30) + '...'
+              : chat.lastMessage}
+          </span>
         </div>
       </button>
     </li>

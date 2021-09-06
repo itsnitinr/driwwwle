@@ -40,6 +40,7 @@ const MessagesPage = ({ user }) => {
 
   const socket = useRef();
 
+  // Connecting to socket
   useEffect(() => {
     if (!socket.current) {
       socket.current = io(baseURL);
@@ -52,6 +53,7 @@ const MessagesPage = ({ user }) => {
     }
   }, []);
 
+  // Loading message from socket
   useEffect(() => {
     const loadMessages = () => {
       socket.current.emit('loadMessages', {
@@ -72,6 +74,35 @@ const MessagesPage = ({ user }) => {
       loadMessages();
     }
   }, [chat]);
+
+  // Receiving new messages from socket
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on('messageSent', ({ newMessage }) => {
+        if (newMessage.receiver === chat) {
+          setMessages((prev) => [...prev, newMessage]);
+          setChats((prev) => {
+            const previousChat = prev.find(
+              (chat) => chat.messagesWith === newMessage.receiver
+            );
+            previousChat.lastMessage = newMessage.message;
+            previousChat.date = newMessage.date;
+            return [...prev];
+          });
+        }
+      });
+    }
+  }, []);
+
+  const sendMessage = (message) => {
+    if (socket.current) {
+      socket.current.emit('newMessage', {
+        userId: user._id,
+        receiver: chat,
+        message,
+      });
+    }
+  };
 
   return (
     <div className="bg-gray-50 container mx-auto h-chat">
@@ -105,7 +136,7 @@ const MessagesPage = ({ user }) => {
           {messages.length > 0 && banner.name && banner.profilePicUrl ? (
             <div className="h-full w-full relative flex flex-col">
               <Banner banner={banner} />
-              <div className="bg-gray-50 flex-1 p-4">
+              <div className="bg-gray-50 flex-1 p-4 max-h-100 overflow-x-hidden">
                 {messages.map((message, index) => (
                   <Message
                     key={index}
@@ -116,11 +147,7 @@ const MessagesPage = ({ user }) => {
                   />
                 ))}
               </div>
-              <MessageInput
-                socket={socket.current}
-                user={user}
-                messagesWith={chat}
-              />
+              <MessageInput sendMessage={sendMessage} />
             </div>
           ) : (
             <div className="space-y-5">
