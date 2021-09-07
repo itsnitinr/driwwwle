@@ -21,4 +21,8 @@ const removeUser = (socketId) => {
   return users;
 };
 
-module.exports = { addUser, removeUser };
+const findConnectedUser = (userId) => {
+  return users.find((user) => user.userId === userId);
+};
+
+module.exports = { addUser, removeUser, findConnectedUser };

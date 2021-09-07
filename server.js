@@ -12,8 +12,16 @@ const io = require('socket.io')(server);
 const dev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 3000;
 
-const { addUser, removeUser } = require('./server-utils/sockets');
-const { loadMessages, sendMessage } = require('./server-utils/chat');
+const {
+  addUser,
+  removeUser,
+  findConnectedUser,
+} = require('./server-utils/sockets');
+const {
+  loadMessages,
+  sendMessage,
+  setMessageToUnread,
+} = require('./server-utils/chat');
 
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
@@ -41,6 +49,12 @@ io.on('connection', (socket) => {
 
   socket.on('newMessage', async ({ userId, receiver, message }) => {
     const { newMessage, error } = await sendMessage(userId, receiver, message);
+    const receiverSocket = await findConnectedUser(receiver);
+    if (receiverSocket) {
+      io.to(receiverSocket.socketId).emit('newMessageReceived', { newMessage });
+    } else {
+      await setMessageToUnread(receiver);
+    }
     if (!error) {
       socket.emit('messageSent', { newMessage });
     }

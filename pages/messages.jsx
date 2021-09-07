@@ -16,6 +16,7 @@ import MessageInput from '../components/messages-page/MessageInput';
 
 import baseURL from '../utils/baseURL';
 import getUserInfo from '../utils/getUserInfo';
+import messageNotification from '../utils/messageNotification';
 
 const getChats = async (token) => {
   const { data } = await axios.get(`${baseURL}/api/chats`, {
@@ -114,7 +115,6 @@ const MessagesPage = ({ user }) => {
   useEffect(() => {
     if (socket.current) {
       socket.current.on('messageSent', ({ newMessage }) => {
-        console.log(newMessage.receiver, openChatId.current);
         if (newMessage.receiver === openChatId.current) {
           setMessages((prev) => [...prev, newMessage]);
           setChats((prev) => {
@@ -126,6 +126,52 @@ const MessagesPage = ({ user }) => {
             return [...prev];
           });
         }
+      });
+
+      socket.current.on('newMessageReceived', async ({ newMessage }) => {
+        let senderName;
+
+        if (newMessage.sender === openChatId.current) {
+          setMessages((prev) => [...prev, newMessage]);
+          setChats((prev) => {
+            const previousChat = prev.find(
+              (chat) => chat.messagesWith === newMessage.sender
+            );
+            previousChat.lastMessage = newMessage.message;
+            previousChat.date = newMessage.date;
+            senderName = previousChat.name;
+            return [...prev];
+          });
+        } else {
+          const previouslyMessaged =
+            chat.filter((chat) => chat.messagesWith === newMessage.sender)
+              .length > 0;
+          if (previouslyMessaged) {
+            setChats((prev) => {
+              const previousChat = prev.find(
+                (chat) => chat.messagesWith === newMessage.sender
+              );
+              previousChat.lastMessage = newMessage.message;
+              previousChat.date = newMessage.date;
+              senderName = previousChat.name;
+              return [...prev];
+            });
+          } else {
+            const { name, profilePicUrl } = await getUserInfo(
+              newMessage.sender
+            );
+            senderName = name;
+            const newChat = {
+              messagesWith: newMessage.sender,
+              name,
+              profilePicUrl,
+              lastMessage: newMessage.message,
+              date: newMessage.date,
+            };
+            setChats((prev) => [newChat, ...prev]);
+          }
+        }
+        messageNotification(senderName);
       });
     }
   }, []);
