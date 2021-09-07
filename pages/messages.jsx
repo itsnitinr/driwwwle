@@ -25,6 +25,10 @@ const getChats = async (token) => {
   return data;
 };
 
+const scrollToBottom = (divRef) => {
+  divRef.current && divRef.current.scrollIntoView({ behaviour: 'smooth' });
+};
+
 const MessagesPage = ({ user }) => {
   const { data } = useQuery(['messages'], () => getChats(cookie.get('token')));
 
@@ -42,6 +46,7 @@ const MessagesPage = ({ user }) => {
 
   const socket = useRef();
   const openChatId = useRef('');
+  const divRef = useRef();
 
   // Connecting to socket
   useEffect(() => {
@@ -71,6 +76,7 @@ const MessagesPage = ({ user }) => {
           profilePicUrl: chat.messagesWith.profilePicUrl,
         });
         openChatId.current = chat.messagesWith._id;
+        divRef.current && scrollToBottom(divRef);
       });
 
       socket.current.on('noChatFound', async () => {
@@ -176,6 +182,10 @@ const MessagesPage = ({ user }) => {
     }
   }, []);
 
+  useEffect(() => {
+    messages.length > 0 && scrollToBottom(divRef);
+  }, [messages]);
+
   return (
     <div className="bg-gray-50 container mx-auto h-chat">
       <div className="bg-white border border-gray-200 rounded flex h-full">
@@ -211,6 +221,7 @@ const MessagesPage = ({ user }) => {
               <div className="bg-gray-50 flex-1 p-4 max-h-100 overflow-x-hidden">
                 {messages.map((message, index) => (
                   <Message
+                    divRef={divRef}
                     key={index}
                     message={message}
                     user={user}

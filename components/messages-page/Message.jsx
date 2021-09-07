@@ -1,4 +1,4 @@
-const Message = ({ message, user, setMessages, messagesWith }) => {
+const Message = ({ message, user, divRef }) => {
   const isUserSender = message.sender === user._id;
 
   return (
@@ -6,6 +6,7 @@ const Message = ({ message, user, setMessages, messagesWith }) => {
       className={`${
         isUserSender ? 'ml-auto' : 'mr-auto'
       } w-max max-w-xs md:max-w-xs lg:max-w-md xl:max-w-lg mb-2`}
+      ref={divRef}
     >
       <div
         className={`${
