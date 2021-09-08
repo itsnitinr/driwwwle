@@ -212,7 +212,7 @@ const MessagesPage = ({ user }) => {
         </div>
         <div
           className={`${
-            chat ? 'flex w-full' : 'flex'
+            chat ? 'flex w-full' : 'hidden md:flex'
           } md:w-2/3 lg:w-3/4 border-l border-gray-200 items-center justify-center text-center`}
         >
           {banner.name && banner.profilePicUrl ? (
