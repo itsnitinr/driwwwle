@@ -20,6 +20,7 @@ router.get('/:searchText', async (req, res) => {
         { name: { $regex: searchText, $options: 'i' } },
         { username: { $regex: searchText, $options: 'i' } },
       ],
+      isVerified: true,
     }).limit(3);
 
     const posts = await Post.find({
@@ -46,9 +47,10 @@ router.get('/users/:searchText', auth, async (req, res) => {
   try {
     let users = await User.find({
       $or: [
-        { name: { $regex: searchText, $options: 'i' } },
+        { name: { $regex: searchText, $options: 'i' }, isVerified: true },
         { username: { $regex: searchText, $options: 'i' } },
       ],
+      isVerified: true,
     });
 
     users = users.filter((user) => user._id.toString() !== req.userId);
