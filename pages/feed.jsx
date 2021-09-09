@@ -6,6 +6,7 @@ import { dehydrate } from 'react-query/hydration';
 
 import baseURL from '../utils/baseURL';
 import PostCard from '../components/PostCard';
+import NoPosts from '../components/NoPosts';
 
 const getFeed = async (token) => {
   const { data } = await axios.get(`${baseURL}/api/posts/feed`, {
@@ -16,6 +17,10 @@ const getFeed = async (token) => {
 
 const FeedPage = ({ user }) => {
   const { data } = useQuery(['feed'], () => getFeed(cookie.get('token')));
+
+  if (data.length === 0) {
+    return <NoPosts />;
+  }
 
   return (
     <div className="container mx-auto p-8 md:px-16 md:py-10 grid gap-5 place-items-center grid-cols-auto-fit">

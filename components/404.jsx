@@ -3,7 +3,7 @@ import { ArrowCircleLeftIcon } from '@heroicons/react/outline';
 
 function NotFound(props) {
   return (
-    <div className="flex flex-col justify-center items-center text-center">
+    <div className="flex flex-col h-fullscreen justify-center items-center text-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1920 1080"
@@ -265,7 +265,7 @@ function NotFound(props) {
         Sorry!
       </p>
       <Link href="/home">
-        <a className="text-pink-600 pb-10 mt-6 flex items-center font-semibold">
+        <a className="text-pink-600 mt-6 flex items-center font-semibold">
           <ArrowCircleLeftIcon className="h-5 w-5" />
           <span className="ml-2">Go back</span>
         </a>

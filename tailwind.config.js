@@ -14,6 +14,7 @@ module.exports = {
       },
       spacing: {
         chat: '88vh',
+        fullscreen: '80vh',
       },
     },
   },
