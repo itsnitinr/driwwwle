@@ -8,6 +8,7 @@ import PostCard from '../components/PostCard';
 import ProfileHeader from '../components/profile-page/ProfileHeader';
 import ProfileTabs from '../components/profile-page/ProfileTabs';
 import SocialContainer from '../components/profile-page/SocialContainer';
+import NotFound from '../components/404';
 
 import baseURL from '../utils/baseURL';
 
@@ -24,7 +25,7 @@ const ProfilePage = ({ user }) => {
 
   const { data } = useQuery(['profiles', username], () => getProfile(username));
 
-  if (!data) return <h1>Not found!</h1>;
+  if (!data) return <NotFound />;
 
   return (
     <>
