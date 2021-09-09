@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
@@ -72,7 +74,12 @@ const Hero = () => {
             </svg>
           </div>
         </div>
-        <div className="relative pt-6 pb-16 sm:pb-24">
+        <motion.div
+          initial={{ y: 120, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative pt-6 pb-16 sm:pb-24"
+        >
           <div className="mt-16 mx-auto max-w-7xl px-4 sm:px-6">
             <div className="text-center">
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
@@ -97,19 +104,25 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
         <div className="relative">
           <div className="absolute inset-0 flex flex-col" aria-hidden="true">
             <div className="flex-1" />
             <div className="flex-1 w-full bg-pink-600" />
           </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <img
+          <motion.div
+            initial={{ y: 120, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, delay: 0.75 }}
+            className="max-w-7xl mx-auto px-4 sm:px-6"
+          >
+            <Image
               className="relative rounded-lg shadow-lg"
               src="https://imgur.com/IYhsgy1.png"
-              alt="App screenshot"
+              width={1920}
+              height={1080}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
       <div className="bg-pink-600 pb-12"></div>

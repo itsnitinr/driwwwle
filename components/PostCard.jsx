@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import cookie from 'js-cookie';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useMutation } from 'react-query';
 import { EyeIcon, HeartIcon, BookmarkIcon } from '@heroicons/react/solid';
 
@@ -55,7 +56,7 @@ const PostCard = ({ post, user }) => {
 
   return (
     <Link href={`/posts/${post._id}`} className="z-40">
-      <div>
+      <motion.div layout>
         <div className="rounded-lg group relative">
           <Image
             src={post.images[0]}
@@ -124,7 +125,7 @@ const PostCard = ({ post, user }) => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 };
