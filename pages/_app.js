@@ -44,9 +44,7 @@ MyApp.getInitialProps = async ({ ctx }) => {
     ctx.pathname === '/messages';
 
   const availableForEveryone =
-    ctx.pathname === '/' ||
     ctx.pathname === '/home' ||
-    ctx.pathname === '/onboarding' ||
     ctx.pathname === '/posts/[id]' ||
     ctx.pathname === '/[username]';
 
