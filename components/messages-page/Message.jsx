@@ -24,7 +24,7 @@ const Message = ({ message, user, divRef }) => {
           isUserSender ? 'text-right' : 'text-left'
         }`}
       >
-        {format(new Date(message.date), 'hh:mm a')}
+        {format(new Date(message.date), 'd MMM, hh:mm a')}
       </p>
     </div>
   );

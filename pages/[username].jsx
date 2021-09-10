@@ -53,7 +53,7 @@ const ProfilePage = ({ user }) => {
                   <h1 className="text-gray-800 mb-2 font-semibold text-lg">
                     Tech Stack
                   </h1>
-                  <div className="flex gap-x-3">
+                  <div className="flex flex-wrap gap-3">
                     {data.profile.techStack.map((techStack, index) => (
                       <span
                         key={index}

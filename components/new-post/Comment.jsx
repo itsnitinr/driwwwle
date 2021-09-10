@@ -1,6 +1,7 @@
-import Image from 'next/image';
 import axios from 'axios';
+import Link from 'next/link';
 import cookie from 'js-cookie';
+import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
 import { formatDistanceToNow } from 'date-fns';
@@ -30,17 +31,23 @@ const Comment = ({ comment, user, postId, queryClient }) => {
 
   return (
     <div className="flex w-full items-start mb-4 md:w-5/6">
-      <div className="w-100 mr-2">
-        <Image
-          src={comment.user.profilePicUrl}
-          height={45}
-          width={45}
-          className="rounded-full"
-        />
-      </div>
+      <Link href={`/${comment.user.username}`}>
+        <div className="w-100 mr-2 cursor-pointer">
+          <Image
+            src={comment.user.profilePicUrl}
+            height={45}
+            width={45}
+            className="rounded-full"
+          />
+        </div>
+      </Link>
       <div className="ml-2 flex flex-col flex-1">
         <h4 className="font-semibold">
-          {comment.user.username}{' '}
+          <Link href={`/${comment.user.username}`}>
+            <a className="hover:text-pink-600 transition">
+              {comment.user.username}
+            </a>
+          </Link>{' '}
           <span className="text-gray-500 text-xs font-normal">
             {formatDistanceToNow(new Date(comment.date), { addSuffix: true })}
           </span>
