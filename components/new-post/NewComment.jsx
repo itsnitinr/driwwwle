@@ -40,7 +40,7 @@ const NewComment = ({ id, queryClient }) => {
       }}
     >
       <textarea
-        className="w-full md:w-5/6 mb-1"
+        className="w-full md:w-5/6 mb-1 focus:ring-pink-600 focus:border-pink-600"
         rows="2"
         value={text}
         onChange={(e) => setText(e.target.value)}

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { formatDistanceToNowStrict } from 'date-fns';
 import { ChatAltIcon, HeartIcon, UserAddIcon } from '@heroicons/react/solid';
 
 const NotificationItem = ({ notification, index, length }) => {
@@ -49,7 +50,9 @@ const NotificationItem = ({ notification, index, length }) => {
                   <p className="mt-1 text-gray-900">{notification.text}</p>
                 </div>
                 <p className="text-gray-500 ml-2 text-sm">
-                  {notification.date.substring(0, 10)}
+                  {formatDistanceToNowStrict(new Date(notification.date), {
+                    addSuffix: true,
+                  })}
                 </p>
               </div>
             </>
@@ -81,7 +84,9 @@ const NotificationItem = ({ notification, index, length }) => {
                   started following you
                 </div>
                 <p className="text-gray-700 ml-2 text-sm">
-                  {notification.date.substring(0, 10)}
+                  {formatDistanceToNowStrict(new Date(notification.date), {
+                    addSuffix: true,
+                  })}
                 </p>
               </div>
             </>
@@ -96,7 +101,7 @@ const NotificationItem = ({ notification, index, length }) => {
                     height={40}
                   />
                   <span className="absolute -bottom-0.5 rounded-full -right-1 bg-pink-600 p-0.5">
-                    <UserAddIcon
+                    <HeartIcon
                       className="h-3 w-3 text-white"
                       aria-hidden="true"
                     />
@@ -118,7 +123,9 @@ const NotificationItem = ({ notification, index, length }) => {
                   </Link>
                 </div>
                 <p className="text-gray-700 ml-2 text-sm">
-                  {notification.date.substring(0, 10)}
+                  {formatDistanceToNowStrict(new Date(notification.date), {
+                    addSuffix: true,
+                  })}
                 </p>
               </div>
             </>

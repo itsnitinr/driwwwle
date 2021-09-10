@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 const Message = ({ message, user, divRef }) => {
   const isUserSender = message.sender === user._id;
 
@@ -17,7 +19,13 @@ const Message = ({ message, user, divRef }) => {
       >
         <p className="break-words">{message.message}</p>
       </div>
-      <p className="text-xs text-gray-400">{message.date}</p>
+      <p
+        className={`text-xs text-gray-400 ${
+          isUserSender ? 'text-right' : 'text-left'
+        }`}
+      >
+        {format(new Date(message.date), 'hh:mm a')}
+      </p>
     </div>
   );
 };

@@ -2,8 +2,8 @@ import axios from 'axios';
 import cookie from 'js-cookie';
 import { useEffect } from 'react';
 import { parseCookies } from 'nookies';
-import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
+import { QueryClient, useQuery } from 'react-query';
 
 import NotificationItem from '../components/NotificationItem';
 

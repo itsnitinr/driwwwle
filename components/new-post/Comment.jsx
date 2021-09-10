@@ -3,6 +3,7 @@ import axios from 'axios';
 import cookie from 'js-cookie';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
+import { formatDistanceToNow } from 'date-fns';
 import { TrashIcon } from '@heroicons/react/outline';
 
 import baseURL from '../../utils/baseURL';
@@ -41,7 +42,7 @@ const Comment = ({ comment, user, postId, queryClient }) => {
         <h4 className="font-semibold">
           {comment.user.username}{' '}
           <span className="text-gray-500 text-xs font-normal">
-            Posted at {comment.date}
+            {formatDistanceToNow(new Date(comment.date), { addSuffix: true })}
           </span>
         </h4>
         <p className="text-sm">{comment.text}</p>
