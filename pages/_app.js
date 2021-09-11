@@ -41,7 +41,8 @@ MyApp.getInitialProps = async ({ ctx }) => {
     ctx.pathname === '/feed' ||
     ctx.pathname === '/notifications' ||
     ctx.pathname === '/posts/new' ||
-    ctx.pathname === '/messages';
+    ctx.pathname === '/messages' ||
+    ctx.pathname === '/settings';
 
   const availableForEveryone =
     ctx.pathname === '/home' ||

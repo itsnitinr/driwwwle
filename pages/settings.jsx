@@ -1,0 +1,27 @@
+import { useState } from 'react';
+
+import SettingsHeader from '../components/settings-page/SettingsHeader';
+import SettingsSidebar from '../components/settings-page/SettingsSidebar';
+import UserSettings from '../components/settings-page/UserSettings';
+
+const SettingsPage = ({ user }) => {
+  const [tab, setTab] = useState('user');
+
+  return (
+    <div>
+      <SettingsHeader />
+      <main className="relative -mt-32">
+        <div className="max-w-screen-xl mx-auto pb-6 px-4 sm:px-6 lg:pb-16 lg:px-8">
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
+              <SettingsSidebar tab={tab} setTab={setTab} />
+              {tab === 'user' && <UserSettings user={user} />}
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default SettingsPage;
