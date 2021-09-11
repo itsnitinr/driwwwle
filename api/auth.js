@@ -82,7 +82,7 @@ router.put('/', auth, upload.single('profilePic'), async (req, res) => {
 
     // Check if username is already taken
     let user = await User.findOne({ username: username.toLowerCase() });
-    if (user) {
+    if (user && user._id.toString() !== req.userId) {
       return res.status(400).json({ msg: 'Username is already taken' });
     }
 

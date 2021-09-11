@@ -8,33 +8,12 @@ import { useQuery, useMutation } from 'react-query';
 
 import baseURL from '../../utils/baseURL';
 
-const UserSettings = ({ user }) => {
+const ProfileSettings = ({ user }) => {
   const [name, setName] = useState(user.name);
   const [username, setUsername] = useState(user.username);
   const [profilePic, setProfilePic] = useState(null);
 
   const router = useRouter();
-
-  const { isLoading, isSuccess } = useQuery(
-    ['checkUsername', username],
-    async () => {
-      const CancelToken = axios.CancelToken;
-      const source = CancelToken.source();
-
-      const promise = await axios.get(`${baseURL}/api/signup/${username}`, {
-        cancelToken: source.token,
-      });
-
-      promise.cancel = () => {
-        source.cancel();
-      };
-
-      return promise.data;
-    },
-    {
-      retry: false,
-    }
-  );
 
   const mutation = useMutation(async (formdata) => {
     const {} = await axios.put(`${baseURL}/api/auth`, formdata, {
@@ -45,31 +24,12 @@ const UserSettings = ({ user }) => {
     });
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formdata = new FormData();
-    formdata.append('name', name);
-    formdata.append('username', username);
-    formdata.append('profilePic', profilePic);
-
-    try {
-      await mutation.mutateAsync(formdata);
-      toast.success('User settings have been updated');
-      router.push('/home');
-    } catch (err) {
-      toast.error(err.response?.data?.msg || 'Please recheck your inputs');
-    }
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="divide-y divide-gray-200 lg:col-span-9"
-    >
+    <form className="divide-y divide-gray-200 lg:col-span-9">
       <div className="py-6 px-4 sm:p-6 lg:pb-8">
         <div>
           <h2 className="text-lg leading-6 font-medium text-gray-900">
-            User Settings
+            Profile Settings
           </h2>
           <p className="mt-1 text-sm text-gray-500">
             This information will be displayed publicly so be careful what you
@@ -216,4 +176,4 @@ const UserSettings = ({ user }) => {
   );
 };
 
-export default UserSettings;
+export default ProfileSettings;
