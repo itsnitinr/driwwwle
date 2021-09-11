@@ -27,6 +27,9 @@ const Search = () => {
       };
 
       return promise.data;
+    },
+    {
+      enabled: !!searchText,
     }
   );
 
