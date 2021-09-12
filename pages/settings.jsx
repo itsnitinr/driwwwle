@@ -9,6 +9,7 @@ import SettingsHeader from '../components/settings-page/SettingsHeader';
 import SettingsSidebar from '../components/settings-page/SettingsSidebar';
 import UserSettings from '../components/settings-page/UserSettings';
 import ProfileSettings from '../components/settings-page/ProfileSettings';
+import PasswordSettings from '../components/settings-page/PasswordSettings';
 
 import baseURL from '../utils/baseURL';
 
@@ -36,6 +37,7 @@ const SettingsPage = ({ user }) => {
               <SettingsSidebar tab={tab} setTab={setTab} />
               {tab === 'user' && <UserSettings user={user} />}
               {tab === 'profile' && <ProfileSettings profile={profile} />}
+              {tab === 'password' && <PasswordSettings />}
             </div>
           </div>
         </div>

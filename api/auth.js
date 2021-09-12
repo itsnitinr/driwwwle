@@ -100,4 +100,37 @@ router.put('/', auth, upload.single('profilePic'), async (req, res) => {
   }
 });
 
+// @route:  PUT /api/auth/password
+// @desc:   Update password
+router.put('/password', auth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.userId).select('+password');
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    // Check if current password matches
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ msg: 'Incorrect password' });
+    }
+
+    if (newPassword.length < 6) {
+      return res
+        .status(400)
+        .json({ msg: 'Password must be atleast 6 characters long' });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.status(200).json({ msg: 'Password updated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 module.exports = router;

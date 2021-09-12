@@ -1,8 +1,13 @@
-import { UserCircleIcon, IdentificationIcon } from '@heroicons/react/outline';
+import {
+  UserCircleIcon,
+  IdentificationIcon,
+  KeyIcon,
+} from '@heroicons/react/outline';
 
 const subNavigation = [
   { name: 'User', icon: UserCircleIcon, id: 'user' },
   { name: 'Profile', icon: IdentificationIcon, id: 'profile' },
+  { name: 'Password', icon: KeyIcon, id: 'password' },
 ];
 
 function classNames(...classes) {
