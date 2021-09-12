@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -7,6 +8,7 @@ const User = require('../models/User.model');
 
 const auth = require('../middleware/auth.middleware');
 const upload = require('../middleware/imageUpload.middleware');
+const sendEmail = require('../server-utils/sendEmail');
 
 // @route:  GET /api/auth
 // @desc:   Get logged in user's info
@@ -127,6 +129,78 @@ router.put('/password', auth, async (req, res) => {
     await user.save();
 
     res.status(200).json({ msg: 'Password updated' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route:  POST /api/auth/forgot-password
+// @desc:   Send password reset email
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    user.resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+    user.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+
+    const resetUrl = `${req.protocol}://${req.get(
+      'host'
+    )}/reset-password/${resetToken}`;
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Driwwwle - Reset Password',
+        text: `Please reset your password by visting the following URL within 30 minutes: ${resetUrl}`,
+      });
+    } catch (err) {
+      console.log(err);
+      user.resetPasswordToken = undefined;
+      await user.save();
+      return res.status(500).json({ msg: 'Error sending verification email' });
+    }
+
+    await user.save();
+    res.status(200).json({ msg: 'Email sent' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route:  PUT /api/auth/reset-password/:token
+// @desc:   Reset password
+router.put('/reset-password/:token', async (req, res) => {
+  try {
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(req.params.token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ msg: 'Invalid or expired token' });
+    }
+
+    // Set new password
+    user.password = await bcrypt.hash(req.body.password, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    res.status(200).json({ msg: 'Password reset complete' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ msg: 'Server error' });
