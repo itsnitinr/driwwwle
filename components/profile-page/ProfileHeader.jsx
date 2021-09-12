@@ -60,9 +60,11 @@ const ProfileHeader = ({ profile, followers, following, user }) => {
           {followers.length} Followers | {following.length} Following
         </h3>
         {user && user._id === profile.user._id ? (
-          <button className="bg-gray-100 flex items-center font-semibold rounded-md px-3 py-2">
-            <CogIcon className="h-5 w-5 mr-2" /> Update
-          </button>
+          <Link href="/settings">
+            <button className="bg-gray-100 flex items-center font-semibold rounded-md px-3 py-2">
+              <CogIcon className="h-5 w-5 mr-2" /> Update
+            </button>
+          </Link>
         ) : user ? (
           isFollowing ? (
             <button

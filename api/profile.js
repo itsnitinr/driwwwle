@@ -140,4 +140,44 @@ router.post('/follow/:userId', auth, async (req, res) => {
   }
 });
 
+// @route   GET /api/profile
+// @desc    Get logged in user's profile
+router.get('/', auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.userId });
+    if (!profile) {
+      return res.status(404).json({ msg: 'Profile not found' });
+    }
+
+    res.status(200).json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   PUT /api/profile
+// @desc    Update user profile
+router.put('/', auth, async (req, res) => {
+  try {
+    const { bio, techStack, social } = req.body;
+
+    let profile = await Profile.findOne({ user: req.userId });
+    if (!profile) {
+      return res.status(404).json({ msg: 'Profile not found' });
+    }
+
+    profile = await Profile.findOneAndUpdate(
+      { user: req.userId },
+      { bio, techStack, social },
+      { new: true }
+    );
+
+    res.status(200).json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 module.exports = router;

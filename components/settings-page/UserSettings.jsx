@@ -37,7 +37,7 @@ const UserSettings = ({ user }) => {
   );
 
   const mutation = useMutation(async (formdata) => {
-    const {} = await axios.put(`${baseURL}/api/auth`, formdata, {
+    await axios.put(`${baseURL}/api/auth`, formdata, {
       headers: {
         Authorization: cookie.get('token'),
         'Content-Type': 'multipart/form-data',
