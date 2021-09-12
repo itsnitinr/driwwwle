@@ -23,11 +23,19 @@ const FeedPage = ({ user }) => {
   }
 
   return (
-    <div className="container mx-auto p-8 md:px-16 md:py-10 grid gap-5 place-items-center grid-cols-auto-fit">
-      {data.map((post) => (
-        <PostCard user={user} key={post._id} post={post} />
-      ))}
-    </div>
+    <>
+      <div className="container mx-auto p-8 md:px-16 md:py-10">
+        <h1 className="text-pink-600 text-2xl font-semibold mb-1">Your Feed</h1>
+        <p className="text-gray-600 text-md mb-5">
+          Recent posts from people you follow
+        </p>
+        <div className="grid gap-5 place-items-start grid-cols-auto-fit">
+          {data.map((post) => (
+            <PostCard user={user} key={post._id} post={post} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 
