@@ -1,5 +1,6 @@
 const uuid = require('uuid').v4;
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 
 const Post = require('../models/Post.model');
@@ -72,6 +73,20 @@ router.get('/feed', auth, async (req, res) => {
     res.status(200).json(posts);
   } catch (err) {
     console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   GET /api/profile/saves
+// @desc    Get saved posts of user
+router.get('/saves', auth, async (req, res) => {
+  try {
+    const saves = await Post.find({
+      'saves.user': mongoose.Types.ObjectId(req.userId),
+    }).populate('user');
+    res.status(200).json(saves);
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ msg: 'Server error' });
   }
 });

@@ -29,7 +29,7 @@ const FeedPage = ({ user }) => {
         <p className="text-gray-600 text-md mb-5">
           Recent posts from people you follow
         </p>
-        <div className="grid gap-5 place-items-start grid-cols-auto-fit">
+        <div className="grid gap-5 place-items-start grid-cols-auto-fill">
           {data.map((post) => (
             <PostCard user={user} key={post._id} post={post} />
           ))}
