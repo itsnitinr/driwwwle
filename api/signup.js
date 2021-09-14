@@ -1,12 +1,15 @@
+const path = require('path');
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const handlebars = require('handlebars');
 const router = express.Router();
 
 const User = require('../models/User.model');
 
 const sendEmail = require('../server-utils/sendEmail');
+const readHTML = require('../server-utils/readHTML');
 
 const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
@@ -84,12 +87,20 @@ router.post('/', async (req, res) => {
       'host'
     )}/onboarding/${verificationToken}`;
 
+    const htmlTemplate = await readHTML(
+      path.join(__dirname, '..', 'emails', 'verify-email.html')
+    );
+    const handlebarsTemplate = handlebars.compile(htmlTemplate);
+    const replacements = { verificationUrl };
+    const html = handlebarsTemplate(replacements);
+
     try {
       await sendEmail({
         to: user.email,
         subject: 'Driwwwle - Account Verification',
-        text: `Please confirm your Driwwwle account registration by visiting this URL and completing the onboarding process: ${verificationUrl}`,
+        html,
       });
+      console.log('Sent');
     } catch (err) {
       console.log(err);
       user.verificationToken = undefined;

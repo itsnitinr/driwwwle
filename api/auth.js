@@ -1,14 +1,18 @@
+const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const handlebars = require('handlebars');
 const router = express.Router();
 
 const User = require('../models/User.model');
 
 const auth = require('../middleware/auth.middleware');
 const upload = require('../middleware/imageUpload.middleware');
+
 const sendEmail = require('../server-utils/sendEmail');
+const readHTML = require('../server-utils/readHTML');
 
 // @route:  GET /api/auth
 // @desc:   Get logged in user's info
@@ -155,11 +159,18 @@ router.post('/forgot-password', async (req, res) => {
       'host'
     )}/reset-password/${resetToken}`;
 
+    const htmlTemplate = await readHTML(
+      path.join(__dirname, '..', 'emails', 'forgot-password.html')
+    );
+    const handlebarsTemplate = handlebars.compile(htmlTemplate);
+    const replacements = { resetUrl };
+    const html = handlebarsTemplate(replacements);
+
     try {
       await sendEmail({
         to: user.email,
         subject: 'Driwwwle - Reset Password',
-        text: `Please reset your password by visting the following URL within 30 minutes: ${resetUrl}`,
+        html,
       });
     } catch (err) {
       console.log(err);
