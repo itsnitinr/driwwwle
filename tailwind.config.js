@@ -10,8 +10,8 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       gridTemplateColumns: {
-        'auto-fit': 'repeat(auto-fit, minmax(270px, 1fr))',
-        'auto-fill': 'repeat(auto-fill, minmax(300px, 1fr))',
+        'auto-fit': 'repeat(auto-fit, minmax(280px, 1fr))',
+        'auto-fill': 'repeat(auto-fill, minmax(290px, 1fr))',
       },
       spacing: {
         chat: '88vh',

@@ -18,21 +18,21 @@ const Navbar = ({ user, currentPath }) => {
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
         <>
-          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+          <div className="container mx-auto px-2 md:px-10 lg:px-12">
             <div className="flex justify-between h-16">
               <div className="flex px-2 lg:px-0">
                 <div className="flex-shrink-0 flex items-center">
                   <Link href="/home">
                     <img
-                      className="block lg:hidden h-4 w-auto cursor-pointer"
+                      className="block lg:hidden h-10 w-auto cursor-pointer"
                       src="/logo.svg"
                       alt="Driwwwle"
                     />
                   </Link>
                   <Link href="/home">
                     <img
-                      className="hidden lg:block h-8 w-auto cursor-pointer"
-                      src="/logo.svg"
+                      className="hidden lg:block h-14 w-auto cursor-pointer"
+                      src="/logo-full.png"
                       alt="Driwwwle"
                     />
                   </Link>

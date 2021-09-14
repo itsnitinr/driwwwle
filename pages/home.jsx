@@ -17,7 +17,7 @@ const HomePage = ({ user }) => {
   return (
     <main className="bg-gray-50">
       <HeroBanner />
-      <div className="container mx-auto p-8 md:px-16 md:py-10 grid gap-5 place-items-center grid-cols-auto-fit">
+      <div className="container mx-auto py-8 px-6 md:px-12 md:py-10 grid gap-x-5 gap-y-7 place-items-center grid-cols-auto-fill">
         {data.map((post) => (
           <PostCard user={user} key={post._id} post={post} />
         ))}

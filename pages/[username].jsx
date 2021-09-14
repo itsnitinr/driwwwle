@@ -36,14 +36,14 @@ const ProfilePage = ({ user }) => {
         following={data.following}
         user={user}
       />
-      <div className="container mx-auto px-8 md:px-16 pb-8">
+      <div className="container mx-auto px-8 md:px-12 pb-8">
         <ProfileTabs
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
           user={user._id}
           profile={data.profile.user._id}
         />
-        <div className="grid gap-5 place-items-start grid-cols-auto-fill">
+        <div className="grid gap-x-5 gap-y-7 place-items-start grid-cols-auto-fill">
           {currentTab === 'Posts' &&
             (data.posts.length === 0 ? (
               <p className="text-lg mt-2 text-pink-600">

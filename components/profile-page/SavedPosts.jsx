@@ -29,7 +29,7 @@ const SavedPosts = ({ user }) => {
   }
 
   return (
-    <div className="grid gap-5 place-items-start grid-cols-auto-fill">
+    <div className="grid gap-x-5 gap-y-7 place-items-start grid-cols-auto-fill">
       {data.map((post) => (
         <PostCard key={post._id} post={post} user={user} />
       ))}

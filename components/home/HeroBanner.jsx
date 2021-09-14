@@ -1,7 +1,7 @@
 const HeroBanner = () => {
   return (
-    <div className="bg-gradient-to-br from-pink-400 via-pink-500 to-pink-400 py-10 px-6 md:px-16 md:py-10">
-      <div className="container mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap">
+    <div className="bg-gradient-to-br from-pink-400 via-pink-500 to-pink-400 py-10 px-4 md:px-0 md:py-10">
+      <div className="container mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap md:px-12">
         <div className="flex-3 order-2 sm:order-1 text-center md:text-left">
           <h1 className="text-3xl lg:text-5xl font-bold text-white w-50 mb-4 md:mb-6">
             Discover creatives websites and developers
