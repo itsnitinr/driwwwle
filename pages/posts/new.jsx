@@ -148,7 +148,7 @@ const NewPost = ({ user }) => {
   );
 };
 
-export function getStaticProps() {
+export function getServerSideProps() {
   return { props: { title: 'Create a New Post' } };
 }
 
