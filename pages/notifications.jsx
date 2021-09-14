@@ -65,7 +65,12 @@ export async function getServerSideProps(ctx) {
   await queryClient.prefetchQuery(['notifications'], () =>
     getNotifications(token)
   );
-  return { props: { dehydratedState: dehydrate(queryClient) } };
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      title: 'Your Notifications on Driwwwle',
+    },
+  };
 }
 
 export default NotificationsPage;

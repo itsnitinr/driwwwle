@@ -44,7 +44,12 @@ export async function getServerSideProps(ctx) {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['feed'], () => getFeed(token));
-  return { props: { dehydratedState: dehydrate(queryClient) } };
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      title: 'Your Feed on Driwwwle',
+    },
+  };
 }
 
 export default FeedPage;

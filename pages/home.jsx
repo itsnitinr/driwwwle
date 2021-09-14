@@ -31,7 +31,12 @@ export async function getServerSideProps() {
 
   await queryClient.prefetchQuery(['posts'], getPosts);
 
-  return { props: { dehydratedState: dehydrate(queryClient) } };
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      title: 'Recent Posts on Driwwwle',
+    },
+  };
 }
 
 export default HomePage;

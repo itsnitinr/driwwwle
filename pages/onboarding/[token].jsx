@@ -280,4 +280,8 @@ const Onboarding = () => {
   );
 };
 
+export function getServerSideProps() {
+  return { props: { title: 'Onboarding' } };
+}
+
 export default Onboarding;

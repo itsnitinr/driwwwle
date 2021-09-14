@@ -256,7 +256,12 @@ export async function getServerSideProps(ctx) {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['messages'], () => getChats(token));
-  return { props: { dehydratedState: dehydrate(queryClient) } };
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      title: 'Your Messages on Driwwwle',
+    },
+  };
 }
 
 export default MessagesPage;

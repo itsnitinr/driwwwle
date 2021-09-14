@@ -2,6 +2,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import Image from 'next/image';
 import cookie from 'js-cookie';
+import { useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import {
   UserAddIcon,
@@ -41,6 +42,10 @@ const ProfileHeader = ({ profile, followers, following, user }) => {
       },
     }
   );
+
+  useEffect(() => {
+    document.title = `${profile.user.name}'s Profile on Driwwwle`;
+  }, [profile]);
 
   return (
     <div className="flex justify-center px-8 py-8 md:py-12">

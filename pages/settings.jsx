@@ -51,7 +51,12 @@ export async function getServerSideProps(ctx) {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['profile'], () => getProfile(token));
-  return { props: { dehydratedState: dehydrate(queryClient) } };
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+      title: 'Your Settings on Driwwwle',
+    },
+  };
 }
 
 export default SettingsPage;

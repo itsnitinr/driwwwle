@@ -151,4 +151,8 @@ const ResetPassword = () => {
   );
 };
 
+export function getServerSideProps() {
+  return { props: { title: 'Reset Your Password' } };
+}
+
 export default ResetPassword;

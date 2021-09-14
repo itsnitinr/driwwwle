@@ -1,6 +1,7 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 import { format } from 'date-fns';
+import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import {
@@ -99,6 +100,10 @@ const PostPage = ({ user }) => {
       toast.error(err.response?.data?.msg || 'Something went wrong');
     }
   };
+
+  useEffect(() => {
+    document.title = data.title;
+  }, [data]);
 
   return (
     <div className="max-w-5xl px-4 py-8 md:px-8 md:py-12 mx-auto">

@@ -148,4 +148,8 @@ const NewPost = ({ user }) => {
   );
 };
 
+export function getStaticProps() {
+  return { props: { title: 'Create a New Post' } };
+}
+
 export default NewPost;
