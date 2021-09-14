@@ -20,7 +20,7 @@ const Navbar = ({ user, currentPath }) => {
         <>
           <div className="container mx-auto px-2 md:px-10 lg:px-12">
             <div className="flex justify-between h-16">
-              <div className="flex px-2 lg:px-0">
+              <div className="flex px-2 md:px-0">
                 <div className="flex-shrink-0 flex items-center">
                   <Link href="/home">
                     <img

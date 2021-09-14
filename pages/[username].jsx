@@ -36,7 +36,7 @@ const ProfilePage = ({ user }) => {
         following={data.following}
         user={user}
       />
-      <div className="container mx-auto px-8 md:px-12 pb-8">
+      <div className="container mx-auto px-6 md:px-12 pb-8">
         <ProfileTabs
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}

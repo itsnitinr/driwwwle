@@ -24,7 +24,7 @@ const FeedPage = ({ user }) => {
 
   return (
     <>
-      <div className="container mx-auto p-8 md:px-12 md:py-10">
+      <div className="container mx-auto px-6 py-8 md:px-12 md:py-10">
         <h1 className="text-pink-600 text-2xl font-semibold mb-1">Your Feed</h1>
         <p className="text-gray-600 text-md mb-5">
           Recent posts from people you follow

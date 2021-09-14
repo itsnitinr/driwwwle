@@ -70,7 +70,7 @@ const NewPost = ({ user }) => {
   };
 
   return (
-    <div className="bg-gray-100 px-6 md:px-20 xl:px-32 py-10">
+    <div className="bg-gray-100 px-6 md:px-12 py-10">
       <div className="container mx-auto flex flex-col items-center">
         <h1 className="text-3xl mb-8 text-gray-700 font-bold mr-auto">
           Ready to post,{' '}
