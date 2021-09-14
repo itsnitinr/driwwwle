@@ -37,9 +37,15 @@ const ProfilePage = ({ user }) => {
       />
       <div className="container mx-auto px-8 md:px-16 pb-8">
         <ProfileTabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
-        <div className="grid gap-5 place-items-center grid-cols-auto-fit">
+        <div className="grid gap-5 place-items-start grid-cols-auto-fit">
           {currentTab === 'Posts' ? (
-            data.posts.map((post) => <PostCard key={post._id} post={post} />)
+            data.posts.length === 0 ? (
+              <p className="text-lg mt-2 text-pink-600">
+                User does not have any posts yet
+              </p>
+            ) : (
+              data.posts.map((post) => <PostCard key={post._id} post={post} />)
+            )
           ) : (
             <div className="w-full flex flex-wrap">
               <div className="w-full md:w-2/3">

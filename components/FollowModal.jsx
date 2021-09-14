@@ -65,9 +65,9 @@ const FollowModal = ({ open, setOpen, username, statsToShow }) => {
               <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-3/4">
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-center border-b border-gray-200 pb-2">
-                    <div className="mx-auto flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-pink-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <div className="mx-auto flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-pink-100 sm:mx-0 sm:h-10 sm:w-10">
                       <UserGroupIcon
-                        className="h-6 w-6 text-pink-600"
+                        className="h-5 w-5 sm:h-6 sm:w-6 text-pink-600"
                         aria-hidden="true"
                       />
                     </div>

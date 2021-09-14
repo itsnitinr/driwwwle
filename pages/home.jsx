@@ -15,14 +15,14 @@ const HomePage = ({ user }) => {
   const { data } = useQuery(['posts'], getPosts);
 
   return (
-    <>
+    <main className="bg-gray-50">
       <HeroBanner />
-      <main className="container bg-gray-50 mx-auto bg-gray-50 p-8 md:px-16 md:py-10 grid gap-5 place-items-center grid-cols-auto-fit">
+      <div className="container mx-auto p-8 md:px-16 md:py-10 grid gap-5 place-items-center grid-cols-auto-fit">
         {data.map((post) => (
           <PostCard user={user} key={post._id} post={post} />
         ))}
-      </main>
-    </>
+      </div>
+    </main>
   );
 };
 

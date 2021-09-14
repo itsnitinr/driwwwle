@@ -41,7 +41,7 @@ const ChatItem = ({ chat, connectedUsers }) => {
           <h3 className="leading-4">
             {chat.name}{' '}
             <span className="text-xs text-gray-400">
-              {format(new Date(chat.date), 'hh:mm a')}
+              {format(new Date(chat.date), 'dd MMM, hh:mm a')}
             </span>
           </h3>
           <span className="text-xs text-gray-500">
