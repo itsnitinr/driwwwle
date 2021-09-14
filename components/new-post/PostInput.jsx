@@ -14,7 +14,7 @@ const PostInput = ({
         htmlFor={id}
         className="block text-md font-medium text-pink-600 mb-2"
       >
-        {label}
+        {label} {required && <span className="text-red-400">*</span>}
         {small && (
           <small className="block text-xs text-gray-500 mb-3">{small}</small>
         )}

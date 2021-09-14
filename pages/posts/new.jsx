@@ -123,7 +123,7 @@ const NewPost = ({ user }) => {
             htmlFor="description"
             className="block mr-auto text-md font-medium text-pink-600 mb-2"
           >
-            Add some description
+            Add some description <span className="text-red-400">*</span>
           </label>
           <RichTextEditor value={description} setValue={setDescription} />
           <ImageDropzone setImages={setImages} />

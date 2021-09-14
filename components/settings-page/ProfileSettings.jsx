@@ -129,103 +129,120 @@ const UserSettings = ({ profile }) => {
               <label className="block text-sm font-medium text-gray-700">
                 Social Profiles
               </label>
-              <div className="grid grid-cols-6 gap-3">
+              <div className="grid lg:grid-cols-6 gap-x-6 gap-y-3">
                 <div className="mt-1 relative rounded-md shadow-sm col-span-6 sm:col-span-3">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <AiFillGithub
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
+                  <div className="flex rounded-md shadow-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                      <AiFillGithub
+                        className="h-5 w-5 mr-2 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      github.com/
+                    </span>
+                    <input
+                      type="text"
+                      name="github"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-500 sm:text-sm border-gray-300"
+                      placeholder="GitHub username"
+                      value={github}
+                      onChange={handleSocialChange}
                     />
                   </div>
-                  <input
-                    type="text"
-                    name="github"
-                    className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                    placeholder="GitHub username"
-                    value={github}
-                    onChange={handleSocialChange}
-                  />
                 </div>
                 <div className="mt-1 relative rounded-md shadow-sm col-span-6 sm:col-span-3">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <GoBrowser
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
+                  <div className="flex rounded-md shadow-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                      <GoBrowser
+                        className="h-5 w-5 mr-2 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      https://
+                    </span>
+                    <input
+                      type="text"
+                      name="website"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-500 sm:text-sm border-gray-300"
+                      placeholder="Website URL"
+                      value={website}
+                      onChange={handleSocialChange}
                     />
                   </div>
-                  <input
-                    type="text"
-                    name="website"
-                    className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                    placeholder="Website URL"
-                    value={website}
-                    onChange={handleSocialChange}
-                  />
                 </div>
                 <div className="mt-1 relative rounded-md shadow-sm col-span-6 sm:col-span-3">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <AiFillLinkedin
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
+                  <div className="flex rounded-md shadow-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                      <AiFillLinkedin
+                        className="h-5 w-5 mr-2 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      linkedin.com/in/
+                    </span>
+                    <input
+                      type="text"
+                      name="linkedin"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-500 sm:text-sm border-gray-300"
+                      placeholder="LinkedIn username"
+                      value={linkedin}
+                      onChange={handleSocialChange}
                     />
                   </div>
-                  <input
-                    type="text"
-                    name="linkedin"
-                    className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                    placeholder="Linkedin username"
-                    value={linkedin}
-                    onChange={handleSocialChange}
-                  />
                 </div>
                 <div className="mt-1 relative rounded-md shadow-sm col-span-6 sm:col-span-3">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <AiFillTwitterCircle
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
+                  <div className="flex rounded-md shadow-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                      <AiFillTwitterCircle
+                        className="h-5 w-5 mr-2 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      twitter.com/
+                    </span>
+                    <input
+                      type="text"
+                      name="twitter"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-500 sm:text-sm border-gray-300"
+                      placeholder="Twitter username"
+                      value={twitter}
+                      onChange={handleSocialChange}
                     />
                   </div>
-                  <input
-                    type="text"
-                    name="twitter"
-                    className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                    placeholder="Twitter username"
-                    value={twitter}
-                    onChange={handleSocialChange}
-                  />
                 </div>
                 <div className="mt-1 relative rounded-md shadow-sm col-span-6 sm:col-span-3">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <AiFillInstagram
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
+                  <div className="flex rounded-md shadow-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                      <AiFillInstagram
+                        className="h-5 w-5 mr-2 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      instagram.com/
+                    </span>
+                    <input
+                      type="text"
+                      name="instagram"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-500 sm:text-sm border-gray-300"
+                      placeholder="Instagram username"
+                      value={instagram}
+                      onChange={handleSocialChange}
                     />
                   </div>
-                  <input
-                    type="text"
-                    name="instagram"
-                    className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                    placeholder="Instagram username"
-                    value={instagram}
-                    onChange={handleSocialChange}
-                  />
                 </div>
-
                 <div className="mt-1 relative rounded-md shadow-sm col-span-6 sm:col-span-3">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <AiFillYoutube
-                      className="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
+                  <div className="flex rounded-md shadow-sm">
+                    <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                      <AiFillYoutube
+                        className="h-5 w-5 mr-2 text-gray-400"
+                        aria-hidden="true"
+                      />
+                      youtube.com/c/
+                    </span>
+                    <input
+                      type="text"
+                      name="youtube"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-pink-500 focus:border-pink-500 sm:text-sm border-gray-300"
+                      placeholder="YT channel ID"
+                      value={youtube}
+                      onChange={handleSocialChange}
                     />
                   </div>
-                  <input
-                    type="text"
-                    name="youtube"
-                    className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                    placeholder="YT channel name"
-                    value={youtube}
-                    onChange={handleSocialChange}
-                  />
                 </div>
               </div>
             </div>
