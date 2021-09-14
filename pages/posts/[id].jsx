@@ -1,7 +1,7 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 import { format } from 'date-fns';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import {
@@ -27,6 +27,7 @@ import PostDetailsItem from '../../components/post-page/PostDetailsItem';
 import PostDetailsLink from '../../components/post-page/PostDetailsLink';
 import NewComment from '../../components/new-post/NewComment';
 import Comment from '../../components/new-post/Comment';
+import NotFound from '../../components/404';
 
 const getPost = async (id) => {
   const { data } = await axios.get(`${baseURL}/api/posts/${id}`);
@@ -101,9 +102,15 @@ const PostPage = ({ user }) => {
     }
   };
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   useEffect(() => {
-    document.title = data.title;
+    document.title = data && data.title;
   }, [data]);
+
+  if (!data) {
+    return <NotFound />;
+  }
 
   return (
     <div className="max-w-5xl px-4 py-8 md:px-8 md:py-12 mx-auto">
@@ -157,6 +164,10 @@ const PostPage = ({ user }) => {
             <PostDetailsItem
               Icon={HeartIcon}
               detail={`${data.likes.length} likes`}
+              isLikes
+              open={modalOpen}
+              setOpen={setModalOpen}
+              postId={data._id}
             />
             <PostDetailsItem
               Icon={ChatIcon}
