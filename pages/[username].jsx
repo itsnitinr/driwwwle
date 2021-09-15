@@ -40,7 +40,7 @@ const ProfilePage = ({ user }) => {
         <ProfileTabs
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
-          user={user._id}
+          user={user && user._id}
           profile={data.profile.user._id}
         />
         <div className="grid gap-x-5 gap-y-7 place-items-start grid-cols-auto-fill">
