@@ -14,7 +14,15 @@ router.get('/', auth, async (req, res) => {
       .populate('notifications.user')
       .populate('notifications.post');
 
-    res.status(200).json(user.notifications);
+    const notifications = user.notifications.filter(
+      (notification) =>
+        ((notification.type === 'like' || notification.type === 'comment') &&
+          notification.user?._id &&
+          notification.post?._id) ||
+        (notification.type === 'follow' && notification.user?._id)
+    );
+
+    res.status(200).json(notifications);
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server error' });

@@ -4,7 +4,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { ChatAltIcon, HeartIcon, UserAddIcon } from '@heroicons/react/solid';
 
 const NotificationItem = ({ notification, index, length }) => {
-  return notification.post?._id ? (
+  return (
     <li>
       <div className="relative pb-8">
         {index !== length - 1 ? (
@@ -133,7 +133,7 @@ const NotificationItem = ({ notification, index, length }) => {
         </div>
       </div>
     </li>
-  ) : null;
+  );
 };
 
 export default NotificationItem;
