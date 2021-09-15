@@ -90,14 +90,14 @@ const Hero = () => {
                 A portal for web developers and freelancers to showcase their
                 work to the world. Share and get inspired by creatives for free!
               </p>
-              <div className="mt-12 space-x-4">
+              <div className="mt-12 gap-x-4 gap-y-2 flex flex-wrap justify-center">
                 <Link href="/signup">
-                  <a className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 md:py-3 md:text-lg md:px-6">
+                  <a className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 md:py-3 md:text-lg md:px-6 inline-block">
                     Join Community
                   </a>
                 </Link>
                 <Link href="/home">
-                  <a className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-pink-600 bg-pink-100 hover:bg-pink-200 md:py-3 md:text-lg md:px-6">
+                  <a className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-pink-600 bg-pink-100 hover:bg-pink-200 md:py-3 md:text-lg md:px-6 inline-block">
                     Discover Posts
                   </a>
                 </Link>
@@ -118,7 +118,7 @@ const Hero = () => {
           >
             <Image
               className="relative rounded-lg shadow-lg"
-              src="https://imgur.com/IYhsgy1.png"
+              src="https://imgur.com/pZJQ5kT.png"
               width={1920}
               height={1080}
             />

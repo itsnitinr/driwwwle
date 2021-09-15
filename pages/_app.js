@@ -26,8 +26,8 @@ function MyApp({ Component, pageProps }) {
           <ToastContainer />
           <Head title={pageProps.title} />
           <Component {...pageProps} />
-          <ReactQueryDevtools />
         </Layout>
+        <ReactQueryDevtools />
       </Hydrate>
     </QueryClientProvider>
   );
