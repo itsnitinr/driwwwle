@@ -5,14 +5,37 @@ const CustomHead = ({ title }) => {
     <Head>
       <title>{title}</title>
       <meta
-        name="description"
-        content="A portal for web developers to showcase their creative projects."
+        name="title"
+        content="Driwwwle - The Social Network for Developers"
       />
-      <meta property="og:title" content="Driwwwle" />
+      <meta
+        name="description"
+        content="Discover creative websites and developers across the globe. "
+      />
+
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://driwwwle.com/" />
+      <meta
+        property="og:title"
+        content="Driwwwle - The Social Network for Developers"
+      />
       <meta
         property="og:description"
-        content="Showcase your projects to the world!"
+        content="Discover creative websites and developers across the globe. "
       />
+      <meta property="og:image" content="https://imgur.com/pZJQ5kT.png" />
+
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content="https://driwwwle.com/" />
+      <meta
+        property="twitter:title"
+        content="Driwwwle - The Social Network for Developers"
+      />
+      <meta
+        property="twitter:description"
+        content="Discover creative websites and developers across the globe. "
+      />
+      <meta property="twitter:image" content="https://imgur.com/pZJQ5kT.png" />
       <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
   );

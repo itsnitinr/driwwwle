@@ -105,7 +105,7 @@ const PostPage = ({ user }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    document.title = data && data.title;
+    document.title = data && `${data.title} on Driwwwle`;
   }, [data]);
 
   if (!data) {
