@@ -21,6 +21,7 @@ const {
   loadMessages,
   sendMessage,
   setMessageToUnread,
+  setMessageToRead,
 } = require('./server-utils/chat');
 
 const nextApp = next({ dev });
@@ -31,6 +32,7 @@ connectDB();
 io.on('connection', (socket) => {
   socket.on('join', async ({ userId }) => {
     const users = await addUser(userId, socket.id);
+    await setMessageToRead(userId);
     setInterval(() => {
       socket.emit('connectedUsers', {
         users: users.filter((user) => user.userId !== userId),

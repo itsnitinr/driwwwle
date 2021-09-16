@@ -74,4 +74,21 @@ const setMessageToUnread = async (userId) => {
   }
 };
 
-module.exports = { loadMessages, sendMessage, setMessageToUnread };
+const setMessageToRead = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+    if (user.unreadMessage) {
+      user.unreadMessage = false;
+      await user.save();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = {
+  loadMessages,
+  sendMessage,
+  setMessageToUnread,
+  setMessageToRead,
+};

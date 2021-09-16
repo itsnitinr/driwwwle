@@ -24,11 +24,18 @@ const Layout = ({ children, user }) => {
     return true;
   };
 
+  const showFooter = () => {
+    if (router.pathname === '/messages') {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {showNavbar() && <Navbar user={user} currentPath={router.pathname} />}
       <main className="flex-1">{children}</main>
-      <Footer />
+      {showFooter() && <Footer />}
     </div>
   );
 };

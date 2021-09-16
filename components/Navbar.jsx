@@ -10,7 +10,6 @@ import { logoutUser } from '../utils/auth';
 const navigation = [
   { name: 'Home', href: '/home' },
   { name: 'Feed', href: '/feed' },
-  { name: 'Messages', href: '/messages' },
 ];
 
 const Navbar = ({ user, currentPath }) => {
@@ -51,6 +50,20 @@ const Navbar = ({ user, currentPath }) => {
                       </a>
                     </Link>
                   ))}
+                  <Link href="/messages">
+                    <a
+                      className={`${
+                        currentPath === '/messages'
+                          ? 'border-pink-500 text-gray-900 font-semibold'
+                          : 'border-transparent hover:text-pink-500 text-gray-500 font-medium'
+                      } inline-flex items-center px-1 pt-1 border-b-2 text-sm`}
+                    >
+                      Messages
+                      {user?.unreadMessage && (
+                        <div className="ml-1.5 bg-pink-600 h-2 w-2 rounded-full"></div>
+                      )}
+                    </a>
+                  </Link>
                 </div>
               </div>
               <Search />
@@ -169,6 +182,20 @@ const Navbar = ({ user, currentPath }) => {
                   </a>
                 </Link>
               ))}
+              <Link href="/messages">
+                <a
+                  className={
+                    currentPath === '/messages'
+                      ? 'bg-pink-50 border-pink-500 text-pink-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium flex items-center'
+                      : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 flex items-center pl-3 pr-4 py-2 border-l-4 text-base font-medium'
+                  }
+                >
+                  Message
+                  {user?.unreadMessage && (
+                    <div className="ml-1.5 bg-pink-600 h-2 w-2 rounded-full"></div>
+                  )}
+                </a>
+              </Link>
             </div>
             {user ? (
               <div className="pt-4 pb-3 border-t border-gray-200">
