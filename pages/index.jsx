@@ -12,7 +12,7 @@ const LandingPage = () => {
   );
 };
 
-export function getStaticProps() {
+export function getServerSideProps() {
   return {
     props: { title: 'Driwwwle - Find creative websites and developers' },
   };

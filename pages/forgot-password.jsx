@@ -113,7 +113,7 @@ const ForgotPassword = () => {
   );
 };
 
-export function getStaticProps() {
+export function getServerSideProps() {
   return { props: { title: 'Forgot Password?' } };
 }
 

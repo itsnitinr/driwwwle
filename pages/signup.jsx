@@ -276,7 +276,7 @@ const Signup = () => {
   );
 };
 
-export function getStaticProps() {
+export function getServerSideProps() {
   return { props: { title: 'Sign Up to Driwwwle' } };
 }
 

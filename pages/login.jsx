@@ -165,7 +165,7 @@ const Login = () => {
   );
 };
 
-export function getStaticProps() {
+export function getServerSideProps() {
   return { props: { title: 'Login to Driwwwle' } };
 }
 
