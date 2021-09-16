@@ -48,8 +48,24 @@ router.post('/', auth, upload.array('images', 5), async (req, res) => {
 // @desc    Get all posts
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 }).populate('user');
-    res.status(200).json(posts);
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 12;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await Post.countDocuments();
+
+    const posts = await Post.find()
+      .skip(startIndex)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .populate('user');
+
+    let next = null;
+    if (endIndex < total) {
+      next = page + 1;
+    }
+
+    res.status(200).json({ posts, next });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server error' });
@@ -60,17 +76,31 @@ router.get('/', async (req, res) => {
 // @desc    Get posts of following users
 router.get('/feed', auth, async (req, res) => {
   try {
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 12;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
     const user = await Follower.findOne({ user: req.userId }).select(
       '-followers'
     );
 
     const followingUsers = user.following.map((following) => following.user);
 
+    const total = await Post.countDocuments({ user: { $in: followingUsers } });
+
     const posts = await Post.find({ user: { $in: followingUsers } })
+      .skip(startIndex)
+      .limit(limit)
       .sort({ createdAt: -1 })
       .populate('user');
 
-    res.status(200).json(posts);
+    let next = null;
+    if (endIndex < total) {
+      next = page + 1;
+    }
+
+    res.status(200).json({ posts, next });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server error' });

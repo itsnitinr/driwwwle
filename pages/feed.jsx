@@ -1,22 +1,32 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
+import { Fragment } from 'react';
 import { parseCookies } from 'nookies';
-import { QueryClient, useQuery } from 'react-query';
+import InfiniteScroll from 'react-infinite-scroller';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { QueryClient, useInfiniteQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 
 import baseURL from '../utils/baseURL';
 import PostCard from '../components/PostCard';
 import NoPosts from '../components/NoPosts';
 
-const getFeed = async (token) => {
-  const { data } = await axios.get(`${baseURL}/api/posts/feed`, {
+const getFeed = async (page, token) => {
+  const { data } = await axios.get(`${baseURL}/api/posts/feed?page=${page}`, {
     headers: { Authorization: token },
   });
   return data;
 };
 
 const FeedPage = ({ user }) => {
-  const { data } = useQuery(['feed'], () => getFeed(cookie.get('token')));
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery(
+      ['feed'],
+      ({ pageParam = 1 }) => getFeed(pageParam, cookie.get('token')),
+      {
+        getNextPageParam: (lastPage) => lastPage.next,
+      }
+    );
 
   if (data.length === 0) {
     return <NoPosts />;
@@ -29,11 +39,24 @@ const FeedPage = ({ user }) => {
         <p className="text-gray-600 text-md mb-5">
           Recent posts from people you follow
         </p>
-        <div className="grid gap-x-5 gap-y-7 place-items-start grid-cols-auto-fill">
-          {data.map((post) => (
-            <PostCard user={user} key={post._id} post={post} />
+        <InfiniteScroll
+          hasMore={hasNextPage}
+          loadMore={fetchNextPage}
+          className="container mx-auto grid gap-x-5 gap-y-7 place-items-center grid-cols-auto-fill"
+        >
+          {data.pages.map((page, i) => (
+            <Fragment key={i}>
+              {page.posts.map((post) => (
+                <PostCard user={user} key={post._id} post={post} />
+              ))}
+            </Fragment>
           ))}
-        </div>
+        </InfiniteScroll>
+        {isFetchingNextPage && (
+          <div className="py-8">
+            <AiOutlineLoading3Quarters className="h-8 w-8 animate-spin mx-auto text-pink-600" />
+          </div>
+        )}
       </div>
     </>
   );
@@ -43,10 +66,14 @@ export async function getServerSideProps(ctx) {
   const { token } = parseCookies(ctx);
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(['feed'], () => getFeed(token));
+  await queryClient.prefetchInfiniteQuery(['feed'], ({ pageParam = 1 }) =>
+    getFeed(pageParam, token)
+  );
   return {
     props: {
-      dehydratedState: dehydrate(queryClient),
+      // This is hacky but couldn't find a better solution
+      // https://github.com/tannerlinsley/react-query/issues/1458
+      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
       title: 'Your Feed on Driwwwle',
     },
   };
