@@ -28,7 +28,7 @@ const FeedPage = ({ user }) => {
       }
     );
 
-  if (data.length === 0) {
+  if (data.pages[0].posts.length === 0) {
     return <NoPosts />;
   }
 
