@@ -4,7 +4,7 @@ const HeroBanner = () => {
       <div className="container mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap md:px-12">
         <div className="flex-3 order-2 sm:order-1 text-center md:text-left">
           <h1 className="text-3xl lg:text-5xl font-bold text-white w-50 mb-4 md:mb-6">
-            Discover creatives websites and developers
+            Discover creative websites and developers
           </h1>
           <p className="text-md lg:text-lg font-medium text-white mb-6">
             Driwwwle is the leading destination to find & showcase creative

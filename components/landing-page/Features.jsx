@@ -7,9 +7,9 @@ import {
 
 const features = [
   {
-    name: 'Discover creative websites',
+    name: 'Discover websites and developers',
     description:
-      'Browse through an array of websites built by developers across the globe and get inspired. Or promote your projects as well.',
+      'Browse through an awesome collection of websites built by developers across the globe and promote your projects as well.',
     icon: GlobeAltIcon,
   },
   {
@@ -21,7 +21,7 @@ const features = [
   {
     name: 'Chat and engage with the community',
     description:
-      'Reach out to others with real-time chat and get notified about interactions with your post, also in real-time.',
+      'Reach out to others with real-time chat integrated in the platform and get notified about interactions with your post.',
     icon: ChatIcon,
   },
   {
@@ -44,8 +44,7 @@ const Features = () => {
             Why Join the Community?
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-            Register for free and enter the world of creative design and
-            development.
+            Register to enter the world of creative design and development.
           </p>
         </div>
 

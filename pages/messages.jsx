@@ -240,7 +240,7 @@ const MessagesPage = ({ user }) => {
               <div className="space-y-0.5">
                 <h1 className="font-semibold text-xl">Chat with developers!</h1>
                 <p className="text-gray-600 min-w-46">
-                  Select or search for a user to start chatting with
+                  Select or search for a user to start chatting with.
                 </p>
               </div>
             </div>
