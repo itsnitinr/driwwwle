@@ -68,3 +68,15 @@ npm start
 ```
 
 Visit http://localhost:3000 or your custom port environment variable to view the app.
+
+## Screenshots
+
+![Banner Image](https://user-images.githubusercontent.com/34748469/133844015-c1b49f42-95de-4b4c-93d6-0d74152578cc.png)
+
+  Landing Page             |  Search
+:-------------------------:|:-------------------------:
+![](https://user-images.githubusercontent.com/34748469/133844238-18e81ef2-ef31-4455-9b8f-08c71754fd97.png)  |  ![](https://user-images.githubusercontent.com/34748469/133844365-d01ebbe2-5c37-4ed8-9337-efb6c15a4828.png)
+
+  Personal Feed             |  Post & Profile Page
+:-------------------------:|:-------------------------:
+![](https://user-images.githubusercontent.com/34748469/133844617-a3217361-3968-4754-afd6-8f5918a576a5.png)  |  ![](https://user-images.githubusercontent.com/34748469/133844779-fb0bb198-1f9c-4e51-af88-ee55e5471ca4.png)
