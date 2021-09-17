@@ -17,7 +17,9 @@ const Layout = ({ children, user }) => {
       router.pathname === '/' ||
       router.pathname === '/signup' ||
       router.pathname === '/login' ||
-      router.pathname === '/onboarding/[token]'
+      router.pathname === '/onboarding/[token]' ||
+      router.pathname === '/forgot-password' ||
+      router.pathname === '/reset-password/[token]'
     ) {
       return false;
     }
@@ -25,7 +27,14 @@ const Layout = ({ children, user }) => {
   };
 
   const showFooter = () => {
-    if (router.pathname === '/messages') {
+    if (
+      router.pathname === '/messages' ||
+      router.pathname === '/signup' ||
+      router.pathname === '/login' ||
+      router.pathname === '/onboarding/[token]' ||
+      router.pathname === '/forgot-password' ||
+      router.pathname === '/reset-password/[token]'
+    ) {
       return false;
     }
     return true;
