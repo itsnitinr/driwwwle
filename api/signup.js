@@ -111,18 +111,13 @@ router.post('/', async (req, res) => {
     await user.save();
 
     // Sign JWT and return token
-    jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: '30d' },
-      (err, token) => {
-        if (err) throw err;
-        res.status(200).json({
-          msg: 'Please check your email to verify your registration',
-          token,
-        });
-      }
-    );
+    jwt.sign({ userId: user._id }, process.env.JWT_SECRET, (err, token) => {
+      if (err) throw err;
+      res.status(200).json({
+        msg: 'Please check your email to verify your registration',
+        token,
+      });
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Server error' });
