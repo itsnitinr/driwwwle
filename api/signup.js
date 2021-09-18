@@ -100,7 +100,6 @@ router.post('/', async (req, res) => {
         subject: 'Driwwwle - Account Verification',
         html,
       });
-      console.log('Sent');
     } catch (err) {
       console.log(err);
       user.verificationToken = undefined;

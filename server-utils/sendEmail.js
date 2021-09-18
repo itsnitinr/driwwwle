@@ -1,19 +1,16 @@
 const nodemailer = require('nodemailer');
-const sendgridTransport = require('nodemailer-sendgrid-transport');
-
-const sendgridOptions = {
-  auth: {
-    api_key: process.env.SENDGRID_API_KEY,
-  },
-};
 
 const sendEmail = async (options) => {
-  const transporter = nodemailer.createTransport(
-    sendgridTransport(sendgridOptions)
-  );
+  const transporter = nodemailer.createTransport({
+    service: 'SendinBlue',
+    auth: {
+      user: process.env.SENDER_EMAIL,
+      pass: process.env.SENDINBLUE_PASSWORD,
+    },
+  });
 
   await transporter.sendMail({
-    from: process.env.SENDER_EMAIL,
+    from: `Nitin from Driwwwle ${process.env.SENDER_EMAIL}`,
     to: options.to,
     subject: options.subject,
     html: options.html,
