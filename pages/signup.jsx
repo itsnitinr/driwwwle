@@ -14,6 +14,8 @@ import {
   XIcon,
 } from '@heroicons/react/outline';
 
+import EmailConfirmModal from '../components/EmailConfirmModal';
+
 import baseURL from '../utils/baseURL';
 import { registerUser } from '../utils/auth';
 
@@ -36,6 +38,8 @@ const Signup = () => {
   const [usernameLoading, setUsernameLoading] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState(false);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const { name, email, password } = user;
 
   const handleChange = (e) => {
@@ -44,7 +48,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await registerUser(user, setError, setFormLoading, toast);
+    await registerUser(user, setError, setFormLoading, toast, setModalOpen);
   };
 
   const checkUsername = async () => {
@@ -272,6 +276,7 @@ const Signup = () => {
           </div>
         </form>
       </div>
+      <EmailConfirmModal open={modalOpen} setOpen={setModalOpen} />
     </div>
   );
 };

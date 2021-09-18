@@ -9,7 +9,8 @@ export const registerUser = async (
   { name, username, email, password },
   setError,
   setLoading,
-  toast
+  toast,
+  setModalOpen
 ) => {
   setLoading(true);
   try {
@@ -20,7 +21,7 @@ export const registerUser = async (
       password,
     });
     toast.info(res.data.msg);
-    Router.push('/');
+    setModalOpen(true);
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
