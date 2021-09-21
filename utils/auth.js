@@ -80,7 +80,7 @@ export const onboardUser = async (
 };
 
 const setToken = (token) => {
-  cookie.set('token', token);
+  cookie.set('token', token, { expires: 730 });
 };
 
 export const logoutUser = () => {
