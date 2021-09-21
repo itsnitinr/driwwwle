@@ -1,7 +1,13 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { BellIcon, MenuIcon, XIcon, PlusIcon } from '@heroicons/react/outline';
+import {
+  BellIcon,
+  MenuIcon,
+  XIcon,
+  PlusIcon,
+  ChatAlt2Icon,
+} from '@heroicons/react/outline';
 
 import Search from './Search';
 
@@ -50,20 +56,6 @@ const Navbar = ({ user, currentPath }) => {
                       </a>
                     </Link>
                   ))}
-                  <Link href="/messages">
-                    <a
-                      className={`${
-                        currentPath === '/messages'
-                          ? 'border-pink-500 text-gray-900 font-semibold'
-                          : 'border-transparent hover:text-pink-500 text-gray-500 font-medium'
-                      } inline-flex items-center px-1 pt-1 border-b-2 text-sm`}
-                    >
-                      Messages
-                      {user?.unreadMessage && (
-                        <div className="ml-1.5 bg-pink-600 h-2 w-2 rounded-full"></div>
-                      )}
-                    </a>
-                  </Link>
                 </div>
               </div>
               <Search />
@@ -80,6 +72,15 @@ const Navbar = ({ user, currentPath }) => {
               {user ? (
                 <>
                   <div className="hidden lg:ml-4 lg:flex lg:items-center">
+                    <Link href="/messages">
+                      <button className="flex-shrink-0 relative bg-white p-1 mr-2 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                        <span className="sr-only">View messages</span>
+                        <ChatAlt2Icon className="h-6 w-6" aria-hidden="true" />
+                        {user.unreadMessage && (
+                          <div className="absolute top-1 right-2 bg-pink-600 h-2 w-2 rounded-full"></div>
+                        )}
+                      </button>
+                    </Link>
                     <Link href="/notifications">
                       <button className="flex-shrink-0 relative bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
                         <span className="sr-only">View notifications</span>
@@ -182,20 +183,6 @@ const Navbar = ({ user, currentPath }) => {
                   </a>
                 </Link>
               ))}
-              <Link href="/messages">
-                <a
-                  className={
-                    currentPath === '/messages'
-                      ? 'bg-pink-50 border-pink-500 text-pink-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium flex items-center'
-                      : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 flex items-center pl-3 pr-4 py-2 border-l-4 text-base font-medium'
-                  }
-                >
-                  Message
-                  {user?.unreadMessage && (
-                    <div className="ml-1.5 bg-pink-600 h-2 w-2 rounded-full"></div>
-                  )}
-                </a>
-              </Link>
             </div>
             {user ? (
               <div className="pt-4 pb-3 border-t border-gray-200">
@@ -215,15 +202,26 @@ const Navbar = ({ user, currentPath }) => {
                       {user.email}
                     </div>
                   </div>
-                  <Link href="/notifications">
-                    <button className="relative ml-auto flex-shrink-0 bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                      {user.unreadNotification && (
-                        <div className="absolute top-1 right-2 bg-pink-600 h-2 w-2 rounded-full"></div>
-                      )}
-                    </button>
-                  </Link>
+                  <div className="ml-auto">
+                    <Link href="/messages">
+                      <button className="relative flex-shrink-0 mr-1 bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                        <span className="sr-only">View messages</span>
+                        <ChatAlt2Icon className="h-6 w-6" aria-hidden="true" />
+                        {user.unreadMessage && (
+                          <div className="absolute top-1 right-2 bg-pink-600 h-2 w-2 rounded-full"></div>
+                        )}
+                      </button>
+                    </Link>
+                    <Link href="/notifications">
+                      <button className="relative flex-shrink-0 bg-white p-1 text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                        <span className="sr-only">View notifications</span>
+                        <BellIcon className="h-6 w-6" aria-hidden="true" />
+                        {user.unreadNotification && (
+                          <div className="absolute top-1 right-2 bg-pink-600 h-2 w-2 rounded-full"></div>
+                        )}
+                      </button>
+                    </Link>
+                  </div>
                 </div>
                 <div className="mt-3 space-y-1">
                   <Link href={`/${user.username}`}>
