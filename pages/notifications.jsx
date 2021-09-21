@@ -33,7 +33,7 @@ const NotificationsPage = () => {
         console.log(error);
       }
     };
-    return () => setNotificationsToRead();
+    setNotificationsToRead();
   }, []);
 
   return (
