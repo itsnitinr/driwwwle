@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Link from 'next/link';
 import cookie from 'js-cookie';
 import { format } from 'date-fns';
 import { useState, useEffect } from 'react';
@@ -153,10 +154,20 @@ const PostPage = ({ user }) => {
               Icon={ClockIcon}
               detail={format(new Date(data.createdAt), 'do MMM yyyy, hh:mm a')}
             />
-            <PostDetailsItem
-              Icon={TagIcon}
-              detail={data.techStack.join(', ')}
-            />
+            <div className="flex flex-wrap items-center border-b py-1">
+              <div className="w-5 mr-2">
+                <TagIcon className="h-5 w-5 text-pink-600" />
+              </div>
+              <div className="flex-1 flex flex-wrap gap-2">
+                {data.techStack.map((tag, index) => (
+                  <Link key={index} href={`/posts/tag/${tag}`}>
+                    <a className="bg-gray-100 hover:bg-pink-600 hover:text-white transition text-gray-800 text-sm font-semibold rounded-md px-2 py-1">
+                      {tag}
+                    </a>
+                  </Link>
+                ))}
+              </div>
+            </div>
             <PostDetailsLink Icon={GlobeAltIcon} detail={data.liveDemo} />
             {data.sourceCode && (
               <PostDetailsLink Icon={CodeIcon} detail={data.sourceCode} />

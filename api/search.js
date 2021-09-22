@@ -62,4 +62,32 @@ router.get('/users/:searchText', auth, async (req, res) => {
   }
 });
 
+// @route:  GET /api/search/tag/:tag
+// @desc:   Get posts with associated tag
+router.get('/tag/:tag', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 12;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await Post.countDocuments({ techStack: req.params.tag });
+
+    const posts = await Post.find({ techStack: req.params.tag })
+      .skip(startIndex)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .populate('user');
+
+    let next = null;
+    if (endIndex < total) {
+      next = page + 1;
+    }
+
+    res.status(200).json({ posts, next, total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 module.exports = router;

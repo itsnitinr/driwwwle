@@ -47,6 +47,7 @@ MyApp.getInitialProps = async ({ ctx }) => {
   const availableForEveryone =
     ctx.pathname === '/home' ||
     ctx.pathname === '/posts/[id]' ||
+    ctx.pathname === '/posts/tag/[tag]' ||
     ctx.pathname === '/[username]';
 
   // If user is not logged in

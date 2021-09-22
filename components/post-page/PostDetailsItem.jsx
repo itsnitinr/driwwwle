@@ -6,7 +6,9 @@ const PostDetailsItem = ({ Icon, detail, isLikes, open, setOpen, postId }) => {
       className={`flex flex-wrap items-center border-b py-1 ${
         isLikes && 'cursor-pointer hover:text-pink-600 transition'
       }`}
-      onClick={() => setOpen(true)}
+      onClick={() => {
+        if (isLikes) setOpen(true);
+      }}
     >
       <div className="w-5 mr-2">
         <Icon className="h-5 w-5 text-pink-600" />
