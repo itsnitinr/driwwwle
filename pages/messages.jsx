@@ -192,7 +192,7 @@ const MessagesPage = ({ user }) => {
         <div
           className={`${
             chat ? 'hidden md:block' : 'block'
-          } w-full sm:w-1/2 md:w-1/3 lg:w-1/4 h-full`}
+          } w-full sm:w-1/2 md:w-1/3 lg:w-1/4 h-full overflow-y-auto`}
         >
           <div className="border-b border-gray-200 p-3 relative">
             <button className="flex items-center mx-auto select-none font-semibold focus:outline-none">
@@ -200,7 +200,7 @@ const MessagesPage = ({ user }) => {
             </button>
           </div>
           <Search chats={chats} setChats={setChats} />
-          <ul className="py-1 overflow-auto">
+          <ul className="py-1">
             {chats.map((chat) => (
               <ChatItem
                 key={chat.messagesWith}
