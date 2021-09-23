@@ -48,7 +48,9 @@ MyApp.getInitialProps = async ({ ctx }) => {
     ctx.pathname === '/home' ||
     ctx.pathname === '/posts/[id]' ||
     ctx.pathname === '/posts/tag/[tag]' ||
-    ctx.pathname === '/[username]';
+    ctx.pathname === '/[username]' ||
+    ctx.pathname === '/legal/terms' ||
+    ctx.pathname === '/legal/privacy';
 
   // If user is not logged in
   if (!token) {
