@@ -260,4 +260,8 @@ const PrivacyPolicy = () => {
   );
 };
 
+export function getServerSideProps() {
+  return { props: { title: 'Privacy Policy of Driwwwle' } };
+}
+
 export default PrivacyPolicy;

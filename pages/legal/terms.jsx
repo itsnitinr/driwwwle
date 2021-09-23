@@ -181,4 +181,8 @@ const TermsOfService = () => {
   );
 };
 
+export function getServerSideProps() {
+  return { props: { title: 'Terms of Service for Driwwwle' } };
+}
+
 export default TermsOfService;
