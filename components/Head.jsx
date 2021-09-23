@@ -23,7 +23,7 @@ const CustomHead = ({ title }) => {
         property="og:description"
         content="Discover creative websites and developers across the globe. "
       />
-      <meta property="og:image" content="https://imgur.com/pZJQ5kT.png" />
+      <meta property="og:image" content="https://imgur.com/e0p2qaM.png" />
 
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content="https://driwwwle.com/" />
@@ -35,7 +35,7 @@ const CustomHead = ({ title }) => {
         property="twitter:description"
         content="Discover creative websites and developers across the globe. "
       />
-      <meta property="twitter:image" content="https://imgur.com/pZJQ5kT.png" />
+      <meta property="twitter:image" content="https://imgur.com/e0p2qaM.png" />
       <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
   );
