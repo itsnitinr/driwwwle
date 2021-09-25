@@ -118,6 +118,15 @@ const Search = () => {
                   ))
                 )}
               </div>
+              <a
+                onClick={() => {
+                  router.push('/search');
+                  setSearchText('');
+                }}
+                className="text-xs cursor-pointer block mt-4 text-pink-600 text-center"
+              >
+                Try Advanced Search
+              </a>
             </div>
           )}
         </div>
