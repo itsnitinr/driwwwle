@@ -16,6 +16,7 @@ import { logoutUser } from '../utils/auth';
 const navigation = [
   { name: 'Home', href: '/home' },
   { name: 'Feed', href: '/feed' },
+  { name: 'Search', href: '/search' },
 ];
 
 const Navbar = ({ user, currentPath }) => {
@@ -42,7 +43,7 @@ const Navbar = ({ user, currentPath }) => {
                     />
                   </Link>
                 </div>
-                <div className="hidden lg:ml-6 lg:flex lg:space-x-8">
+                <div className="hidden lg:ml-6 lg:flex lg:space-x-5">
                   {navigation.map((link) => (
                     <Link key={link.name} href={link.href}>
                       <a

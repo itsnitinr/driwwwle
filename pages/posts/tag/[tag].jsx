@@ -7,7 +7,6 @@ import { QueryClient, useInfiniteQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 
 import baseURL from '../../../utils/baseURL';
-import NoPosts from '../../../components/NoPosts';
 import PostCard from '../../../components/PostCard';
 
 const TagPage = ({ user }) => {
@@ -19,7 +18,7 @@ const TagPage = ({ user }) => {
       ['tags', tag],
       async ({ pageParam = 1 }) => {
         const { data } = await axios.get(
-          `${baseURL}/api/search/tag/${tag}?page=${pageParam}`
+          `${baseURL}/api/search/advanced/tag/${tag}?page=${pageParam}`
         );
         return data;
       },
@@ -66,7 +65,7 @@ export async function getServerSideProps(ctx) {
     ['tags', tag],
     async ({ pageParam = 1 }) => {
       const { data } = await axios.get(
-        `${baseURL}/api/search/tag/${tag}?page=${pageParam}`
+        `${baseURL}/api/search/advanced/tag/${tag}?page=${pageParam}`
       );
       return data;
     }

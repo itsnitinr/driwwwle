@@ -62,9 +62,9 @@ router.get('/users/:searchText', auth, async (req, res) => {
   }
 });
 
-// @route:  GET /api/search/tag/:tag
+// @route:  GET /api/search/advanced/tag/:tag
 // @desc:   Get posts with associated tag
-router.get('/tag/:tag', async (req, res) => {
+router.get('/advanced/tag/:tag', async (req, res) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 12;
@@ -73,6 +73,80 @@ router.get('/tag/:tag', async (req, res) => {
     const total = await Post.countDocuments({ techStack: req.params.tag });
 
     const posts = await Post.find({ techStack: req.params.tag })
+      .skip(startIndex)
+      .limit(limit)
+      .sort({ createdAt: -1 })
+      .populate('user');
+
+    let next = null;
+    if (endIndex < total) {
+      next = page + 1;
+    }
+
+    res.status(200).json({ posts, next, total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route:  GET /api/search/advanced/users/:searchText
+// @desc:   Get users related to search text
+router.get('/advanced/users/:searchText', async (req, res) => {
+  try {
+    const { searchText } = req.params;
+
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 12;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await User.countDocuments({
+      $or: [
+        { name: { $regex: searchText, $options: 'i' } },
+        { username: { $regex: searchText, $options: 'i' } },
+      ],
+      isVerified: true,
+    });
+
+    const users = await User.find({
+      $or: [
+        { name: { $regex: searchText, $options: 'i' } },
+        { username: { $regex: searchText, $options: 'i' } },
+      ],
+      isVerified: true,
+    })
+      .skip(startIndex)
+      .limit(limit);
+
+    let next = null;
+    if (endIndex < total) {
+      next = page + 1;
+    }
+
+    res.status(200).json({ users, next, total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route:  GET /api/search/advanced/posts/:searchText
+// @desc:   Get posts related to search text
+router.get('/advanced/posts/:searchText', async (req, res) => {
+  try {
+    const { searchText } = req.params;
+
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 12;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const total = await Post.countDocuments({
+      title: { $regex: searchText, $options: 'i' },
+    });
+
+    const posts = await Post.find({
+      title: { $regex: searchText, $options: 'i' },
+    })
       .skip(startIndex)
       .limit(limit)
       .sort({ createdAt: -1 })
