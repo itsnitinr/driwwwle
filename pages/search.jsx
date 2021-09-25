@@ -73,9 +73,6 @@ const SearchPage = ({ user }) => {
           </select>
         </div>
       </form>
-      {(isLoading || isFetching) && (
-        <AiOutlineLoading3Quarters className="h-8 my-8 animate-spin mx-auto w-8 text-pink-600" />
-      )}
       {data?.pages[0]?.posts?.length > 0 && (
         <InfiniteScroll
           hasMore={hasNextPage}
@@ -126,6 +123,9 @@ const SearchPage = ({ user }) => {
       )}
       {data?.pages[0]?.users?.length === 0 && (
         <p className="text-pink-600 text-center my-8 text-lg">No users found</p>
+      )}
+      {(isLoading || isFetching) && (
+        <AiOutlineLoading3Quarters className="h-8 my-8 animate-spin mx-auto w-8 text-pink-600" />
       )}
     </div>
   );
