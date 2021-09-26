@@ -21,12 +21,12 @@ const UserSettings = ({ profile }) => {
     profile.techStack.join(', ')
   );
   const [social, setSocial] = useState({
-    github: profile.social.github,
-    website: profile.social.website,
-    linkedin: profile.social.linkedin,
-    twitter: profile.social.twitter,
-    instagram: profile.social.twitter,
-    youtube: profile.social.youtube,
+    github: profile.social?.github || '',
+    website: profile.social?.website || '',
+    linkedin: profile.social?.linkedin || '',
+    twitter: profile.social?.twitter || '',
+    instagram: profile.social?.twitter || '',
+    youtube: profile.social?.youtube || '',
   });
 
   const { github, website, linkedin, twitter, instagram, youtube } = social;
