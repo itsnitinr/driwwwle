@@ -100,7 +100,7 @@ const FollowModal = ({ open, setOpen, username, statsToShow }) => {
                                 src={follower.user.profilePicUrl}
                                 width={30}
                                 height={30}
-                                className="rounded-full"
+                                className="rounded-full object-cover"
                               />
                               <h3 className="text-lg ml-2">
                                 {follower.user.username}

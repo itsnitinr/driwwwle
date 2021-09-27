@@ -95,7 +95,7 @@ const LikeModal = ({ open, setOpen, postId }) => {
                                 src={like.user.profilePicUrl}
                                 width={30}
                                 height={30}
-                                className="rounded-full"
+                                className="rounded-full object-cover"
                               />
                               <h3 className="text-lg ml-2">
                                 {like.user.username}

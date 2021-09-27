@@ -14,7 +14,7 @@ const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
       <div className="flex items-center">
         <Image
           src={post.user.profilePicUrl}
-          className="rounded-full"
+          className="rounded-full object-cover"
           height={50}
           width={50}
         />

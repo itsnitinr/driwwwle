@@ -66,14 +66,14 @@ const Search = () => {
                         router.push(`/${user.username}`);
                         setSearchText('');
                       }}
-                      className="flex cursor-pointer"
+                      className="flex cursor-pointer items-center"
                       key={user._id}
                     >
                       <Image
                         src={user.profilePicUrl}
                         height={30}
                         width={30}
-                        className="rounded-full"
+                        className="rounded-full object-cover"
                       />
                       <p className="text-md ml-2">
                         {user.name.length > 20
@@ -93,7 +93,7 @@ const Search = () => {
                         router.push(`/posts/${post._id}`);
                         setSearchText('');
                       }}
-                      className="flex cursor-pointer"
+                      className="flex items-center cursor-pointer"
                       key={post._id}
                     >
                       <Image

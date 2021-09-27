@@ -37,7 +37,7 @@ const ThumbnailsDND = ({ images, setImages }) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       src={URL.createObjectURL(image)}
-                      className="w-full h-full rounded-lg shadow cursor-pointer"
+                      className="w-full h-full rounded-lg shadow cursor-pointer object-cover"
                     />
                   )}
                 </Draggable>

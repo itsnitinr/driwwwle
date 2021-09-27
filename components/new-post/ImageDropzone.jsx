@@ -29,7 +29,9 @@ const ImageDropzone = ({ setImages }) => {
         <p className="text-lg font-semibold mb-1">
           Drop your images here or <span className="text-pink-600">browse</span>
         </p>
-        <p className="text-md text-gray-400">Maximum 5 image files only</p>
+        <p className="text-md text-gray-400">
+          Max 5 images. 16:9 aspect ratio recommended.
+        </p>
       </div>
     </div>
   );

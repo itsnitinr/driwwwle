@@ -104,7 +104,7 @@ const SearchPage = ({ user }) => {
                   <div className="hover:text-pink-600 transition cursor-pointer">
                     <div className="space-y-1">
                       <Image
-                        className="mx-auto h-16 w-16 rounded-full lg:w-20 lg:h-20"
+                        className="mx-auto h-16 w-16 rounded-full lg:w-20 lg:h-20 object-cover"
                         src={user.profilePicUrl}
                         alt={user.name}
                         width={70}

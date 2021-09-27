@@ -57,7 +57,7 @@ const ProfileHeader = ({ profile, followers, following, user }) => {
       <div className="flex justify-center px-8 py-8 md:py-12">
         <div>
           <Image
-            className="rounded-full"
+            className="rounded-full object-cover"
             src={profile.user.profilePicUrl}
             height={100}
             width={100}

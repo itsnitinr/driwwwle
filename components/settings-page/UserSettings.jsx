@@ -142,7 +142,7 @@ const UserSettings = ({ user }) => {
                   aria-hidden="true"
                 >
                   <img
-                    className="rounded-full h-full w-full"
+                    className="rounded-full h-full w-full object-cover"
                     src={
                       profilePic
                         ? URL.createObjectURL(profilePic)
@@ -174,7 +174,7 @@ const UserSettings = ({ user }) => {
 
             <div className="hidden relative rounded-full overflow-hidden lg:block">
               <img
-                className="relative rounded-full w-32 h-32"
+                className="relative rounded-full w-32 h-32 object-cover"
                 src={
                   profilePic
                     ? URL.createObjectURL(profilePic)

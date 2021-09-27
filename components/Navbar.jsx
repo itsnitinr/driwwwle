@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import {
@@ -97,10 +98,12 @@ const Navbar = ({ user, currentPath }) => {
                           <div>
                             <Menu.Button className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
                               <span className="sr-only">Open user menu</span>
-                              <img
-                                className="h-8 w-8 rounded-full"
+                              <Image
+                                className="h-8 w-8 rounded-full object-cover"
                                 src={user.profilePicUrl}
                                 alt={user.name}
+                                height={32}
+                                width={32}
                               />
                             </Menu.Button>
                           </div>
@@ -189,10 +192,12 @@ const Navbar = ({ user, currentPath }) => {
               <div className="pt-4 pb-3 border-t border-gray-200">
                 <div className="flex items-center px-4">
                   <div className="flex-shrink-0">
-                    <img
-                      className="h-10 w-10 rounded-full"
+                    <Image
+                      className="h-10 w-10 rounded-full object-cover"
                       src={user.profilePicUrl}
                       alt={user.name}
+                      height={48}
+                      width={48}
                     />
                   </div>
                   <div className="ml-3">
