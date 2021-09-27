@@ -21,6 +21,13 @@ const profileSchema = new mongoose.Schema(
       instagram: { type: String },
       youtube: { type: String },
     },
+    badges: [
+      {
+        title: String,
+        image: String,
+        description: String,
+      },
+    ],
   },
   {
     timestamps: true,

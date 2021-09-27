@@ -19,7 +19,8 @@ router.get('/', auth, async (req, res) => {
         ((notification.type === 'like' || notification.type === 'comment') &&
           notification.user?._id &&
           notification.post?._id) ||
-        (notification.type === 'follow' && notification.user?._id)
+        (notification.type === 'follow' && notification.user?._id) ||
+        notification.type === 'badge'
     );
 
     res.status(200).json(notifications);

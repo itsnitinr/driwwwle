@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { ChatAltIcon, HeartIcon, UserAddIcon } from '@heroicons/react/solid';
+import { BiAward } from 'react-icons/bi';
 
 const NotificationItem = ({ notification, index, length }) => {
   return (
@@ -121,6 +122,39 @@ const NotificationItem = ({ notification, index, length }) => {
                       {notification.post.title}
                     </a>
                   </Link>
+                </div>
+                <p className="text-gray-700 ml-2 text-sm">
+                  {formatDistanceToNowStrict(new Date(notification.date), {
+                    addSuffix: true,
+                  })}
+                </p>
+              </div>
+            </>
+          ) : notification.type === 'badge' ? (
+            <>
+              <Link href="/driwwwle">
+                <div className="relative cursor-pointer">
+                  <Image
+                    className="rounded-full flex items-center justify-center ring-8 ring-white"
+                    src="https://res.cloudinary.com/nitinr/image/upload/v1631657391/driwwwle/atjmp5lij1wy2ox4pnsc.png"
+                    width={40}
+                    height={40}
+                  />
+                  <span className="absolute -bottom-0.5 rounded-full -right-1 bg-pink-600 p-0.5">
+                    <BiAward
+                      className="h-3 w-3 text-white"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </div>
+              </Link>
+              <div className="min-w-0 w-full flex justify-between py-1.5">
+                <div className="text-md text-gray-500 md:ml-2 ml-0">
+                  You have been awarded the{' '}
+                  <span className="font-medium text-gray-900">
+                    {notification.text} badge
+                  </span>
+                  .
                 </div>
                 <p className="text-gray-700 ml-2 text-sm">
                   {formatDistanceToNowStrict(new Date(notification.date), {

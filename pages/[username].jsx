@@ -1,10 +1,12 @@
 import axios from 'axios';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { QueryClient, useQuery } from 'react-query';
 import { dehydrate } from 'react-query/hydration';
 
 import PostCard from '../components/PostCard';
+import BadgeModal from '../components/BadgeModal';
 import ProfileHeader from '../components/profile-page/ProfileHeader';
 import SavedPosts from '../components/profile-page/SavedPosts';
 import ProfileTabs from '../components/profile-page/ProfileTabs';
@@ -20,6 +22,8 @@ const getProfile = async (username) => {
 
 const ProfilePage = ({ user }) => {
   const [currentTab, setCurrentTab] = useState('Posts');
+  const [currentBadge, setCurrentBadge] = useState({});
+  const [badgeModalOpen, setBadgeModalOpen] = useState(false);
 
   const router = useRouter();
   const { username } = router.query;
@@ -80,6 +84,34 @@ const ProfilePage = ({ user }) => {
                   ))}
                 </div>
               </div>
+              {data.profile.badges.length > 0 && (
+                <div className="mb-6">
+                  <h1 className="text-gray-800 mb-2 font-semibold text-lg">
+                    Badges
+                  </h1>
+                  <div className="flex flex-wrap gap-3">
+                    {data.profile.badges.map((badge, index) => (
+                      <Image
+                        key={index}
+                        src={badge.image}
+                        alt={badge.title}
+                        height={80}
+                        width={80}
+                        className="cursor-pointer"
+                        onClick={() => {
+                          setCurrentBadge(badge);
+                          setBadgeModalOpen(true);
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <BadgeModal
+                    badge={currentBadge}
+                    open={badgeModalOpen}
+                    setOpen={setBadgeModalOpen}
+                  />
+                </div>
+              )}
             </div>
             <div className="w-full md:w-1/3">
               <h1 className="text-gray-800 mb-2 font-semibold text-lg">

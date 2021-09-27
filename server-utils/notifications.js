@@ -141,6 +141,24 @@ const removeFollowerNotification = async (
   }
 };
 
+const newBadgeNotification = async (userToNotifyId, badgeTitle) => {
+  try {
+    const userToNotify = await Notification.findOne({ user: userToNotifyId });
+    const notification = {
+      type: 'badge',
+      text: badgeTitle,
+      date: Date.now(),
+    };
+
+    userToNotify.notifications.unshift(notification);
+    await userToNotify.save();
+
+    await setNotificationsToUnread(userToNotifyId);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 module.exports = {
   newLikeNotification,
   removeLikeNotification,
@@ -148,4 +166,5 @@ module.exports = {
   removeCommentNotification,
   newFollowerNotification,
   removeFollowerNotification,
+  newBadgeNotification,
 };

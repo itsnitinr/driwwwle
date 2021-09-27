@@ -42,6 +42,7 @@ router.post('/:token', upload.single('profilePic'), async (req, res) => {
     profileFields.user = user._id;
     profileFields.bio = bio;
     profileFields.techStack = JSON.parse(techStack);
+    profileFields.badges = [];
 
     profileFields.social = {};
     if (github) profileFields.social.github = github;
