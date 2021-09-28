@@ -22,7 +22,7 @@ const HomePage = ({ user }) => {
 
   return (
     <main className="bg-gray-50">
-      <HeroBanner />
+      <HeroBanner user={user} />
       <InfiniteScroll
         hasMore={hasNextPage}
         loadMore={fetchNextPage}
