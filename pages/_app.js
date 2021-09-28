@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { useState } from 'react';
+import Script from 'next/script';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -16,20 +18,53 @@ import 'react-toastify/dist/ReactToastify.css';
 import baseURL from '../utils/baseURL';
 import { redirectUser } from '../utils/auth';
 
+import * as gtag from '../lib/gtag';
+
 function MyApp({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient());
 
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      gtag.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Layout {...pageProps}>
-          <ToastContainer />
-          <Head title={pageProps.title} />
-          <Component {...pageProps} />
-        </Layout>
-        <ReactQueryDevtools />
-      </Hydrate>
-    </QueryClientProvider>
+    <>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+      />
+      <Script
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${gtag.GA_TRACKING_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+        }}
+      />
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Layout {...pageProps}>
+            <ToastContainer />
+            <Head title={pageProps.title} />
+            <Component {...pageProps} />
+          </Layout>
+          <ReactQueryDevtools />
+        </Hydrate>
+      </QueryClientProvider>
+    </>
   );
 }
 
