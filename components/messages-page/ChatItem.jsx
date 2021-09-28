@@ -25,7 +25,7 @@ const ChatItem = ({ chat, connectedUsers }) => {
       <button className="flex items-center w-full px-4 py-2 select-none hover:bg-gray-100 focus:outline-none">
         <div className="relative">
           <Image
-            className="rounded-full border"
+            className="rounded-full border object-cover"
             src={chat.profilePicUrl}
             height={50}
             width={50}

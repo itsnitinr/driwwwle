@@ -7,7 +7,7 @@ const Banner = ({ banner }) => {
         src={banner.profilePicUrl}
         height={32}
         width={32}
-        className="rounded-full"
+        className="rounded-full object-cover"
       />
       <h3 className="font-semibold text-xl text-gray-600">{banner.name}</h3>
     </div>

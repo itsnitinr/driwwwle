@@ -64,19 +64,19 @@ const Search = ({ chats, setChats }) => {
         onChange={(e) => setSearchText(e.target.value)}
       />
       {data && searchText.trim().length !== 0 && (
-        <div className="absolute space-y-2 top-14 w-full bg-white z-50 px-2 py-4 shadow-2xl rounded">
+        <div className="absolute space-y-1 top-14 w-full bg-white z-50 py-2 shadow-2xl rounded">
           {data.length > 0 ? (
             data.map((user) => (
               <div
                 onClick={() => addChat(user)}
-                className="flex cursor-pointer"
+                className="flex items-center cursor-pointer px-2 py-1 hover:bg-gray-100"
                 key={user._id}
               >
                 <Image
                   src={user.profilePicUrl}
                   height={30}
                   width={30}
-                  className="rounded-full"
+                  className="rounded-full object-cover"
                 />
                 <p className="text-md ml-2">
                   {user.name.length > 20

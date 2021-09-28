@@ -37,7 +37,7 @@ const Comment = ({ comment, user, postId, queryClient }) => {
             src={comment.user.profilePicUrl}
             height={45}
             width={45}
-            className="rounded-full"
+            className="rounded-full object-cover"
           />
         </div>
       </Link>
