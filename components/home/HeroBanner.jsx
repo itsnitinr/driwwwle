@@ -36,21 +36,17 @@ const HeroBanner = ({ user }) => {
         />
         {user ? (
           <Link href="/posts/new">
-            <>
-              <button className="md:hidden text-lg flex items-center font-semibold bg-white py-2 px-5 text-pink-600 mx-auto rounded-lg shadow">
-                <PlusCircleIcon className="h-6 w-6 text-pink-600" />
-                <span className="ml-2">New Post</span>
-              </button>
-            </>
+            <a className="md:hidden text-lg flex items-center font-semibold bg-white py-2 px-5 text-pink-600 mx-auto rounded-lg shadow">
+              <PlusCircleIcon className="h-6 w-6 text-pink-600" />
+              <span className="ml-2">New Post</span>
+            </a>
           </Link>
         ) : (
           <Link href="/login">
-            <>
-              <button className="md:hidden text-lg flex items-center font-semibold bg-white py-2 px-5 text-pink-600 mx-auto rounded-lg shadow">
-                <LoginIcon className="h-6 w-6 text-pink-600" />
-                <span className="ml-2">Log In</span>
-              </button>
-            </>
+            <a className="md:hidden text-lg flex items-center font-semibold bg-white py-2 px-5 text-pink-600 mx-auto rounded-lg shadow">
+              <LoginIcon className="h-6 w-6 text-pink-600" />
+              <span className="ml-2">Log In</span>
+            </a>
           </Link>
         )}
       </div>
