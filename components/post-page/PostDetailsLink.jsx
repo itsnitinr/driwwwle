@@ -5,7 +5,7 @@ const PostDetailsLink = ({ Icon, detail }) => {
         <Icon className="h-5 w-5 text-pink-600" />
       </div>
       <a
-        href={detail}
+        href={detail + '?ref=driwwwle'}
         target="_blank"
         rel="noopener"
         className="hover:text-pink-600 flex-1 transition break-all"
