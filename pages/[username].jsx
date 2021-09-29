@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -75,12 +76,11 @@ const ProfilePage = ({ user }) => {
                 </h1>
                 <div className="flex flex-wrap gap-3">
                   {data.profile.techStack.map((techStack, index) => (
-                    <span
-                      key={index}
-                      className="bg-gray-200 text-gray-800 text-sm font-semibold rounded-md px-2 py-1"
-                    >
-                      {techStack}
-                    </span>
+                    <Link key={index} href={`/posts/tag/${techStack}`}>
+                      <a className="bg-gray-100 hover:bg-pink-600 hover:text-white transition text-gray-800 text-sm font-semibold rounded-md px-2 py-1">
+                        {techStack}
+                      </a>
+                    </Link>
                   ))}
                 </div>
               </div>
