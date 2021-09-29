@@ -61,9 +61,9 @@ const PostCard = ({ post, user }) => {
           <Image
             src={post.images[0]}
             alt={post.name}
-            width={375}
-            height={225}
-            className="rounded-lg group-hover:brightness-50 transition cursor-pointer"
+            width={600}
+            height={338}
+            className="rounded-lg group-hover:brightness-50 transition cursor-pointer object-cover object-top"
           />
           <p className="absolute opacity-0 group-hover:opacity-100 transition text-white bottom-6 left-4 font-medium cursor-pointer">
             {post.title.length > 20

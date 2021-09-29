@@ -49,13 +49,7 @@ const PostCarousel = ({ images, title }) => {
     <Slider {...settings}>
       {images.map((image) => (
         <div key={image} className="group">
-          <Image
-            className="rounded-lg shadow-4xl"
-            src={image}
-            width={1000}
-            height={550}
-            alt={title}
-          />
+          <img className="rounded-lg w-full h-auto" src={image} alt={title} />
         </div>
       ))}
     </Slider>
