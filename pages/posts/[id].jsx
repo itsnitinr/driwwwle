@@ -29,6 +29,7 @@ import PostDetailsLink from '../../components/post-page/PostDetailsLink';
 import NewComment from '../../components/new-post/NewComment';
 import Comment from '../../components/new-post/Comment';
 import NotFound from '../../components/404';
+import PostHead from '../../components/PostHead';
 
 const getPost = async (id) => {
   const { data } = await axios.get(`${baseURL}/api/posts/${id}`);
@@ -114,80 +115,88 @@ const PostPage = ({ user }) => {
   }
 
   return (
-    <div className="max-w-5xl px-4 py-8 md:px-12 md:py-12 mx-auto">
-      <PostHeader
-        post={data}
-        user={user}
-        deletePost={deletePost}
-        likePost={() => likeMutation.mutate()}
-        savePost={() => saveMutation.mutate()}
-      />
-      <div className="my-8">
-        <PostCarousel images={data.images} title={data.title} />
-      </div>
-      <div className="flex flex-wrap md:flex-nowrap">
-        <div className="w-full md:w-2/3 lg:w-3/4">
-          <div
-            className="w-full text-lg mb-6 md:mb-0 pr-4"
-            dangerouslySetInnerHTML={{ __html: data.description }}
-          ></div>
-          <div className="mt-6">
-            <h1 className="mb-4 text-lg text-pink-600 font-semibold">
-              Comments ({data.comments.length})
-            </h1>
-            {user && <NewComment queryClient={queryClient} id={data._id} />}
-            {data.comments.map((comment) => (
-              <Comment
-                key={comment._id}
-                comment={comment}
-                postId={data._id}
-                user={user}
-                queryClient={queryClient}
-              />
-            ))}
-          </div>
+    <>
+      <PostHead post={data} />
+      <div className="max-w-5xl px-4 py-8 md:px-12 md:py-12 mx-auto">
+        <PostHeader
+          post={data}
+          user={user}
+          deletePost={deletePost}
+          likePost={() => likeMutation.mutate()}
+          savePost={() => saveMutation.mutate()}
+        />
+        <div className="my-8">
+          <PostCarousel images={data.images} title={data.title} />
         </div>
-        <div className="w-100 md:w-1/3 lg:w-1/4 w-full">
-          <h3 className="text-lg font-semibold text-pink-600">Post Details</h3>
-          <div className="grid grid-col-1 mt-4 space-y-2">
-            <PostDetailsItem
-              Icon={ClockIcon}
-              detail={format(new Date(data.createdAt), 'do MMM yyyy, hh:mm a')}
-            />
-            <div className="flex flex-wrap items-center border-b py-1">
-              <div className="w-5 mr-2">
-                <TagIcon className="h-5 w-5 text-pink-600" />
-              </div>
-              <div className="flex-1 flex flex-wrap gap-2">
-                {data.techStack.map((tag, index) => (
-                  <Link key={index} href={`/posts/tag/${tag}`}>
-                    <a className="bg-gray-100 hover:bg-pink-600 hover:text-white transition text-gray-800 text-sm font-semibold rounded-md px-2 py-1">
-                      {tag}
-                    </a>
-                  </Link>
-                ))}
-              </div>
+        <div className="flex flex-wrap md:flex-nowrap">
+          <div className="w-full md:w-2/3 lg:w-3/4">
+            <div
+              className="w-full text-lg mb-6 md:mb-0 pr-4"
+              dangerouslySetInnerHTML={{ __html: data.description }}
+            ></div>
+            <div className="mt-6">
+              <h1 className="mb-4 text-lg text-pink-600 font-semibold">
+                Comments ({data.comments.length})
+              </h1>
+              {user && <NewComment queryClient={queryClient} id={data._id} />}
+              {data.comments.map((comment) => (
+                <Comment
+                  key={comment._id}
+                  comment={comment}
+                  postId={data._id}
+                  user={user}
+                  queryClient={queryClient}
+                />
+              ))}
             </div>
-            <PostDetailsLink Icon={GlobeAltIcon} detail={data.liveDemo} />
-            {data.sourceCode && (
-              <PostDetailsLink Icon={CodeIcon} detail={data.sourceCode} />
-            )}
-            <PostDetailsItem
-              Icon={HeartIcon}
-              detail={`${data.likes.length} likes`}
-              isLikes
-              open={modalOpen}
-              setOpen={setModalOpen}
-              postId={data._id}
-            />
-            <PostDetailsItem
-              Icon={ChatIcon}
-              detail={`${data.comments.length} comments`}
-            />
+          </div>
+          <div className="w-100 md:w-1/3 lg:w-1/4 w-full">
+            <h3 className="text-lg font-semibold text-pink-600">
+              Post Details
+            </h3>
+            <div className="grid grid-col-1 mt-4 space-y-2">
+              <PostDetailsItem
+                Icon={ClockIcon}
+                detail={format(
+                  new Date(data.createdAt),
+                  'do MMM yyyy, hh:mm a'
+                )}
+              />
+              <div className="flex flex-wrap items-center border-b py-1">
+                <div className="w-5 mr-2">
+                  <TagIcon className="h-5 w-5 text-pink-600" />
+                </div>
+                <div className="flex-1 flex flex-wrap gap-2">
+                  {data.techStack.map((tag, index) => (
+                    <Link key={index} href={`/posts/tag/${tag}`}>
+                      <a className="bg-gray-100 hover:bg-pink-600 hover:text-white transition text-gray-800 text-sm font-semibold rounded-md px-2 py-1">
+                        {tag}
+                      </a>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <PostDetailsLink Icon={GlobeAltIcon} detail={data.liveDemo} />
+              {data.sourceCode && (
+                <PostDetailsLink Icon={CodeIcon} detail={data.sourceCode} />
+              )}
+              <PostDetailsItem
+                Icon={HeartIcon}
+                detail={`${data.likes.length} likes`}
+                isLikes
+                open={modalOpen}
+                setOpen={setModalOpen}
+                postId={data._id}
+              />
+              <PostDetailsItem
+                Icon={ChatIcon}
+                detail={`${data.comments.length} comments`}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
