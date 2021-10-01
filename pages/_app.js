@@ -10,6 +10,7 @@ import { parseCookies, destroyCookie } from 'nookies';
 
 import Head from '../components/Head';
 import Layout from '../components/Layout';
+import NewFeatureModal from '../components/NewFeatureModal';
 
 import 'tailwindcss/tailwind.css';
 import '../public/nprogress.css';
@@ -62,6 +63,7 @@ function MyApp({ Component, pageProps }) {
             <Head title={pageProps.title} />
             <Component {...pageProps} />
           </Layout>
+          <NewFeatureModal />
           <ReactQueryDevtools />
         </Hydrate>
       </QueryClientProvider>

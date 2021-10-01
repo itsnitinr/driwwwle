@@ -6,7 +6,7 @@ import CTA from '../components/announcements-page/CTA';
 
 import baseURL from '../utils/baseURL';
 
-export default function Example({ users, posts }) {
+const AnnouncementsPage = ({ users, posts }) => {
   return (
     <>
       <Stats users={users} posts={posts} />
@@ -14,7 +14,7 @@ export default function Example({ users, posts }) {
       <CTA />
     </>
   );
-}
+};
 
 export async function getServerSideProps() {
   const { data } = await axios.get(`${baseURL}/api/stats`);
@@ -26,3 +26,5 @@ export async function getServerSideProps() {
     },
   };
 }
+
+export default AnnouncementsPage;

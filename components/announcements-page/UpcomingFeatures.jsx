@@ -1,7 +1,7 @@
 import {
   FilterIcon,
   PencilAltIcon,
-  SortAscendingIcon,
+  BadgeCheckIcon,
 } from '@heroicons/react/outline';
 import { BiMedal } from 'react-icons/bi';
 import { RiDashboardLine, RiUserSearchLine } from 'react-icons/ri';
@@ -17,7 +17,7 @@ const features = [
     name: 'More Badges For Your Profile',
     description:
       'Contributed to the project or posted something creative? Youll be rewarded with cool badges to show off.',
-    icon: PencilAltIcon,
+    icon: BadgeCheckIcon,
   },
   {
     name: 'Weekly & Monthly Leaderboard',
@@ -41,7 +41,7 @@ const features = [
     name: 'Edit Posts Even After Publishing',
     description:
       "Made a mistake while publishing your post? Don't worry! You can still edit your posts after publishing them.",
-    icon: SortAscendingIcon,
+    icon: PencilAltIcon,
   },
 ];
 
