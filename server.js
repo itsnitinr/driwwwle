@@ -77,6 +77,7 @@ nextApp.prepare().then(() => {
   app.use('/api/notifications', require('./api/notifications'));
   app.use('/api/chats', require('./api/chats'));
   app.use('/api/badges', require('./api/badges'));
+  app.use('/api/stats', require('./api/stats'));
 
   app.all('*', (req, res) => handle(req, res));
   server.listen(PORT, (err) => {
