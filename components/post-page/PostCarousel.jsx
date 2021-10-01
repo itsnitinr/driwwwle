@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Slider from 'react-slick';
-import "./Slider_buttons.css";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -22,22 +21,11 @@ const PostCarousel = ({ images, title }) => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={className + '  group-hover:opacity-100 transition'}
-        style={{
-          ...style,
-          display: 'block',
-          left: '3vw',
-          zIndex: 100,
-          background: '#db2777',
-          height: '21px',
-          paddingTop: '0.2%',
-          transform: 'scale(1.2)',
-          width: '21px',
-          top: '47%',
-          borderRadius: '50%',
-          left: '3vw',
-          opacity: '1'
-        }}
+        className={
+          className +
+          ' opacity-0 group-hover:opacity-100 transition before:text-pink-600 block z-50'
+        }
+        style={{ ...style, left: '3vw' }}
         onClick={onClick}
       />
     );
@@ -47,22 +35,10 @@ const PostCarousel = ({ images, title }) => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={className + '  group-hover:opacity-100 transition'}
-        style={{
-          ...style,
-          display: 'block',
-          left: '3vw',
-          zIndex: 100,
-          background: '#db2777',
-          height: '21px',
-          paddingTop: '0.2%',
-          transform: 'scale(1.2)',
-          width: '21px',
-          top: '47%',
-          borderRadius: '50%',
-          right: '3vw',
-          opacity: '1'
-        }}
+        className={
+          className + ' opacity-0 group-hover:opacity-100 transition block z-50'
+        }
+        style={{ ...style, right: '3vw' }}
         onClick={onClick}
       />
     );

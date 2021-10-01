@@ -1,0 +1,5 @@
+.slick-prev::before,
+.slick-next::before {
+  color: #db2777 !important;
+  opacity: 1 !important;
+}

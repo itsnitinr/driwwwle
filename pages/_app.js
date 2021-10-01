@@ -13,6 +13,7 @@ import Layout from '../components/Layout';
 
 import 'tailwindcss/tailwind.css';
 import '../public/nprogress.css';
+import '../public/slick-theme.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import baseURL from '../utils/baseURL';
