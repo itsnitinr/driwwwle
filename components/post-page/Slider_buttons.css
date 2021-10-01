@@ -1,0 +1,12 @@
+.slick-prev,
+.slick-next {
+    left: -54px;
+    background: #db2777;
+    height: 21px;
+    padding-top: 0.2%;
+    transform: scale(1.2);
+    width: 21px;
+    top: 47%;
+    border-radius: 50%;
+    left: 3vw;
+}

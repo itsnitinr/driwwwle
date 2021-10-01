@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Slider from 'react-slick';
-
+import "./Slider_buttons.css";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -22,7 +22,7 @@ const PostCarousel = ({ images, title }) => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={className + ' opacity-0 group-hover:opacity-100 transition'}
+        className={className + '  group-hover:opacity-100 transition'}
         style={{
           ...style,
           display: 'block',
@@ -38,7 +38,7 @@ const PostCarousel = ({ images, title }) => {
     const { className, style, onClick } = props;
     return (
       <div
-        className={className + ' opacity-0 group-hover:opacity-100 transition'}
+        className={className + '  group-hover:opacity-100 transition'}
         style={{ ...style, display: 'block', right: '3vw', zIndex: 100 }}
         onClick={onClick}
       />
