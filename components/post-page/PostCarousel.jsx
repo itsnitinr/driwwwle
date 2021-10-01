@@ -28,6 +28,15 @@ const PostCarousel = ({ images, title }) => {
           display: 'block',
           left: '3vw',
           zIndex: 100,
+          background: '#db2777',
+          height: '21px',
+          paddingTop: '0.2%',
+          transform: 'scale(1.2)',
+          width: '21px',
+          top: '47%',
+          borderRadius: '50%',
+          left: '3vw',
+          opacity: '1'
         }}
         onClick={onClick}
       />
@@ -39,7 +48,21 @@ const PostCarousel = ({ images, title }) => {
     return (
       <div
         className={className + '  group-hover:opacity-100 transition'}
-        style={{ ...style, display: 'block', right: '3vw', zIndex: 100 }}
+        style={{
+          ...style,
+          display: 'block',
+          left: '3vw',
+          zIndex: 100,
+          background: '#db2777',
+          height: '21px',
+          paddingTop: '0.2%',
+          transform: 'scale(1.2)',
+          width: '21px',
+          top: '47%',
+          borderRadius: '50%',
+          right: '3vw',
+          opacity: '1'
+        }}
         onClick={onClick}
       />
     );
