@@ -61,7 +61,7 @@ const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
                 </>
               )}
             </button>
-            {post.user._id === user._id && (
+            {(post.user._id === user._id || user.role === 'root') && (
               <button
                 onClick={deletePost}
                 className="bg-red-100 text-red-600 py-2 px-3 flex items-center rounded-lg font-medium"
