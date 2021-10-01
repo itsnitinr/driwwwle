@@ -63,7 +63,7 @@ function MyApp({ Component, pageProps }) {
             <Head title={pageProps.title} />
             <Component {...pageProps} />
           </Layout>
-          <NewFeatureModal />
+          <NewFeatureModal user={pageProps.user} />
           <ReactQueryDevtools />
         </Hydrate>
       </QueryClientProvider>

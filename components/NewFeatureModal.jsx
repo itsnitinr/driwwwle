@@ -2,12 +2,12 @@ import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FaHandsHelping } from 'react-icons/fa';
 
-const NewFeatureModal = () => {
+const NewFeatureModal = ({ user }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const hasBeenShown = localStorage.getItem('shownFeedbackModal');
-    if (!hasBeenShown) {
+    if (user && !hasBeenShown) {
       setShowModal(true);
       localStorage.setItem('shownFeedbackModal', true);
     }
