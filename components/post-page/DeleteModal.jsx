@@ -61,7 +61,7 @@ const DeleteModal = ({ open, setOpen, deletePost }) => {
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
                         Are you sure you want to delete this post? All the likes
-                        and comments will also be delete. This action is
+                        and comments will also be deleted. This action is
                         irreversible.
                       </p>
                     </div>

@@ -16,7 +16,7 @@ const features = [
   {
     name: 'More Badges For Your Profile',
     description:
-      'Contributed to the project or posted something creative? Youll be rewarded with cool badges to show off.',
+      "Contributed to the project or posted something creative? You'll be rewarded with cool badges to show off.",
     icon: BadgeCheckIcon,
   },
   {
