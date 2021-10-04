@@ -79,6 +79,7 @@ MyApp.getInitialProps = async ({ ctx }) => {
     ctx.pathname === '/feed' ||
     ctx.pathname === '/notifications' ||
     ctx.pathname === '/posts/new' ||
+    ctx.pathname === '/posts/edit/[id]' ||
     ctx.pathname === '/messages' ||
     ctx.pathname === '/settings';
 

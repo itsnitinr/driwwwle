@@ -140,6 +140,56 @@ router.get('/:postId', async (req, res) => {
   }
 });
 
+// @route   PUT /api/posts/:postId
+// @desc    Create a new post
+router.put('/:postId', auth, upload.array('images', 5), async (req, res) => {
+  const {
+    title,
+    description,
+    originalImages,
+    liveDemo,
+    sourceCode,
+    techStack,
+    isOriginalImages,
+  } = req.body;
+
+  if (!isOriginalImages && req.files.length < 1) {
+    return res.status(400).json({ msg: 'Atleast one image is required' });
+  }
+
+  try {
+    let post = await Post.findById(req.params.postId);
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    if (post.user.toString() !== req.userId) {
+      return res
+        .status(401)
+        .json({ msg: 'You are not authorized to edit this post' });
+    }
+
+    const postObj = {
+      title,
+      description,
+      images: JSON.parse(isOriginalImages)
+        ? JSON.parse(originalImages)
+        : req.files.map((file) => file.path),
+      liveDemo,
+      techStack: JSON.parse(techStack),
+    };
+    if (sourceCode) postObj.sourceCode = sourceCode;
+
+    post = await Post.findByIdAndUpdate(req.params.postId, postObj, {
+      new: true,
+    });
+    res.status(201).json(post);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 // @route   DELETE /api/posts/:postId
 // @desc    Delete a post by ID
 router.delete('/:postId', auth, async (req, res) => {
