@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -7,7 +8,11 @@ import {
   PencilAltIcon,
 } from '@heroicons/react/solid';
 
+import DeleteModal from '../../components/post-page/DeleteModal';
+
 const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
+  const [open, setOpen] = useState(false);
+
   const isLiked =
     user && post.likes.filter((like) => like.user === user._id).length > 0;
 
@@ -71,18 +76,23 @@ const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
             {post.user._id === user._id && (
               <Link href={`/posts/edit/${post._id}`}>
                 <a className="bg-blue-100 text-blue-600 py-2 px-3 flex items-center rounded-lg font-medium">
-                  <PencilAltIcon className="h-5 w-5 mr-1" />{' '}
-                  <p className="hidden md:block">Edit</p>
+                  <PencilAltIcon className="h-5 w-5" />{' '}
+                  <p className="hidden md:block ml-1">Edit</p>
                 </a>
               </Link>
             )}
             {(post.user._id === user._id || user.role === 'root') && (
               <button
-                onClick={deletePost}
+                onClick={() => setOpen(true)}
                 className="bg-red-100 text-red-600 py-2 px-3 flex items-center rounded-lg font-medium"
               >
-                <TrashIcon className="h-5 w-5 mr-1" />{' '}
-                <p className="hidden md:block">Delete</p>
+                <TrashIcon className="h-5 w-5" />{' '}
+                <p className="hidden md:block ml-1">Delete</p>
+                <DeleteModal
+                  open={open}
+                  setOpen={setOpen}
+                  deletePost={deletePost}
+                />
               </button>
             )}
           </>
