@@ -1,6 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { HeartIcon, BookmarkIcon, TrashIcon } from '@heroicons/react/solid';
+import {
+  HeartIcon,
+  BookmarkIcon,
+  TrashIcon,
+  PencilAltIcon,
+} from '@heroicons/react/solid';
 
 const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
   const isLiked =
@@ -30,17 +35,19 @@ const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
       <div className="flex gap-2 md:gap-4">
         {user && (
           <>
-            <button
-              onClick={savePost}
-              className={`${
-                isSaved
-                  ? 'bg-blue-100 text-blue-600'
-                  : 'bg-gray-100 text-gray-700'
-              }  py-2 px-3 flex items-center rounded-lg font-medium`}
-            >
-              <BookmarkIcon className="h-5 w-5 mr-1" />{' '}
-              <p className="hidden md:block">{isSaved ? 'Saved' : 'Save'}</p>
-            </button>
+            {post.user._id !== user._id && (
+              <button
+                onClick={savePost}
+                className={`${
+                  isSaved
+                    ? 'bg-blue-100 text-blue-600'
+                    : 'bg-gray-100 text-gray-700'
+                }  py-2 px-3 flex items-center rounded-lg font-medium`}
+              >
+                <BookmarkIcon className="h-5 w-5 mr-1" />{' '}
+                <p className="hidden md:block">{isSaved ? 'Saved' : 'Save'}</p>
+              </button>
+            )}
             <button
               onClick={likePost}
               className={`${
@@ -61,6 +68,14 @@ const PostHeader = ({ post, user, deletePost, likePost, savePost }) => {
                 </>
               )}
             </button>
+            {post.user._id === user._id && (
+              <Link href={`/posts/edit/${post._id}`}>
+                <a className="bg-blue-100 text-blue-600 py-2 px-3 flex items-center rounded-lg font-medium">
+                  <PencilAltIcon className="h-5 w-5 mr-1" />{' '}
+                  <p className="hidden md:block">Edit</p>
+                </a>
+              </Link>
+            )}
             {(post.user._id === user._id || user.role === 'root') && (
               <button
                 onClick={deletePost}

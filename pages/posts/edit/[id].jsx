@@ -1,6 +1,6 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useQuery, QueryClient, useMutation } from 'react-query';
@@ -85,6 +85,12 @@ const EditPostPage = ({ user }) => {
       toast.error(err.response?.data?.msg || 'Please recheck your inputs');
     }
   };
+
+  useEffect(() => {
+    if (data.user._id !== user._id) {
+      router.push(`/posts/${data._id}`);
+    }
+  }, []);
 
   return (
     <div className="bg-gray-100 px-6 md:px-12 py-10">
