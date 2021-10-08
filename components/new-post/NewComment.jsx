@@ -12,7 +12,7 @@ const NewComment = ({ id, queryClient }) => {
   const mutation = useMutation(
     async () => {
       const { data } = await axios.post(
-        `${baseURL}/api/posts/comment/${id}`,
+        `${baseURL}/api/comments/${id}`,
         { text },
         {
           headers: {
@@ -25,8 +25,7 @@ const NewComment = ({ id, queryClient }) => {
     {
       onSuccess: (data) => {
         setText('');
-        const old = queryClient.getQueryData(['posts', id]);
-        queryClient.setQueryData(['posts', id], { ...old, comments: data });
+        queryClient.setQueryData(['comments', id], data);
         toast.success('Your comment has been posted');
       },
     }

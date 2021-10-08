@@ -2,9 +2,9 @@ import axios from 'axios';
 import Link from 'next/link';
 import cookie from 'js-cookie';
 import { format } from 'date-fns';
-import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import {
   useQuery,
   useMutation,
@@ -43,6 +43,11 @@ const PostPage = ({ user }) => {
   const queryClient = useQueryClient();
 
   const { data } = useQuery(['posts', id], () => getPost(id));
+
+  const { data: comments } = useQuery(['comments', id], async () => {
+    const { data } = await axios.get(`${baseURL}/api/comments/${id}`);
+    return data;
+  });
 
   const mutation = useMutation(async () => {
     await axios.delete(`${baseURL}/api/posts/${id}`, {
@@ -136,10 +141,10 @@ const PostPage = ({ user }) => {
             ></div>
             <div className="mt-6">
               <h1 className="mb-4 text-lg text-pink-600 font-semibold">
-                Comments ({data.comments.length})
+                Comments ({comments.length})
               </h1>
               {user && <NewComment queryClient={queryClient} id={data._id} />}
-              {data.comments.map((comment) => (
+              {comments.map((comment) => (
                 <Comment
                   key={comment._id}
                   comment={comment}
@@ -205,7 +210,15 @@ export async function getServerSideProps(ctx) {
 
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(['posts', id], () => getPost(id));
-  return { props: { dehydratedState: dehydrate(queryClient) } };
+  await queryClient.prefetchQuery(['comments', id], async () => {
+    const { data } = await axios.get(`${baseURL}/api/comments/${id}`);
+    return data;
+  });
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 }
 
 export default PostPage;

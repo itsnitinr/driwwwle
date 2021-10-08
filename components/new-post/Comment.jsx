@@ -13,7 +13,7 @@ const Comment = ({ comment, user, postId, queryClient }) => {
   const mutation = useMutation(
     async () => {
       const { data } = await axios.delete(
-        `${baseURL}/api/posts/comment/${postId}/${comment._id}`,
+        `${baseURL}/api/comments/${postId}/${comment._id}`,
         {
           headers: { Authorization: cookie.get('token') },
         }
@@ -22,8 +22,7 @@ const Comment = ({ comment, user, postId, queryClient }) => {
     },
     {
       onSuccess: (data) => {
-        const old = queryClient.getQueryData(['posts', postId]);
-        queryClient.setQueryData(['posts', postId], { ...old, comments: data });
+        queryClient.setQueryData(['comments', postId], data);
         toast.success('Your comment has been deleted');
       },
     }
