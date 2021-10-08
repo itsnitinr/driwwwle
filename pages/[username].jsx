@@ -113,12 +113,14 @@ const ProfilePage = ({ user }) => {
                 </div>
               )}
             </div>
-            <div className="w-full md:w-1/3">
-              <h1 className="text-gray-800 mb-2 font-semibold text-lg">
-                Social Profiles
-              </h1>
-              <SocialContainer social={data.profile?.social} />
-            </div>
+            {data.profile?.social && (
+              <div className="w-full md:w-1/3">
+                <h1 className="text-gray-800 mb-2 font-semibold text-lg">
+                  Social Profiles
+                </h1>
+                <SocialContainer social={data.profile?.social} />
+              </div>
+            )}
           </div>
         )}
         {currentTab === 'Saved' && <SavedPosts user={user} />}
