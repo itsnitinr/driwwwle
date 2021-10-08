@@ -52,7 +52,7 @@ const Comment = ({ comment, user, postId, queryClient }) => {
             {formatDistanceToNow(new Date(comment.date), { addSuffix: true })}
           </span>
         </h4>
-        <p className="text-sm">{comment.text}</p>
+        <p className="text-sm whitespace-pre-wrap">{comment.text}</p>
         {user && user._id === comment.user._id && (
           <TrashIcon
             onClick={() => mutation.mutate()}
