@@ -45,14 +45,6 @@ const postSchema = new mongoose.Schema(
         },
       },
     ],
-    comments: [
-      {
-        _id: { type: String, required: true },
-        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-        text: { type: String, required: true },
-        date: { type: Date, default: Date.now },
-      },
-    ],
     views: {
       type: Number,
       default: 0,
