@@ -113,7 +113,7 @@ const Comment = ({ comment, user, postId, queryClient }) => {
               {formatDistanceToNow(new Date(comment.date), { addSuffix: true })}
             </span>
           </h4>
-          <p className="text-sm">{comment.text}</p>
+          <p className="text-sm whitespace-pre-wrap">{comment.text}</p>
           <div className="flex items-center space-x-2 text-gray-700 mt-1">
             <div className="flex items-center space-x-1">
               {isLiked ? (

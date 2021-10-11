@@ -94,7 +94,9 @@ const Reply = ({ reply, user, queryClient, comment, postId }) => {
                 className="h-4 w-4 text-pink-600 cursor-pointer"
               />
             )}
-            <span className="text-sm">{reply.likes.length}</span>
+            <span className="text-sm whitespace-pre-wrap">
+              {reply.likes.length}
+            </span>
           </div>
           {user && user._id === reply.user._id && (
             <TrashIcon
