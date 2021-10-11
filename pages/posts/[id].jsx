@@ -26,8 +26,8 @@ import PostHeader from '../../components/post-page/PostHeader';
 import PostCarousel from '../../components/post-page/PostCarousel';
 import PostDetailsItem from '../../components/post-page/PostDetailsItem';
 import PostDetailsLink from '../../components/post-page/PostDetailsLink';
-import NewComment from '../../components/new-post/NewComment';
-import Comment from '../../components/new-post/Comment';
+import NewComment from '../../components/post-page/NewComment';
+import Comment from '../../components/post-page/Comment';
 import NotFound from '../../components/404';
 import PostHead from '../../components/PostHead';
 

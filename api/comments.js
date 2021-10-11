@@ -11,6 +11,8 @@ const auth = require('../middleware/auth.middleware');
 const {
   newCommentNotification,
   removeCommentNotification,
+  newReplyNotification,
+  removeReplyNotification,
 } = require('../server-utils/notifications');
 
 // @route   GET /api/comments/:postId
@@ -117,6 +119,111 @@ router.delete('/:postId/:commentId', auth, async (req, res) => {
           req.userId,
           req.params.postId,
           comment._id
+        );
+      }
+
+      res.status(200).json(post.comments);
+    } else {
+      res
+        .status(401)
+        .json({ msg: 'You are not authorized to delete this comment' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   POST /api/comments/:postId/:commentId
+// @desc    Reply to a comment
+router.post('/:postId/:commentId', auth, async (req, res) => {
+  try {
+    if (req.body.text.length < 1) {
+      return res
+        .status(400)
+        .json({ msg: 'Reply must be atleast 1 character long' });
+    }
+
+    let post = await Comment.findOne({ post: req.params.postId });
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    const reply = {
+      _id: uuid(),
+      user: req.userId,
+      text: req.body.text,
+      date: Date.now(),
+      likes: [],
+    };
+
+    const commentToReply = post.comments.find(
+      (comment) => comment._id === req.params.commentId
+    );
+    commentToReply.replies.push(reply);
+    post = await post.save();
+
+    post = await Comment.populate(post, 'comments.user');
+    post = await Comment.populate(post, 'comments.replies.user');
+
+    if (commentToReply.user._id.toString() !== req.userId) {
+      await newReplyNotification(
+        commentToReply.user._id.toString(),
+        req.userId,
+        req.params.postId,
+        reply._id,
+        req.body.text
+      );
+    }
+
+    res.status(201).json(post.comments);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   DELETE /api/comments/:postId/:commentId/:replyId
+// @desc    Delete a reply to comment
+router.delete('/:postId/:commentId/:replyId', auth, async (req, res) => {
+  try {
+    let post = await Comment.findOne({ post: req.params.postId });
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    const parentComment = post.comments.find(
+      (comment) => comment._id === req.params.commentId
+    );
+    if (!parentComment) {
+      return res.status(404).json({ msg: 'Comment not found' });
+    }
+
+    const reply = parentComment.replies.find(
+      (reply) => reply._id === req.params.replyId
+    );
+    if (!reply) {
+      return res.status(404).json({ msg: 'Reply not found' });
+    }
+
+    const user = await User.findById(req.userId);
+
+    if (reply.user.toString() === req.userId || user.role === 'root') {
+      const index = parentComment.replies.findIndex(
+        (reply) => reply._id === req.params.replyId
+      );
+      parentComment.replies.splice(index, 1);
+      post = await post.save();
+
+      post = await Comment.populate(post, 'comments.user');
+      post = await Comment.populate(post, 'comments.replies.user');
+
+      if (parentComment.user._id.toString() !== req.userId) {
+        await removeReplyNotification(
+          parentComment.user._id.toString(),
+          req.userId,
+          req.params.postId,
+          reply._id
         );
       }
 
