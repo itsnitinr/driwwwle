@@ -239,4 +239,107 @@ router.delete('/:postId/:commentId/:replyId', auth, async (req, res) => {
   }
 });
 
+// @route   PUT /api/comments/like/:postId/:commentId
+// @desc    Like or unlike a comment
+router.put('/like/:postId/:commentId', auth, async (req, res) => {
+  try {
+    let post = await Comment.findOne({ post: req.params.postId });
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    let comment = post.comments.find(
+      (comment) => comment._id === req.params.commentId
+    );
+    if (!comment) {
+      return res.status(404).json({ msg: 'Comment not found' });
+    }
+
+    const isLiked =
+      comment.likes.filter((like) => like.user.toString() === req.userId)
+        .length > 0;
+
+    if (isLiked) {
+      // Unlike the comment if already liked
+      const index = comment.likes.findIndex(
+        (like) => like.user.toString() === req.userId
+      );
+      comment.likes.splice(index, 1);
+      post = await post.save();
+
+      post = await Comment.populate(post, 'comments.user');
+      post = await Comment.populate(post, 'comments.replies.user');
+
+      res.status(200).json(post.comments);
+    } else {
+      // Like the comment
+      comment.likes.unshift({ user: req.userId });
+      post = await post.save();
+
+      post = await Comment.populate(post, 'comments.user');
+      post = await Comment.populate(post, 'comments.replies.user');
+
+      res.status(200).json(post.comments);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   PUT /api/comments/like/:postId/:commentId/:replyId
+// @desc    Like or unlike a reply
+router.put('/like/:postId/:commentId/:replyId', auth, async (req, res) => {
+  try {
+    let post = await Comment.findOne({ post: req.params.postId });
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    let comment = post.comments.find(
+      (comment) => comment._id === req.params.commentId
+    );
+    if (!comment) {
+      return res.status(404).json({ msg: 'Comment not found' });
+    }
+
+    let reply = comment.replies.find(
+      (reply) => reply._id === req.params.replyId
+    );
+    if (!reply) {
+      return res.status(404).json({ msg: 'Reply not found' });
+    }
+
+    const isLiked =
+      reply.likes.filter((like) => like.user.toString() === req.userId).length >
+      0;
+
+    if (isLiked) {
+      // Unlike the reply if already liked
+      const index = reply.likes.findIndex(
+        (like) => like.user.toString() === req.userId
+      );
+      reply.likes.splice(index, 1);
+      post = await post.save();
+
+      post = await Comment.populate(post, 'comments.user');
+      post = await Comment.populate(post, 'comments.replies.user');
+
+      res.status(200).json(post.comments);
+    } else {
+      // Like the comment
+      reply.likes.unshift({ user: req.userId });
+      post = await post.save();
+
+      post = await Comment.populate(post, 'comments.user');
+      post = await Comment.populate(post, 'comments.replies.user');
+
+      res.status(200).json(post.comments);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 module.exports = router;

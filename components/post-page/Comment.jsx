@@ -19,6 +19,9 @@ import Reply from './Reply';
 import baseURL from '../../utils/baseURL';
 
 const Comment = ({ comment, user, postId, queryClient }) => {
+  const isLiked =
+    user && comment.likes.filter((like) => like.user === user._id).length > 0;
+
   const mutation = useMutation(
     async () => {
       const { data } = await axios.delete(
@@ -52,6 +55,26 @@ const Comment = ({ comment, user, postId, queryClient }) => {
       onSuccess: (data) => {
         queryClient.setQueryData(['comments', postId], data);
         toast.success('Your reply has been posted');
+      },
+    }
+  );
+
+  const likeMutation = useMutation(
+    async () => {
+      const { data } = await axios.put(
+        `${baseURL}/api/comments/like/${postId}/${comment._id}`,
+        {},
+        {
+          headers: {
+            Authorization: cookie.get('token'),
+          },
+        }
+      );
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(['comments', postId], data);
       },
     }
   );
@@ -93,7 +116,17 @@ const Comment = ({ comment, user, postId, queryClient }) => {
           <p className="text-sm">{comment.text}</p>
           <div className="flex items-center space-x-2 text-gray-700 mt-1">
             <div className="flex items-center space-x-1">
-              <HeartOutlineIcon className="h-4 w-4 text-pink-600 cursor-pointer" />
+              {isLiked ? (
+                <HeartSolidIcon
+                  onClick={() => likeMutation.mutate()}
+                  className="h-4 w-4 text-pink-600 cursor-pointer"
+                />
+              ) : (
+                <HeartOutlineIcon
+                  onClick={() => likeMutation.mutate()}
+                  className="h-4 w-4 text-pink-600 cursor-pointer"
+                />
+              )}
               <span className="text-sm">{comment.likes.length}</span>
             </div>
             <a

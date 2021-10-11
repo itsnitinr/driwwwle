@@ -14,8 +14,11 @@ import { HeartIcon as HeartSolidIcon } from '@heroicons/react/solid';
 import baseURL from '../../utils/baseURL';
 
 const Reply = ({ reply, user, queryClient, comment, postId }) => {
+  const isLiked =
+    user && reply.likes.filter((like) => like.user === user._id).length > 0;
+
   const replyMutation = useMutation(
-    async (replyId) => {
+    async () => {
       const { data } = await axios.delete(
         `${baseURL}/api/comments/${postId}/${comment._id}/${reply._id}`,
         {
@@ -28,6 +31,26 @@ const Reply = ({ reply, user, queryClient, comment, postId }) => {
       onSuccess: (data) => {
         queryClient.setQueryData(['comments', postId], data);
         toast.success('Your reply has been deleted');
+      },
+    }
+  );
+
+  const likeMutation = useMutation(
+    async () => {
+      const { data } = await axios.put(
+        `${baseURL}/api/comments/like/${postId}/${comment._id}/${reply._id}`,
+        {},
+        {
+          headers: {
+            Authorization: cookie.get('token'),
+          },
+        }
+      );
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(['comments', postId], data);
       },
     }
   );
@@ -60,8 +83,18 @@ const Reply = ({ reply, user, queryClient, comment, postId }) => {
         <p className="text-sm">{reply.text}</p>
         <div className="flex items-center space-x-2 text-gray-700 mt-1">
           <div className="flex items-center space-x-1">
-            <HeartOutlineIcon className="h-4 w-4 text-pink-600 cursor-pointer" />
-            <span className="text-sm">{comment.likes.length}</span>
+            {isLiked ? (
+              <HeartSolidIcon
+                onClick={() => likeMutation.mutate()}
+                className="h-4 w-4 text-pink-600 cursor-pointer"
+              />
+            ) : (
+              <HeartOutlineIcon
+                onClick={() => likeMutation.mutate()}
+                className="h-4 w-4 text-pink-600 cursor-pointer"
+              />
+            )}
+            <span className="text-sm">{reply.likes.length}</span>
           </div>
           {user && user._id === reply.user._id && (
             <TrashIcon
