@@ -57,6 +57,48 @@ const NotificationItem = ({ notification, index, length }) => {
                 </p>
               </div>
             </>
+          ) : notification.type === 'reply' ? (
+            <>
+              <Link href={`/${notification.user.username}`}>
+                <div className="relative cursor-pointer">
+                  <Image
+                    className="rounded-full flex items-center justify-center ring-8 ring-white object-cover"
+                    src={notification.user.profilePicUrl}
+                    width={40}
+                    height={40}
+                  />
+                  <span className="absolute -bottom-0.5 rounded-full -right-1 bg-pink-600 p-0.5">
+                    <ChatAltIcon
+                      className="h-3 w-3 text-white"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </div>
+              </Link>
+              <div className="min-w-0 flex justify-between w-full">
+                <div className="md:ml-2 ml-0">
+                  <div className="text-md text-gray-500">
+                    <Link href={`/${notification.user.username}`}>
+                      <a className="font-medium text-gray-900 hover:text-pink-600">
+                        {notification.user.username}
+                      </a>
+                    </Link>{' '}
+                    replied to your comment on{' '}
+                    <Link href={`/posts/${notification.post._id}`}>
+                      <a className="hover:text-pink-600 cursor-pointer">
+                        {notification.post.title}
+                      </a>
+                    </Link>
+                  </div>
+                  <p className="mt-1 text-gray-900">{notification.text}</p>
+                </div>
+                <p className="text-gray-500 ml-2 text-sm">
+                  {formatDistanceToNowStrict(new Date(notification.date), {
+                    addSuffix: true,
+                  })}
+                </p>
+              </div>
+            </>
           ) : notification.type === 'follow' ? (
             <>
               <Link href={`/${notification.user.username}`}>
