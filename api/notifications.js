@@ -16,7 +16,9 @@ router.get('/', auth, async (req, res) => {
 
     const notifications = user.notifications.filter(
       (notification) =>
-        ((notification.type === 'like' || notification.type === 'comment') &&
+        ((notification.type === 'like' ||
+          notification.type === 'comment' ||
+          notification.type === 'reply') &&
           notification.user?._id &&
           notification.post?._id) ||
         (notification.type === 'follow' && notification.user?._id) ||

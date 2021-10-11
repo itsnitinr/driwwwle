@@ -3,6 +3,7 @@ import cookie from 'js-cookie';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useMutation } from 'react-query';
+import { ChatAltIcon } from '@heroicons/react/outline';
 
 import baseURL from '../../utils/baseURL';
 
@@ -12,7 +13,7 @@ const NewComment = ({ id, queryClient }) => {
   const mutation = useMutation(
     async () => {
       const { data } = await axios.post(
-        `${baseURL}/api/posts/comment/${id}`,
+        `${baseURL}/api/comments/${id}`,
         { text },
         {
           headers: {
@@ -25,8 +26,7 @@ const NewComment = ({ id, queryClient }) => {
     {
       onSuccess: (data) => {
         setText('');
-        const old = queryClient.getQueryData(['posts', id]);
-        queryClient.setQueryData(['posts', id], { ...old, comments: data });
+        queryClient.setQueryData(['comments', id], data);
         toast.success('Your comment has been posted');
       },
     }
@@ -40,17 +40,19 @@ const NewComment = ({ id, queryClient }) => {
       }}
     >
       <textarea
-        className="w-full md:w-5/6 mb-1 focus:ring-pink-600 focus:border-pink-600"
+        className="w-full md:w-5/6 focus:ring-pink-600 flex-1 focus:border-pink-600 rounded shadow"
         rows="2"
         value={text}
         onChange={(e) => setText(e.target.value)}
+        placeholder="Leave a nice comment.."
         required
       />
       <button
         type="submit"
-        className="block text-sm bg-pink-600 text-white p-2 mb-8"
+        className="text-sm bg-pink-600 text-white p-2 flex items-center space-x-2 mb-8 rounded shadow"
       >
-        Add Comment
+        <ChatAltIcon className="h-4 w-4 text-white" />
+        <span>Post Comment</span>
       </button>
     </form>
   );

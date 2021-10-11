@@ -82,6 +82,33 @@ const newCommentNotification = async (
   }
 };
 
+const newReplyNotification = async (
+  userToNotifyId,
+  userWhoCommentedId,
+  postId,
+  commentId,
+  commentText
+) => {
+  try {
+    const userToNotify = await Notification.findOne({ user: userToNotifyId });
+    const notification = {
+      type: 'reply',
+      user: userWhoCommentedId,
+      post: postId,
+      commentId,
+      text: commentText,
+      date: Date.now(),
+    };
+
+    userToNotify.notifications.unshift(notification);
+    await userToNotify.save();
+
+    await setNotificationsToUnread(userToNotifyId);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const removeCommentNotification = async (
   userToNotifyId,
   userWhoCommentedId,
@@ -95,6 +122,31 @@ const removeCommentNotification = async (
         $pull: {
           notifications: {
             type: 'comment',
+            user: userWhoCommentedId,
+            post: postId,
+            commentId,
+          },
+        },
+      }
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const removeReplyNotification = async (
+  userToNotifyId,
+  userWhoCommentedId,
+  postId,
+  commentId
+) => {
+  try {
+    await Notification.findOneAndUpdate(
+      { user: userToNotifyId },
+      {
+        $pull: {
+          notifications: {
+            type: 'reply',
             user: userWhoCommentedId,
             post: postId,
             commentId,
@@ -167,4 +219,6 @@ module.exports = {
   newFollowerNotification,
   removeFollowerNotification,
   newBadgeNotification,
+  newReplyNotification,
+  removeReplyNotification,
 };

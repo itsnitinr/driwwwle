@@ -78,6 +78,7 @@ nextApp.prepare().then(() => {
   app.use('/api/chats', require('./api/chats'));
   app.use('/api/badges', require('./api/badges'));
   app.use('/api/stats', require('./api/stats'));
+  app.use('/api/comments', require('./api/comments'));
 
   app.all('*', (req, res) => handle(req, res));
   server.listen(PORT, (err) => {
