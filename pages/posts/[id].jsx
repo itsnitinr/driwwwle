@@ -195,7 +195,7 @@ const PostPage = ({ user }) => {
               />
               <PostDetailsItem
                 Icon={ChatIcon}
-                detail={`${data.comments.length} comments`}
+                detail={`${comments.length} comments`}
               />
             </div>
           </div>
