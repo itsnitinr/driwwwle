@@ -9,7 +9,7 @@ import { dehydrate } from 'react-query/hydration';
 
 import baseURL from '../utils/baseURL';
 import PostCard from '../components/PostCard';
-import NoPosts from '../components/NoPosts';
+import Recommendations from '../components/Recommendations';
 
 const getFeed = async (page, token) => {
   const { data } = await axios.get(`${baseURL}/api/posts/feed?page=${page}`, {
@@ -29,7 +29,11 @@ const FeedPage = ({ user }) => {
     );
 
   if (data.pages[0].posts.length === 0) {
-    return <NoPosts />;
+    return (
+      <div className="container mx-auto px-6 py-8 md:px-12 md:py-10">
+        <Recommendations user={user} />
+      </div>
+    );
   }
 
   return (
