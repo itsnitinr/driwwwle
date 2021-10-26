@@ -8,7 +8,7 @@ const NewFeatureModal = ({ user }) => {
   useEffect(() => {
     const hasBeenShown = localStorage.getItem('shownFeedbackModal');
     if (user && !hasBeenShown) {
-      setShowModal(true);
+      // setShowModal(true);
       localStorage.setItem('shownFeedbackModal', true);
     }
   }, []);

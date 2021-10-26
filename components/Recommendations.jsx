@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Link from 'next/link';
+import Image from 'next/image';
 import cookie from 'js-cookie';
 import { useQuery } from 'react-query';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -45,8 +46,10 @@ const Recommendations = ({ user }) => {
                   <li key={developer.user._id} className="py-1.5">
                     <div className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
-                        <img
-                          className="h-8 w-8 rounded-full"
+                        <Image
+                          height={32}
+                          width={32}
+                          className="object-cover rounded-full"
                           src={developer.user.profilePicUrl}
                           alt={developer.user.name}
                         />
@@ -78,8 +81,10 @@ const Recommendations = ({ user }) => {
                   <li key={developer.user._id} className="py-1.5">
                     <div className="flex items-center space-x-4">
                       <div className="flex-shrink-0">
-                        <img
-                          className="h-8 w-8 rounded-full"
+                        <Image
+                          height={32}
+                          width={32}
+                          className="object-cover rounded-full"
                           src={developer.user.profilePicUrl}
                           alt={developer.user.name}
                         />
