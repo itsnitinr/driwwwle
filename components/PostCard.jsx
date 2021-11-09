@@ -32,7 +32,8 @@ const PostCard = ({ post, user }) => {
       return data;
     },
     {
-      onSuccess: () => setIsLiked((prevState) => !prevState),
+      onMutate: () => setIsLiked((prevState) => !prevState),
+      onError: () => setIsLiked((prevState) => !prevState),
     }
   );
 
@@ -50,7 +51,8 @@ const PostCard = ({ post, user }) => {
       return data;
     },
     {
-      onSuccess: () => setIsSaved((prevState) => !prevState),
+      onMutate: () => setIsSaved((prevState) => !prevState),
+      onError: () => setIsSaved((prevState) => !prevState),
     }
   );
 
