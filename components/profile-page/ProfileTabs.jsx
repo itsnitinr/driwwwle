@@ -1,4 +1,9 @@
-import { UserIcon, ViewGridIcon, BookmarkIcon } from '@heroicons/react/solid';
+import {
+  UserIcon,
+  ViewGridIcon,
+  BookmarkIcon,
+  PresentationChartLineIcon,
+} from '@heroicons/react/solid';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -9,13 +14,19 @@ const tabs = [
   { name: 'About', icon: UserIcon },
 ];
 
-const authTabs = [{ name: 'Saved', icon: BookmarkIcon }];
+const authTabs = [
+  { name: 'Saved', icon: BookmarkIcon },
+  { name: 'Statistics', icon: PresentationChartLineIcon },
+];
 
 const ProfileTabs = ({ currentTab, setCurrentTab, user, profile }) => {
   return (
     <div className="block mb-8">
       <div className="border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+        <nav
+          className="-mb-px flex space-x-8 overflow-x-auto"
+          aria-label="Tabs"
+        >
           {tabs.map((tab) => (
             <a
               key={tab.name}

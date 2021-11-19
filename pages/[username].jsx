@@ -11,6 +11,7 @@ import BadgeModal from '../components/BadgeModal';
 import ProfileHeader from '../components/profile-page/ProfileHeader';
 import SavedPosts from '../components/profile-page/SavedPosts';
 import ProfileTabs from '../components/profile-page/ProfileTabs';
+import Statistics from '../components/profile-page/Statistics';
 import SocialContainer from '../components/profile-page/SocialContainer';
 import NotFound from '../components/404';
 
@@ -124,6 +125,7 @@ const ProfilePage = ({ user }) => {
           </div>
         )}
         {currentTab === 'Saved' && <SavedPosts user={user} />}
+        {currentTab === 'Statistics' && <Statistics posts={data.posts} />}
       </div>
     </>
   );
