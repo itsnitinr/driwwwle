@@ -30,6 +30,7 @@ import NewComment from '../../components/post-page/NewComment';
 import Comment from '../../components/post-page/Comment';
 import NotFound from '../../components/404';
 import PostHead from '../../components/PostHead';
+import DOMPurify from 'dompurify';
 
 const getPost = async (id) => {
   const { data } = await axios.get(`${baseURL}/api/posts/${id}`);
@@ -137,7 +138,7 @@ const PostPage = ({ user }) => {
           <div className="w-full md:w-2/3 lg:w-3/4">
             <div
               className="w-full text-lg mb-6 md:mb-0 pr-4"
-              dangerouslySetInnerHTML={{ __html: data.description }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.description) }}
             ></div>
             <div className="mt-6">
               <h1 className="mb-4 text-lg text-pink-600 font-semibold">
