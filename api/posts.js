@@ -6,6 +6,7 @@ const Post = require('../models/Post.model');
 const User = require('../models/User.model');
 const Follower = require('../models/Follower.model');
 const Comment = require('../models/Comment.model');
+const sanitizeHtml = require('sanitize-html');
 
 const auth = require('../middleware/auth.middleware');
 const upload = require('../middleware/imageUpload.middleware');
@@ -24,11 +25,13 @@ router.post('/', auth, upload.array('images', 5), async (req, res) => {
     return res.status(400).json({ msg: 'Atleast one image is required' });
   }
 
+  const sanitizedDescription = sanitizeHtml(description)
+
   try {
     const postObj = {
       user: req.userId,
       title,
-      description,
+      description: sanitizedDescription,
       images: req.files.map((file) => file.path),
       liveDemo,
       techStack: JSON.parse(techStack),
@@ -168,9 +171,11 @@ router.put('/:postId', auth, upload.array('images', 5), async (req, res) => {
         .json({ msg: 'You are not authorized to edit this post' });
     }
 
+    const sanitizedDescription = sanitizeHtml(description)
+
     const postObj = {
       title,
-      description,
+      description: sanitizedDescription,
       images: JSON.parse(isOriginalImages)
         ? JSON.parse(originalImages)
         : req.files.map((file) => file.path),
