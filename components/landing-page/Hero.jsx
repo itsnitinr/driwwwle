@@ -118,7 +118,7 @@ const Hero = () => {
           >
             <Image
               className="relative rounded-lg shadow-lg"
-              src="https://imgur.com/pZJQ5kT.png"
+              src="https://res.cloudinary.com/nitinr/image/upload/f_auto,q_auto/v1/driwwwle/bkvhflw23vwcgofkyrkr"
               width={1920}
               height={1080}
             />
