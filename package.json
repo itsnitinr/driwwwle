@@ -5,6 +5,9 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
     "@heroicons/react": "^1.0.4",
